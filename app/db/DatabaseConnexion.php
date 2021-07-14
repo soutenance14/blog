@@ -3,7 +3,7 @@
 Class DatabaseConnexion{
     
     private static $pdo;
-    
+
     public static function createPdo()
     {
         //get config for database connexion
@@ -30,6 +30,10 @@ Class DatabaseConnexion{
 
     public static function getPdo()
     {
+        if(DatabaseConnexion::$pdo === null)
+        {
+            DatabaseConnexion::createPdo();
+        }
         return DatabaseConnexion::$pdo;
     }
 }

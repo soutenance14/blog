@@ -4,21 +4,10 @@
 require dirname(__DIR__) . '../db/DatabaseConnexion.php';
 
 Class MemberManager{
-    
-    private $pdo;
 
-    public function __construct()
+    public static function auth(String $login, String $password)
     {
-        if(\DatabaseConnexion::getPdo() == null)
-        {
-            \DatabaseConnexion::createPdo();
-        }
-        $this->pdo = \DatabaseConnexion::getPdo();
-        
-    }
-
-    public function auth(String $login, String $password){
-        $request = $this->pdo->prepare(
+        $request = DatabaseConnexion::getPdo()->prepare(
             "SELECT id, login, password, type from MEMBER where login = :login and password = :password");
         $request->bindParam(':login', $login, \PDO::PARAM_STR);
         $request->bindParam(':password', $password, \PDO::PARAM_STR);
@@ -26,4 +15,17 @@ Class MemberManager{
         $member = $request->fetch(\PDO::FETCH_ASSOC);
         return $member;
     }
+
+    public static function editPassword(String $id, String $password)
+    {
+        $request = DatabaseConnexion::getPdo()->prepare(
+            "UPDATE MEMBER set password =:password where id = :id");
+        $request->bindParam(':id', $id, \PDO::PARAM_STR);
+        $request->bindParam(':password', $password, \PDO::PARAM_STR);
+        $request->execute();
+        $member = $request->fetch(\PDO::FETCH_ASSOC);
+        return $member;
+    }
+
+
 }
