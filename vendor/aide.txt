@@ -1,0 +1,5 @@
+composer install
+    installer composer
+composer dump-autoload
+    dumper l'autoloader(a chaque ajout de package necéssitant
+    l'autoloader)
