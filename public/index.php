@@ -1,5 +1,7 @@
 <?php
 
+// This is the router page
+
 require dirname(__DIR__) . '../vendor/autoload.php';
 
 //start AltoRouter
@@ -11,7 +13,7 @@ $router = new AltoRouter();
 
 $router->map('GET', '/', 'home');
 $router->map('GET', '/login', 'login');
-// $router->map('GET', '/post', 'post');
+// $router->map('GET', '/post/[i:id]', 'post');
 $router->map('GET', '/member', 'member');
 
 // $router->map('POST', '/login/[:login]/[:password]', 'authentication');
@@ -23,11 +25,7 @@ $router->map('POST', '/auth', 'auth');
 //     echo $o;
 // }
 
-function test()
-{
-    echo "test";
-}
-
+// Functions for call controller functions
 function home()
 {
     echo "home";

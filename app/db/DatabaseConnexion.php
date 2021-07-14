@@ -1,13 +1,13 @@
 <?php
 
-Class Manager{
+Class DatabaseConnexion{
     
-    public $pdo;
+    private static $pdo;
     
-    public function __construct()
+    public static function createPdo()
     {
         //get config for database connexion
-        require dirname(__DIR__) . "../configDB.php";  
+        require  "configDB.php";  
         // more explain about dsn and oprions here -> https://phpdelusions.net/pdo#dsn 
 
         $dsn = "mysql:host=$HOST;dbname=$DB_NAME;port=$PORT;charset=$CHARSET";
@@ -20,11 +20,16 @@ Class Manager{
 
         try 
         {
-            $this->pdo = new \PDO($dsn, $USER, $PASS, $options);
+            DatabaseConnexion::$pdo = new \PDO($dsn, $USER, $PASS, $options);
             
             echo "connexion to database successfull\n****\n\n";
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }
+    }
+
+    public static function getPdo()
+    {
+        return DatabaseConnexion::$pdo;
     }
 }

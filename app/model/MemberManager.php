@@ -1,13 +1,20 @@
 <?php
 
-require 'Manager.php';
 
-Class MemberManager extends Manager{
+require dirname(__DIR__) . '../db/DatabaseConnexion.php';
+
+Class MemberManager{
     
-    public $pdo;
+    private $pdo;
 
-    public function __construct(){
-        parent::__construct();
+    public function __construct()
+    {
+        if(\DatabaseConnexion::getPdo() == null)
+        {
+            \DatabaseConnexion::createPdo();
+        }
+        $this->pdo = \DatabaseConnexion::getPdo();
+        
     }
 
     public function auth(String $login, String $password){
