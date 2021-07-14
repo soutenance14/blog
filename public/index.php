@@ -8,16 +8,31 @@ require dirname(__DIR__) . '../vendor/autoload.php';
 $router = new AltoRouter();
 
 // map routes
-//$ router->map('TYPE', 'route', 'function')
 
+// user no auth
+// get
 $router->map('GET', '/', 'home');
 $router->map('GET', '/login', 'login');
+$router->map('GET', '/posts', 'posts');
 $router->map('GET', '/post/[i:id]', 'post');
-$router->map('GET', '/member', 'member');
+// post
+$router->map('POST', '/auth', 'auth');
+
+// user auth
+//  get
 $router->map('GET', '/formEditPassword', 'formEditPassword');
 
-$router->map('POST', '/auth', 'auth');
+// post
 $router->map('POST', '/editPassword', 'editPassword');
+
+// user admin
+$router->map('GET', '/formPushPost', 'formPushPost');
+$router->map('GET', '/formEditPost', 'formEditPost');
+$router->map('GET', '/formDeletePost', 'formDeletePost');
+// post
+$router->map('POST', '/editPost', 'editPost');
+$router->map('POST', '/pushPost', 'pushPost');
+$router->map('POST', '/deletePost', 'deletePost');
 
 // Functions for call controller functions
 function home()
@@ -25,6 +40,25 @@ function home()
     echo "home";
 }
 
+//for post
+//form
+function formPushPost()
+{
+    echo "formPushPost";
+    echo "<form action ='pushPost' method ='post'><input name='auteur'><input name='titre'><input name='chapo'><input name='contenu'><input type='submit' name ='submit' value='ok'></form>";
+}
+
+function formEditPost()
+{
+    echo "formEditPost";
+    echo "<form action ='editPost' method ='post'><input name='id'><input name='auteur'><input name='titre'><input name='chapo'><input name='contenu'><input type='submit' name ='submit' value='ok'></form>";
+}
+
+function formDeletePost()
+{
+    echo "formDeletePost";
+    echo "<form action ='deletePost' method ='post'><input name='id'><input type='submit' name ='submit' value='ok'></form>";
+}
 
 function post($id)
 {
@@ -39,6 +73,88 @@ function post($id)
         redirectionIfPDOException($e);
     }
 }
+
+function posts()
+{
+    try 
+    {
+        require  '../app/controller/PostController.php';
+        PostController::getAll();
+    } 
+    catch (\PDOException $e)
+    {
+        // throw new \PDOException($e->getMessage(), (int)$e->getCode());
+        redirectionIfPDOException($e);
+    }
+}
+
+function pushPost()
+{
+    if( isset($_POST['auteur']) && isset($_POST['titre']) && isset($_POST['chapo']) && isset($_POST['contenu']) )
+    {
+        try 
+        {
+            require  '../app/controller/PostController.php';
+            PostController::push($_POST['auteur'], $_POST['titre'], $_POST['chapo'], $_POST['contenu']);
+        } 
+        catch (\PDOException $e)
+        {
+            // throw new \PDOException($e->getMessage(), (int)$e->getCode());
+            redirectionIfPDOException($e);
+        }
+    }
+    else
+    {
+        // a changer redirect view ici
+        echo 'problème, post(s) manquant(s).';
+    }
+}
+
+function editPost()
+{
+    if( isset($_POST['id']) && isset($_POST['auteur']) && isset($_POST['titre']) && isset($_POST['chapo']) && isset($_POST['contenu']) )
+    {
+        try 
+        {
+            require  '../app/controller/PostController.php';
+            PostController::edit($_POST['id'], $_POST['auteur'], $_POST['titre'], $_POST['chapo'], $_POST['contenu']);
+        } 
+        catch (\PDOException $e)
+        {
+            // throw new \PDOException($e->getMessage(), (int)$e->getCode());
+            redirectionIfPDOException($e);
+        }
+    }
+    else
+    {
+        // a changer redirect view ici
+        echo 'problème, post(s) manquant(s).';
+    }
+}
+
+function deletePost()
+{
+    if( isset($_POST['id']) )
+    {
+        try 
+        {
+            require  '../app/controller/PostController.php';
+            PostController::delete($_POST['id']);
+        } 
+        catch (\PDOException $e)
+        {
+            // throw new \PDOException($e->getMessage(), (int)$e->getCode());
+            redirectionIfPDOException($e);
+        }
+    }
+    else
+    {
+        // a changer redirect view ici
+        echo 'problème, post(s) manquant(s).';
+    }
+}
+
+
 
     // for member 
         // form
@@ -55,10 +171,6 @@ function formEditPassword()
 }
 
         //link with db
-function member()
-{
-    echo "member";
-}
 
 function auth()
 {
