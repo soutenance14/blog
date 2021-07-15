@@ -8,7 +8,7 @@ Class CommentManager{
     public static function get(String $id)
     {
         $request = DatabaseConnexion::getPdo()->prepare(
-            "SELECT id, contenu, created_at from COMMENT where id = :id");
+            "SELECT id, contenu, created_at, published, id_membre from COMMENT where id = :id");
         $request->bindParam(':id', $id, \PDO::PARAM_STR);
         $request->execute();
         $post = $request->fetch(\PDO::FETCH_ASSOC);

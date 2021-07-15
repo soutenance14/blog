@@ -36,8 +36,8 @@ Abstract Class MemberController extends Controller
             $userSession = UserSession::getUser(); 
             if($userSession === USER_NO_AUTHENTIFIED)
             {
-            echo 'redirection utilisateur non connecté';
-            var_dump ($userSession);
+                echo 'redirection utilisateur non connecté';
+                var_dump ($userSession);
             }
             else
             {
@@ -57,6 +57,12 @@ Abstract Class MemberController extends Controller
         {
             MemberController::viewIfPDOException($e);
         }
+    }
+
+    public static function disconnect()
+    {
+        UserSession::disconnect();
+        echo 'disconnect';
     }
 
     // view if exception

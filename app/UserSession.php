@@ -1,6 +1,6 @@
 <?php
 
-define('USER_NO_AUTHENTIFIED', null);
+define('USER_NO_AUTHENTIFIED_SESSION', null);
 session_start();
 Class UserSession
 {
@@ -10,7 +10,7 @@ Class UserSession
     {
         if( !isset($_SESSION['user'])   )
         {
-            $_SESSION['user'] = USER_NO_AUTHENTIFIED;
+            $_SESSION['user'] = USER_NO_AUTHENTIFIED_SESSION;
         }
         return $_SESSION['user'];
     }
@@ -18,6 +18,11 @@ Class UserSession
     public static function setUser($user)
     {    
         $_SESSION['user'] = $user;
+    }
+
+    public static function disconnect()
+    {
+        session_destroy();
     }
 
 }

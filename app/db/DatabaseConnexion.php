@@ -7,7 +7,7 @@ Class DatabaseConnexion{
     public static function createPdo()
     {
         //get config for database connexion
-        require  "configDB.php";  
+        require dirname(__DIR__) . "../config/configDB.php";  
         // more explain about dsn and oprions here -> https://phpdelusions.net/pdo#dsn 
 
         $dsn = "mysql:host=$HOST;dbname=$DB_NAME;port=$PORT;charset=$CHARSET";

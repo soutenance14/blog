@@ -5,7 +5,6 @@
 // https://altorouter.com
 
 require dirname(__DIR__) . '../vendor/autoload.php';
-
 //start AltoRouter
 $router = new AltoRouter();
 
@@ -22,6 +21,7 @@ $router->map('POST', '/auth', 'auth');
 
 // for user auth
 //  get
+$router->map('GET', '/disconnect', 'disconnect');
 $router->map('GET', '/formEditPassword', 'formEditPassword');
 $router->map('GET', '/comm', 'formPushCommentASupprimer');// a supprimer, utiliser que pour les tests mais cest dans post que le formulaire sera
 $router->map('GET', '/deleteComment/[i:id]', 'deleteComment');
@@ -185,6 +185,12 @@ function auth()
         // this call is not possible in theory
         echo 'problème, post(s) manquant(s).';
     }
+}
+
+function disconnect()
+{
+    require  '../app/controller/MemberController.php';
+    MemberController::disconnect();
 }
 
 function editPassword()

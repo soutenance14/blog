@@ -3,6 +3,7 @@
 require  'Controller.php';
 require  dirname(__DIR__) . '../UserSession.php';
 require  dirname(__DIR__) . '../model/CommentManager.php';
+define('NO_NEED_USER_ID', null);
 
 Abstract Class CommentController
 {
@@ -48,28 +49,28 @@ Abstract Class CommentController
 
     public static function push( $id_post, $contenu)
     {
-        try{
-            $userSession = UserSession::getUser(); 
-            if(isset($userSession['type'])  )
+        try
+        {
+            $userSession = UserSession::getUser();
+            CommentController::permission(USER_AUTHENTIFIED, $userSession, NO_NEED_USER_ID); 
+            
+            $affectedLines = CommentManager::push( $userSession['id'], $id_post, $contenu);
+            if($affectedLines != null)
             {
-                $affectedLines = CommentManager::push( $userSession['id'], $id_post, $contenu);
-                if($affectedLines != null)
-                {
-                    echo 'redirection push comment success.';
-                }
-                else
-                {
-                    echo 'redirection push comment failed.';
-                }
+                echo 'redirection push comment success.';
             }
             else
             {
-                echo 'redirection droits insuffisants';
+                echo 'redirection push comment failed.';
             }
         }
         catch (\PDOException $e)
         {
             CommentController::viewIfPDOException($e);
+        }
+        catch (AccessViolationException $e)
+        {
+            echo $e->getMessage() , $e->getCode();
         }
     }
 
@@ -79,27 +80,27 @@ Abstract Class CommentController
         {
             try
             {
-                $userSession = UserSession::getUser(); 
-                if(isset($userSession['type']) && $userSession['type'] === 'admin')
+                $userSession = UserSession::getUser();
+                CommentController::permission(ADMIN, $userSession, NO_NEED_USER_ID);
+                
+                $affectedLines = CommentManager::setPublished($id, $published);
+                if($affectedLines != null)
                 {
-                    $affectedLines = CommentManager::setPublished($id, $published);
-                    if($affectedLines != null)
-                    {
-                        echo 'redirection setPublished comment success.';
-                    }
-                    else
-                    {
-                        echo 'redirection setPublished comment failed.';
-                    }
+                    echo 'redirection setPublished comment success.';
                 }
                 else
                 {
-                    echo 'redirection droits insuffisants';
+                    echo 'redirection setPublished comment failed.';
                 }
+                
             }
             catch (\PDOException $e)
             {
                 CommentController::viewIfPDOException($e);
+            }
+            catch (AccessViolationException $e)
+            {
+                echo $e->getMessage() , $e->getCode();
             }
         }
         else
@@ -113,9 +114,11 @@ Abstract Class CommentController
         try
         {
             $userSession = UserSession::getUser();
-            // if user is admin, delete is possible
-            if(isset($userSession['type']) && $userSession['type'] === 'admin')
+            $comment = CommentManager::get($id);
+            if($comment != null)
             {
+                CommentController::permission(ADMIN_OR_THIS_USER_AUTHENTIFIED, $userSession, $comment['id_membre']);
+                
                 $affectedLines = CommentManager::delete( $id);
                 if($affectedLines !== null)
                 {
@@ -126,36 +129,19 @@ Abstract Class CommentController
                 {
                     echo 'redirection delete comment failed.';
                 }
-            } 
-            elseif(isset($userSession['type']))
-            {
-                $comment = CommentManager::get($id);
-                if(isset($comment['id_membre']) && $comment['id_membre'] === $userSession['id'] )
-                {
-                    // if user is the author's comment delete is possible
-                    $affectedLines = CommentManager::delete( $id);
-                    if($affectedLines != null)
-                    {
-                        echo 'redirection delete comment success.';
-                    }
-                    else
-                    {
-                        echo 'redirection delete comment failed.';
-                    }
-                }
-                else
-                {
-                    echo 'Ce commentaire n\'existe pas, ou n\'est pas le votre';
-                }
             }
             else
             {
-                echo 'redirection droits insuffisants';
+                echo 'Ce commentaire n\'existe pas.';
             }
         }
         catch (\PDOException $e)
         {
             CommentController::viewIfPDOException($e);
+        }
+        catch (AccessViolationException $e)
+        {
+            echo $e->getMessage() , $e->getCode();
         }
     }
 
@@ -165,6 +151,10 @@ Abstract Class CommentController
         // Class is static, no instance, heritage is not possible
         // no parent::viewIfPDOException($e);
         return Controller::viewIfPDOException($e);
-    } 
+    }
 
+    private static function permission(String $permission, $user, $id_member_permission)
+    {
+        Controller::permission($permission, $user, $id_member_permission);
+    }
 }
