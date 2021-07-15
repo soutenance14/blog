@@ -3,7 +3,6 @@
 require  'Controller.php';
 require  dirname(__DIR__) . '../UserSession.php';
 require  dirname(__DIR__) . '../model/CommentManager.php';
-define('NO_NEED_USER_ID', null);
 
 Abstract Class CommentController
 {
@@ -23,7 +22,7 @@ Abstract Class CommentController
         }
         catch (\PDOException $e)
         {
-            CommentController::viewIfPDOException($e);
+            CommentController::ifPDOExceptionView($e);
         }
     }
 
@@ -43,7 +42,7 @@ Abstract Class CommentController
         } 
         catch (\PDOException $e)
         {
-            CommentController::viewIfPDOException($e);
+            CommentController::ifPDOExceptionView($e);
         }
     }
 
@@ -52,7 +51,7 @@ Abstract Class CommentController
         try
         {
             $userSession = UserSession::getUser();
-            CommentController::permission(USER_AUTHENTIFIED, $userSession, NO_NEED_USER_ID); 
+            CommentController::permission(USER_AUTHENTIFIED, $userSession); 
             
             $affectedLines = CommentManager::push( $userSession['id'], $id_post, $contenu);
             if($affectedLines != null)
@@ -66,11 +65,11 @@ Abstract Class CommentController
         }
         catch (\PDOException $e)
         {
-            CommentController::viewIfPDOException($e);
+            CommentController::ifPDOExceptionView($e);
         }
         catch (AccessViolationException $e)
         {
-            echo $e->getMessage() , $e->getCode();
+            CommentController::ifAccessViolationExceptionView($e);
         }
     }
 
@@ -81,7 +80,7 @@ Abstract Class CommentController
             try
             {
                 $userSession = UserSession::getUser();
-                CommentController::permission(ADMIN, $userSession, NO_NEED_USER_ID);
+                CommentController::permission(ADMIN, $userSession);
                 
                 $affectedLines = CommentManager::setPublished($id, $published);
                 if($affectedLines != null)
@@ -96,11 +95,11 @@ Abstract Class CommentController
             }
             catch (\PDOException $e)
             {
-                CommentController::viewIfPDOException($e);
+                CommentController::ifPDOExceptionView($e);
             }
             catch (AccessViolationException $e)
             {
-                echo $e->getMessage() , $e->getCode();
+                CommentController::ifAccessViolationExceptionView($e);
             }
         }
         else
@@ -117,7 +116,7 @@ Abstract Class CommentController
             $comment = CommentManager::get($id);
             if($comment != null)
             {
-                CommentController::permission(ADMIN_OR_THIS_USER_AUTHENTIFIED, $userSession, $comment['id_membre']);
+                CommentController::permissionThisIdMember( $userSession, $comment['id_membre']);
                 
                 $affectedLines = CommentManager::delete( $id);
                 if($affectedLines !== null)
@@ -137,24 +136,49 @@ Abstract Class CommentController
         }
         catch (\PDOException $e)
         {
-            CommentController::viewIfPDOException($e);
+            CommentController::ifPDOExceptionView($e);
         }
         catch (AccessViolationException $e)
         {
-            echo $e->getMessage() , $e->getCode();
+            CommentController::ifAccessViolationExceptionView($e);
         }
     }
 
-    // view if exception
-    private static function viewIfPDOException(\PDOException $e)
+    // view if PDO exception
+    private static function ifPDOExceptionView(\PDOException $e)
     {
         // Class is static, no instance, heritage is not possible
-        // no parent::viewIfPDOException($e);
-        return Controller::viewIfPDOException($e);
+        // no parent::ifPDOExceptionView($e);
+        return Controller::ifPDOExceptionView($e);
     }
 
-    private static function permission(String $permission, $user, $id_member_permission)
+    // view if exception AccessViolationException
+    private static function ifAccessViolationExceptionView(AccessViolationException $e)
     {
-        Controller::permission($permission, $user, $id_member_permission);
+        // Class is static, no instance, heritage is not possible
+        // no parent::ifPDOExceptionView($e);
+        return Controller::ifAccessViolationExceptionView($e);
     }
+
+    private static function permission(String $permission, $user)
+    {
+        Controller::permission($permission, $user);
+    }
+    
+    private static function permissionThisIdMember( $user, $id_member_permission)
+    {
+        require dirname(__DIR__) . "../exception/AccessViolationException.php";
+        if(isset($user['id'])) 
+        {
+            if( ($user['id'] != $id_member_permission) && ($user['type'] != 'admin')    )
+            {
+                throw new AccessViolationException('user is not the owner  and not admin.', 99);
+            }
+        }
+        else
+        {
+            throw new AccessViolationException('User not authenfied.', 97);
+        }
+    }
+
 }

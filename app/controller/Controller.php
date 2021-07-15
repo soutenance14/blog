@@ -1,13 +1,11 @@
 <?php
 
-// define('USER_NO_AUTHENTIFIED', null);
 define('USER_AUTHENTIFIED', 0);
 define('ADMIN', 1);
-define('ADMIN_OR_THIS_USER_AUTHENTIFIED', 2);
 
 Abstract Class Controller
 {
-    public static function viewIfPDOException(\PDOException $e)
+    public static function ifPDOExceptionView(\PDOException $e)
     {
         switch($e->getCode())
         {
@@ -23,13 +21,23 @@ Abstract Class Controller
             case '42000':
                 echo 'view pb avec la db: erreur de syntaxe.' , $e->getCode(), $e->getMessage();
                 break;
-            default:
-                echo 'view pb avec la db: une erreur inatendue est arrivé avec la db.';
-                throw new \PDOException($e->getMessage(), (int)$e->getCode());  
-        }
-    } 
+            case '23000':
+                //can not add or update a child, foreign constraitn failed
+                echo 'view pb l\'élement recherché n\'existe pas dans la db.' , $e->getCode(), $e->getMessage();
+                break;
 
-    public static function permission(String $permission, $user, $id_member_permission)
+            default:
+                echo 'view pb avec la db: une erreur inatendue est arrivé avec la db.' , $e->getCode(), $e->getMessage();
+                // throw new \PDOException($e->getMessage(), (int)$e->getCode());  
+        }
+    }
+    
+    public static function ifAccessViolationExceptionView(AccessViolationException $e)
+    {
+        echo 'view pb access violation: ', $e->getMessage(), $e->getCode();
+    }
+
+    public static function permission(String $permission, $user)
     {
         require dirname(__DIR__) . "../exception/AccessViolationException.php";
         switch($permission)
@@ -45,23 +53,6 @@ Abstract Class Controller
                 if(!isset($user['type']) || $user['type'] !== 'admin')
                 {
                     throw new AccessViolationException('User not authenfied, or not admin.', 98);
-                }
-                break;
-            case ADMIN_OR_THIS_USER_AUTHENTIFIED:
-                // if( (!isset($user['id'])) || (  ($user['id'] != $id_member_permission) && ($user['type'] !== 'admin')   )      )
-                // {
-                //     throw new AccessViolationException('User not authenfied, not have permission, or not admin.', 99);
-                // }
-                if(isset($user['id'])) 
-                {
-                    if( ($user['id'] != $id_member_permission) && ($user['type'] != 'admin')    )
-                    {
-                        throw new AccessViolationException('user is not the owner  and not admin.', 99);
-                    }
-                }
-                else
-                {
-                    throw new AccessViolationException('User not authenfied.', 97);
                 }
                 break;
             default:

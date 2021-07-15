@@ -4,7 +4,7 @@ require  'Controller.php';
 require  dirname(__DIR__) . '../UserSession.php';
 require  dirname(__DIR__) . '../model/MemberManager.php';
 
-Abstract Class MemberController extends Controller
+Abstract Class MemberController
 {
     public static function auth($login, $password)
     {
@@ -24,7 +24,7 @@ Abstract Class MemberController extends Controller
         }
         catch (\PDOException $e)
         {
-            MemberController::viewIfPDOException($e);
+            MemberController::ifPDOExceptionView($e);
         }
     }
 
@@ -34,28 +34,26 @@ Abstract Class MemberController extends Controller
         {
             //use js for check new password and confirmNewPassword
             $userSession = UserSession::getUser(); 
-            if($userSession === USER_NO_AUTHENTIFIED)
+            MemberController::permission(USER_AUTHENTIFIED, $userSession); 
+
+            if( $userSession['password'] === $oldPassord)
             {
-                echo 'redirection utilisateur non connecté';
-                var_dump ($userSession);
+                //user can only change his password, not for another member
+                MemberManager::editPassword($userSession['id'], $newPassword);
+                echo 'oui changement';
             }
             else
             {
-                if( $userSession['password'] === $oldPassord)
-                {
-                    //user can only change his password, not for another member
-                    MemberManager::editPassword($userSession['id'], $newPassword);
-                    echo 'oui changement';
-                }
-                else
-                {
-                    echo 'redirection mauvais old password';
-                }
+                echo 'redirection mauvais old password';
             }
         }
         catch (\PDOException $e)
         {
-            MemberController::viewIfPDOException($e);
+            MemberController::ifPDOExceptionView($e);
+        }
+        catch (AccessViolationException $e)
+        {
+            MemberController::ifAccessViolationExceptionView($e);
         }
     }
 
@@ -65,11 +63,24 @@ Abstract Class MemberController extends Controller
         echo 'disconnect';
     }
 
-    // view if exception
-    public static function viewIfPDOException(\PDOException $e)
+    // view if PDO exception
+    private static function ifPDOExceptionView(\PDOException $e)
     {
         // Class is static, no instance, heritage is not possible
-        // no parent::viewIfPDOException($e);
-        return Controller::viewIfPDOException($e);
-    } 
+        // no parent::ifPDOExceptionView($e);
+        return Controller::ifPDOExceptionView($e);
+    }
+
+    // view if exception AccessViolationException
+    private static function ifAccessViolationExceptionView(AccessViolationException $e)
+    {
+        // Class is static, no instance, heritage is not possible
+        // no parent::ifPDOExceptionView($e);
+        return Controller::ifAccessViolationExceptionView($e);
+    }
+
+    private static function permission(String $permission, $user)
+    {
+        Controller::permission($permission, $user);
+    }
 }
