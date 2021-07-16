@@ -1,17 +1,16 @@
 <?php
 
 require  'Controller.php';
-require  dirname(__DIR__) . '../UserSession.php';
+// require  dirname(__DIR__) . '../UserSession.php';
 require  dirname(__DIR__) . '../model/PostManager.php';
 
 Abstract Class PostController
 {
-    // FORM WITHOUT MODELS
-    public static function formPushPost()
+    // FORM
+    public static function formPushPost($userSession)
     {
         try
         {
-            $userSession = UserSession::getUser(); 
             PostController::permission(USER_AUTHENTIFIED, $userSession);
             
             echo "formPushPost";
@@ -23,7 +22,38 @@ Abstract Class PostController
         }
     }
     
-    // WITH MODELS
+    public static function formEditPost(String $id, $userSession)
+    {
+        try
+        {
+            PostController::permission(USER_AUTHENTIFIED, $userSession);
+            $post = PostManager::get($id);
+            if($post != null)
+            {
+            echo "formEditPost";
+            echo "<br>created_at :" . $post['created_at'];
+            echo    "<form action ='editPost' method ='post'>
+                        <input name='auteur' value='".$post['auteur']."'>
+                        <input name='titre' value='".$post['titre']."'>
+                        <input name='chapo' value='".$post['chapo']."'>
+                        <input name='contenu' value='".$post['contenu']."'>
+                        <input type='submit' name ='submit' value='ok'>
+                    </form>";
+            }
+            else
+            {
+                echo 'redirection ce post n\'existe pas.';
+            }
+            
+        }
+        catch (AccessViolationException $e)
+        {
+            PostController::ifAccessViolationExceptionView($e);
+        }
+    }
+    
+    //NOT FORM
+    //get for the front-end
     public static function get(String $id)
     {
         try
@@ -31,7 +61,10 @@ Abstract Class PostController
             $post = PostManager::get($id);
             if($post != null)
             {
-                echo 'récupération de post '. $post['id'];
+                echo 'Post ' , var_dump($post);
+                require dirname(__DIR__) . "../model/CommentManager.php";
+                $commentsPublished = CommentManager::getAllPostPublished($id);
+                echo '<br>published comment: ' , var_dump ($commentsPublished);
             }
             else
             {
@@ -44,6 +77,38 @@ Abstract Class PostController
         }
     }
 
+    //get for the back-end
+    public static function getBack(String $id, $userSession)
+    {
+        try
+        {
+            PostController::permission(ADMIN, $userSession); 
+
+            $post = PostManager::get($id);
+            if($post != null)
+            {
+                echo 'Post ' , var_dump($post);
+                require dirname(__DIR__) . "../model/CommentManager.php";
+                $commentsPublished = CommentManager::getAllPostPublished($id);
+                $commentsNotPublished = CommentManager::getAllPostNotPublished($id);
+                echo '<br>published' , var_dump ($commentsPublished);
+                echo '<br>not published' , var_dump ($commentsNotPublished);
+            }
+            else
+            {
+                echo 'redirection ce post n\'existe pas.';
+            }
+        }
+        catch (\PDOException $e)
+        {
+            PostController::ifPDOExceptionView($e);
+        }
+        catch (AccessViolationException $e)
+        {
+            PostController::ifAccessViolationExceptionView($e);
+        }
+    }
+
     public static function getAll()
     {
         try 
@@ -51,7 +116,7 @@ Abstract Class PostController
             $posts = PostManager::getAll();
             if($posts != null)
             {
-                echo 'récupération de posts '. $posts[0]['id'];
+                var_dump($posts);
             }
             else
             {
@@ -64,12 +129,12 @@ Abstract Class PostController
         }
     }
 
-    public static function push( $auteur, $titre, $chapo, $contenu)
+    public static function push( $auteur, $titre, $chapo, $contenu, $userSession)
     {
         try{
-            $userSession = UserSession::getUser(); 
             
             PostController::permission(ADMIN, $userSession); 
+            
             $affectedLines = PostManager::push( $auteur, $titre, $chapo, $contenu);
             if($affectedLines != null)
             {
@@ -90,13 +155,12 @@ Abstract Class PostController
         }
     }
 
-    public static function edit($id, $auteur, $titre, $chapo, $contenu)
+    public static function edit($id, $auteur, $titre, $chapo, $contenu, $userSession)
     {
         try
-        {
-            $userSession = UserSession::getUser(); 
-            
+        { 
             PostController::permission(ADMIN, $userSession); 
+            
             $affectedLines = PostManager::edit($id, $auteur, $titre, $chapo, $contenu);
             if($affectedLines != null)
             {
@@ -117,11 +181,10 @@ Abstract Class PostController
         }
     }
 
-    public static function delete( $id)
+    public static function delete( $id, $userSession)
     {
         try
         {
-            $userSession = UserSession::getUser(); 
             PostController::permission(ADMIN, $userSession); 
 
             $affectedLines = PostManager::delete( $id);

@@ -50,9 +50,16 @@ Abstract Class Controller
                 break;
                 
             case ADMIN:
-                if(!isset($user['type']) || $user['type'] !== 'admin')
+                if(isset($user['type']) )
                 {
-                    throw new AccessViolationException('User not authenfied, or not admin.', 98);
+                    if( $user['type'] !== 'admin')
+                    {
+                        throw new AccessViolationException('User is not admin.', 98);
+                    }
+                }
+                else
+                {
+                    throw new AccessViolationException('User not authenfied.', 97);
                 }
                 break;
             default:

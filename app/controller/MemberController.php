@@ -1,21 +1,35 @@
 <?php
 
 require  'Controller.php';
-require  dirname(__DIR__) . '../UserSession.php';
+// require  dirname(__DIR__) . '../UserSession.php';
 require  dirname(__DIR__) . '../model/MemberManager.php';
 
 Abstract Class MemberController
 {
-    public static function auth($login, $password)
+    //FORM
+    public static function login()
+    {
+        echo "login";
+        echo "<form action ='auth' method ='post'><input name='login'><input name='password'><input type='submit' name ='submi' value='ok'></form>";
+    }
+    
+    public static function formEditPassword()
+    {
+        echo "formEditPassword";
+        echo "<form action ='editPassword' method ='post'><input name='oldPassword'><input name='newPassword'><input name='confirmNewPassword'><input type='submit' name ='submit' value='ok'></form>";
+    }
+
+    // NOT FORM
+    public static function auth($login, $password, $blogSession)
     {
         try
         {
             $member = MemberManager::auth($login, $password);
             if($member != null)
             {
-                UserSession::setUser($member);
-                var_dump($member);
-                var_dump(UserSession::getUser());
+                $blogSession->setUser($member);
+                echo'member model' , var_dump($member);
+                echo '<br> session user' , var_dump($blogSession->getUser());
             }
             else
             {
@@ -28,14 +42,12 @@ Abstract Class MemberController
         }
     }
 
-    public static function editPassword($oldPassord, $newPassword)
+    public static function editPassword($oldPassord, $newPassword, $userSession)
     {
         try
         {
             //use js for check new password and confirmNewPassword
-            $userSession = UserSession::getUser(); 
             MemberController::permission(USER_AUTHENTIFIED, $userSession); 
-
             if( $userSession['password'] === $oldPassord)
             {
                 //user can only change his password, not for another member
@@ -57,9 +69,9 @@ Abstract Class MemberController
         }
     }
 
-    public static function disconnect()
+    public static function disconnect($blogSession)
     {
-        UserSession::disconnect();
+        $blogSession->disconnect();
         echo 'disconnect';
     }
 

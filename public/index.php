@@ -8,6 +8,8 @@ require dirname(__DIR__) . '../vendor/autoload.php';
 //start AltoRouter
 $router = new AltoRouter();
 
+require dirname(__DIR__) . '../app/BlogSession.php';
+
 // ALL MAP ROUTES
 
 // for user no auth
@@ -16,6 +18,7 @@ $router->map('GET', '/', 'home');
 $router->map('GET', '/login', 'login');
 $router->map('GET', '/posts', 'posts');
 $router->map('GET', '/post/[i:id]', 'post');
+$router->map('GET', '/postBack/[i:id]', 'postBack');
 // post
 $router->map('POST', '/auth', 'auth');
 
@@ -25,7 +28,7 @@ $router->map('GET', '/disconnect', 'disconnect');
 $router->map('GET', '/formEditPassword', 'formEditPassword');
 $router->map('GET', '/comm', 'formPushCommentASupprimer');// a supprimer, utiliser que pour les tests mais cest dans post que le formulaire sera
 $router->map('GET', '/deleteComment/[i:id]', 'deleteComment');
-$router->map('GET', '/setPublishedComment/[i:id]/[i:published]', 'setPublishedComment');
+$router->map('GET', '/setPublishedComment/[i:id]/[i:published]', 'setPublishedComment');//use post later is better
 
 // post
 $router->map('POST', '/editPassword', 'editPassword');
@@ -33,7 +36,7 @@ $router->map('POST', '/pushComment', 'pushComment');
 
 // for user admin
 $router->map('GET', '/formPushPost', 'formPushPost');
-$router->map('GET', '/formEditPost', 'formEditPost');
+$router->map('GET', '/formEditPost/[i:id]', 'formEditPost');
 $router->map('GET', '/formDeletePost', 'formDeletePost');
 // post
 $router->map('POST', '/editPost', 'editPost');
@@ -52,16 +55,19 @@ function home()
     //form
 function formPushPost()
 {
-    echo "formPushPost";
-    echo "<form action ='pushPost' method ='post'><input name='auteur'><input name='titre'><input name='chapo'><input name='contenu'><input type='submit' name ='submit' value='ok'></form>";
+    require  '../app/controller/PostController.php';
+    $blogSession = new BlogSession();
+    PostController::formPushPost($blogSession->getUser());
 }
 
-function formEditPost()
+function formEditPost(String $id)
 {
-    echo "formEditPost";
-    echo "<form action ='editPost' method ='post'><input name='id'><input name='auteur'><input name='titre'><input name='chapo'><input name='contenu'><input type='submit' name ='submit' value='ok'></form>";
+    require  '../app/controller/PostController.php';
+    $blogSession = new BlogSession();
+    PostController::formEditPost($id, $blogSession->getUser());
 }
 
+//later, delete is from the getBack($id_post), the view give the link for form or just url
 function formDeletePost()
 {
     echo "formDeletePost";
@@ -72,6 +78,13 @@ function post($id)
 {
     require  '../app/controller/PostController.php';
     PostController::get($id);
+}
+
+function postBack($id)
+{
+    require  '../app/controller/PostController.php';
+    $blogSession = new BlogSession();
+    PostController::getBack($id, $blogSession->getUser());
 }
 
 function posts()
@@ -85,7 +98,8 @@ function pushPost()
     if( isset($_POST['auteur']) && isset($_POST['titre']) && isset($_POST['chapo']) && isset($_POST['contenu']) )
     {
         require  '../app/controller/PostController.php';
-        PostController::push($_POST['auteur'], $_POST['titre'], $_POST['chapo'], $_POST['contenu']);
+        $blogSession = new BlogSession();
+        PostController::push($_POST['auteur'], $_POST['titre'], $_POST['chapo'], $_POST['contenu'], $blogSession->getUser());
     }
     else
     {
@@ -99,7 +113,8 @@ function editPost()
     if( isset($_POST['id']) && isset($_POST['auteur']) && isset($_POST['titre']) && isset($_POST['chapo']) && isset($_POST['contenu']) )
     {
         require  '../app/controller/PostController.php';
-        PostController::edit($_POST['id'], $_POST['auteur'], $_POST['titre'], $_POST['chapo'], $_POST['contenu']);
+        $blogSession = new BlogSession();
+        PostController::edit($_POST['id'], $_POST['auteur'], $_POST['titre'], $_POST['chapo'], $_POST['contenu'], $blogSession->getUser());
     }
     else
     {
@@ -113,7 +128,8 @@ function deletePost()
     if( isset($_POST['id']) )
     {
         require  '../app/controller/PostController.php';
-        PostController::delete($_POST['id']);
+        $blogSession = new BlogSession();
+        PostController::delete($_POST['id'], $blogSession->getUser());
     }
     else
     {
@@ -139,21 +155,24 @@ function pushComment()
     if(isset($_POST['id_post']) && isset($_POST['contenu']) )
     {
         require  '../app/controller/CommentController.php';
-        CommentController::push($_POST['id_post'], $_POST['contenu']);
+        $blogSession = new BlogSession();
+        CommentController::push($_POST['id_post'], $_POST['contenu'], $blogSession->getUser());
     }
 }
 
 function deleteComment($id)
 {
     require  '../app/controller/CommentController.php';
-    CommentController::delete($id);   
+    $blogSession = new BlogSession();
+    CommentController::delete($id, $blogSession->getUser());   
 }
 
 // for user auth
 function setPublishedComment($id, $published)
 {
     require  '../app/controller/CommentController.php';
-    CommentController::setPublished($id, $published);
+    $blogSession = new BlogSession();
+    CommentController::setPublished($id, $published, $blogSession->getUser());
 }
 
 
@@ -161,14 +180,16 @@ function setPublishedComment($id, $published)
         // form
 function login()
 {
-    echo "login";
-    echo "<form action ='auth' method ='post'><input name='login'><input name='password'><input type='submit' name ='submi' value='ok'></form>";
+    require  '../app/controller/MemberController.php';
+    $blogSession = new BlogSession();
+    MemberController::login();
 }
 
 function formEditPassword()
 {
-    echo "formEditPassword";
-    echo "<form action ='editPassword' method ='post'><input name='oldPassword'><input name='newPassword'><input name='confirmNewPassword'><input type='submit' name ='submit' value='ok'></form>";
+    require  '../app/controller/MemberController.php';
+    $blogSession = new BlogSession();
+    MemberController::formEditPassword();
 }
 
     //controller need model
@@ -178,7 +199,8 @@ function auth()
     if( isset($_POST['login'])  && isset($_POST['password']) )
     {
         require  '../app/controller/MemberController.php';
-        MemberController::auth($_POST['login'],    $_POST['password'] );
+        $blogSession = new BlogSession();
+        MemberController::auth($_POST['login'],    $_POST['password'] , $blogSession);
     }
     else
     {
@@ -190,7 +212,8 @@ function auth()
 function disconnect()
 {
     require  '../app/controller/MemberController.php';
-    MemberController::disconnect();
+    $blogSession = new BlogSession();
+    MemberController::disconnect($blogSession);
 }
 
 function editPassword()
@@ -198,7 +221,8 @@ function editPassword()
     if( isset($_POST['oldPassword'])  && isset($_POST['newPassword']) && isset($_POST['confirmNewPassword']) )
     {
         require  '../app/controller/MemberController.php';
-        MemberController::editPassword($_POST['oldPassword'],  $_POST['newPassword'],  $_POST['confirmNewPassword']);
+        $blogSession = new BlogSession();
+        MemberController::editPassword($_POST['oldPassword'],  $_POST['newPassword'],  $_POST['confirmNewPassword'], $blogSession->getUser());
     }
     else
     {

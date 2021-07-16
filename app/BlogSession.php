@@ -2,11 +2,11 @@
 
 define('USER_NO_AUTHENTIFIED_SESSION', null);
 session_start();
-Class UserSession
+Class BlogSession
 {
-    private static $user;
+    private $user;
 
-    public static function getUser()
+    public function getUser()
     {
         if( !isset($_SESSION['user'])   )
         {
@@ -15,12 +15,12 @@ Class UserSession
         return $_SESSION['user'];
     }
     
-    public static function setUser($user)
+    public function setUser($user)
     {    
         $_SESSION['user'] = $user;
     }
 
-    public static function disconnect()
+    public function disconnect()
     {
         session_destroy();
     }

@@ -1,59 +1,94 @@
 <?php
 
 require  'Controller.php';
-require  dirname(__DIR__) . '../UserSession.php';
+// require  dirname(__DIR__) . '../UserSession.php';
 require  dirname(__DIR__) . '../model/CommentManager.php';
 
 Abstract Class CommentController
 {
-    public static function get(String $id)
+    // public static function get(String $id)
+    // {
+    //     try
+    //     {
+    //         $comment = CommentManager::get($id);
+    //         if($comment != null)
+    //         {
+    //             echo 'récupération de comment '. $comment['id'];
+    //         }
+    //         else
+    //         {
+    //             echo 'redirection ce comment n\'existe pas.';
+    //         }
+    //     }
+    //     catch (\PDOException $e)
+    //     {
+    //         CommentController::ifPDOExceptionView($e);
+    //     }
+    // }
+
+    // public static function getAll()
+    // {
+    //     try 
+    //     {
+    //         $comments = CommentManager::getAll();
+    //         if($comments != null)
+    //         {
+    //             echo 'récupération de comments '. $comments[0]['id'];
+    //         }
+    //         else
+    //         {
+    //             echo 'redirection Il n\'ya aucun comment.';
+    //         }
+    //     } 
+    //     catch (\PDOException $e)
+    //     {
+    //         CommentController::ifPDOExceptionView($e);
+    //     }
+    // }
+    
+    // public static function getAllPost(String $id_post)
+    // {
+    //     try 
+    //     {
+    //         $userSession = UserSession::getUser();
+    //         CommentController::permission(USER_AUTHENTIFIED, $userSession);
+
+    //         $comments = CommentManager::getAllThis($id_post);
+    //         if($comments != null)
+    //         {
+    //             echo 'récupération de comments '. $comments[0]['id'];
+    //         }
+    //         else
+    //         {
+    //             echo 'redirection Il n\'ya aucun comment.';
+    //         }
+    //     } 
+    //     catch (\PDOException $e)
+    //     {
+    //         CommentController::ifPDOExceptionView($e);
+    //     }
+    //     catch (AccessViolationException $e)
+    //     {
+    //         CommentController::ifAccessViolationExceptionView($e);
+    //     }
+    // }
+
+    public static function push( $id_post, $contenu, $userSession)
     {
         try
         {
-            $comment = CommentManager::get($id);
-            if($comment != null)
-            {
-                echo 'récupération de comment '. $comment['id'];
-            }
-            else
-            {
-                echo 'redirection ce comment n\'existe pas.';
-            }
-        }
-        catch (\PDOException $e)
-        {
-            CommentController::ifPDOExceptionView($e);
-        }
-    }
-
-    public static function getAll()
-    {
-        try 
-        {
-            $comments = CommentManager::getAll();
-            if($comments != null)
-            {
-                echo 'récupération de comments '. $comments[0]['id'];
-            }
-            else
-            {
-                echo 'redirection Il n\'ya aucun comment.';
-            }
-        } 
-        catch (\PDOException $e)
-        {
-            CommentController::ifPDOExceptionView($e);
-        }
-    }
-
-    public static function push( $id_post, $contenu)
-    {
-        try
-        {
-            $userSession = UserSession::getUser();
             CommentController::permission(USER_AUTHENTIFIED, $userSession); 
             
-            $affectedLines = CommentManager::push( $userSession['id'], $id_post, $contenu);
+            $affectedLines = null;
+            if($userSession['type'] === 'admin')
+            {
+                $affectedLines = CommentManager::pushPublished( $userSession['id'], $id_post, $contenu);
+            }
+            else
+            {
+                $affectedLines = CommentManager::push( $userSession['id'], $id_post, $contenu);
+            }
+
             if($affectedLines != null)
             {
                 echo 'redirection push comment success.';
@@ -73,13 +108,12 @@ Abstract Class CommentController
         }
     }
 
-    public static function setPublished($id, $published)
+    public static function setPublished($id, $published, $userSession)
     {
         if( $published === '0' || $published === '1')
         {
             try
             {
-                $userSession = UserSession::getUser();
                 CommentController::permission(ADMIN, $userSession);
                 
                 $affectedLines = CommentManager::setPublished($id, $published);
@@ -108,11 +142,10 @@ Abstract Class CommentController
         }
     }
 
-    public static function delete( $id)
+    public static function delete( $id, $userSession)
     {
         try
         {
-            $userSession = UserSession::getUser();
             $comment = CommentManager::get($id);
             if($comment != null)
             {
@@ -172,7 +205,7 @@ Abstract Class CommentController
         {
             if( ($user['id'] != $id_member_permission) && ($user['type'] != 'admin')    )
             {
-                throw new AccessViolationException('user is not the owner  and not admin.', 99);
+                throw new AccessViolationException('user is not the owner and not admin.', 101);
             }
         }
         else
