@@ -1,10 +1,6 @@
 <?php
 
-
 require_once dirname(__DIR__) . '../db/DatabaseConnexion.php';
-// require_once because PostController can call this file
-// PostController call also PostManager
-// PostManager require DatabaseConnexion to 
 
 Class CommentManager{
     

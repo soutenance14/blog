@@ -1,7 +1,6 @@
 <?php
 
-define('USER_AUTHENTIFIED', 0);
-define('ADMIN', 1);
+// require_once dirname(__DIR__) . "../config/constant.php";
 
 Abstract Class Controller
 {
@@ -39,7 +38,7 @@ Abstract Class Controller
 
     public static function permission(String $permission, $user)
     {
-        require dirname(__DIR__) . "../exception/AccessViolationException.php";
+        // require dirname(__DIR__) . "../exception/AccessViolationException.php";
         switch($permission)
         {
             case USER_AUTHENTIFIED:

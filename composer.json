@@ -1,4 +1,14 @@
 {
+    "autoload": {
+        "psr-0": {
+            "": [
+                "app/controller/",
+                "app/model/",
+                "app/exception/",
+                "BlogSession"
+            ]
+        }
+    },
     "require": {
         "altorouter/altorouter": "^2.0"
     }

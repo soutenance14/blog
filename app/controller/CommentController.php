@@ -1,8 +1,7 @@
 <?php
 
-require  'Controller.php';
-// require  dirname(__DIR__) . '../UserSession.php';
-require  dirname(__DIR__) . '../model/CommentManager.php';
+define('USER_AUTHENTIFIED', 0);
+define('ADMIN', 1);
 
 Abstract Class CommentController
 {

@@ -1,6 +1,6 @@
 <?php
 
-Class AccessViolationException extends Exception
+Class AccessViolationException extends \Exception
 {
     // Redéfinissez l'exception ainsi le message n'est pas facultatif
   public function __construct($message, $code = 0, Throwable $previous = null) {

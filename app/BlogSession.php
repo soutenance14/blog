@@ -1,5 +1,7 @@
 <?php
 
+// namespace App\Session;
+
 define('USER_NO_AUTHENTIFIED_SESSION', null);
 session_start();
 Class BlogSession

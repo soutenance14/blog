@@ -1,6 +1,5 @@
 <?php
 
-
 require dirname(__DIR__) . '../db/DatabaseConnexion.php';
 
 Class MemberManager{
@@ -26,6 +25,4 @@ Class MemberManager{
         $member = $request->fetch(\PDO::FETCH_ASSOC);
         return $member;
     }
-
-
 }

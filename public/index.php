@@ -1,14 +1,16 @@
 <?php
 
+
 // This is the router page
 // use package Altorouter
 // https://altorouter.com
 
 require dirname(__DIR__) . '../vendor/autoload.php';
+require dirname(__DIR__) . '../app/BlogSession.php';
+
 //start AltoRouter
 $router = new AltoRouter();
 
-require dirname(__DIR__) . '../app/BlogSession.php';
 
 // ALL MAP ROUTES
 
@@ -45,7 +47,7 @@ $router->map('POST', '/deletePost', 'deletePost');
 
 //END MAP ROUTES===END MAP ROUTES===END MAP ROUTES===END MAP ROUTES===END MAP ROUTES===
 
-// CALL FUNCTIONS
+// CALLED FUNCTIONS
 function home()
 {
     echo "home";
@@ -55,14 +57,14 @@ function home()
     //form
 function formPushPost()
 {
-    require  '../app/controller/PostController.php';
+    // require  '../app/controller/PostController.php';
     $blogSession = new BlogSession();
     PostController::formPushPost($blogSession->getUser());
 }
 
 function formEditPost(String $id)
 {
-    require  '../app/controller/PostController.php';
+    // require  '../app/controller/PostController.php';
     $blogSession = new BlogSession();
     PostController::formEditPost($id, $blogSession->getUser());
 }
@@ -76,20 +78,20 @@ function formDeletePost()
     // controller need model
 function post($id)
 {
-    require  '../app/controller/PostController.php';
+    // require  '../app/controller/PostController.php';
     PostController::get($id);
 }
 
 function postBack($id)
 {
-    require  '../app/controller/PostController.php';
+    // require  '../app/controller/PostController.php';
     $blogSession = new BlogSession();
     PostController::getBack($id, $blogSession->getUser());
 }
 
 function posts()
 {
-    require  '../app/controller/PostController.php';
+    // require  '../app/controller/PostController.php';
     PostController::getAll();
 }
 
@@ -97,7 +99,7 @@ function pushPost()
 {
     if( isset($_POST['auteur']) && isset($_POST['titre']) && isset($_POST['chapo']) && isset($_POST['contenu']) )
     {
-        require  '../app/controller/PostController.php';
+        // require  '../app/controller/PostController.php';
         $blogSession = new BlogSession();
         PostController::push($_POST['auteur'], $_POST['titre'], $_POST['chapo'], $_POST['contenu'], $blogSession->getUser());
     }
@@ -112,7 +114,7 @@ function editPost()
 {
     if( isset($_POST['id']) && isset($_POST['auteur']) && isset($_POST['titre']) && isset($_POST['chapo']) && isset($_POST['contenu']) )
     {
-        require  '../app/controller/PostController.php';
+        // require  '../app/controller/PostController.php';
         $blogSession = new BlogSession();
         PostController::edit($_POST['id'], $_POST['auteur'], $_POST['titre'], $_POST['chapo'], $_POST['contenu'], $blogSession->getUser());
     }
@@ -127,7 +129,7 @@ function deletePost()
 {
     if( isset($_POST['id']) )
     {
-        require  '../app/controller/PostController.php';
+        // require  '../app/controller/PostController.php';
         $blogSession = new BlogSession();
         PostController::delete($_POST['id'], $blogSession->getUser());
     }
@@ -154,7 +156,7 @@ function pushComment()
 {
     if(isset($_POST['id_post']) && isset($_POST['contenu']) )
     {
-        require  '../app/controller/CommentController.php';
+        // require  '../app/controller/CommentController.php';
         $blogSession = new BlogSession();
         CommentController::push($_POST['id_post'], $_POST['contenu'], $blogSession->getUser());
     }
@@ -162,7 +164,7 @@ function pushComment()
 
 function deleteComment($id)
 {
-    require  '../app/controller/CommentController.php';
+    // require  '../app/controller/CommentController.php';
     $blogSession = new BlogSession();
     CommentController::delete($id, $blogSession->getUser());   
 }
@@ -170,7 +172,7 @@ function deleteComment($id)
 // for user auth
 function setPublishedComment($id, $published)
 {
-    require  '../app/controller/CommentController.php';
+    // require  '../app/controller/CommentController.php';
     $blogSession = new BlogSession();
     CommentController::setPublished($id, $published, $blogSession->getUser());
 }
@@ -180,14 +182,14 @@ function setPublishedComment($id, $published)
         // form
 function login()
 {
-    require  '../app/controller/MemberController.php';
+    // require  '../app/controller/MemberController.php';
     $blogSession = new BlogSession();
     MemberController::login();
 }
 
 function formEditPassword()
 {
-    require  '../app/controller/MemberController.php';
+    // require  '../app/controller/MemberController.php';
     $blogSession = new BlogSession();
     MemberController::formEditPassword();
 }
@@ -198,7 +200,7 @@ function auth()
 {
     if( isset($_POST['login'])  && isset($_POST['password']) )
     {
-        require  '../app/controller/MemberController.php';
+        // require  '../app/controller/MemberController.php';
         $blogSession = new BlogSession();
         MemberController::auth($_POST['login'],    $_POST['password'] , $blogSession);
     }
@@ -211,7 +213,7 @@ function auth()
 
 function disconnect()
 {
-    require  '../app/controller/MemberController.php';
+    // require  '../app/controller/MemberController.php';
     $blogSession = new BlogSession();
     MemberController::disconnect($blogSession);
 }
@@ -220,7 +222,7 @@ function editPassword()
 {
     if( isset($_POST['oldPassword'])  && isset($_POST['newPassword']) && isset($_POST['confirmNewPassword']) )
     {
-        require  '../app/controller/MemberController.php';
+        // require  '../app/controller/MemberController.php';
         $blogSession = new BlogSession();
         MemberController::editPassword($_POST['oldPassword'],  $_POST['newPassword'],  $_POST['confirmNewPassword'], $blogSession->getUser());
     }

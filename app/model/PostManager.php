@@ -1,6 +1,5 @@
 <?php
 
-
 require dirname(__DIR__) . '../db/DatabaseConnexion.php';
 
 Class PostManager{

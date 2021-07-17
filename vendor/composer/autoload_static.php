@@ -6,6 +6,13 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitd673a7aa785d33e8728540448cfb384c
 {
+    public static $fallbackDirsPsr0 = array (
+        0 => __DIR__ . '/../..' . '/app/controller',
+        1 => __DIR__ . '/../..' . '/app/model',
+        2 => __DIR__ . '/../..' . '/app/exception',
+        3 => __DIR__ . '/../..' . '/BlogSession',
+    );
+
     public static $classMap = array (
         'AltoRouter' => __DIR__ . '/..' . '/altorouter/altorouter/AltoRouter.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
@@ -14,6 +21,7 @@ class ComposerStaticInitd673a7aa785d33e8728540448cfb384c
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->fallbackDirsPsr0 = ComposerStaticInitd673a7aa785d33e8728540448cfb384c::$fallbackDirsPsr0;
             $loader->classMap = ComposerStaticInitd673a7aa785d33e8728540448cfb384c::$classMap;
 
         }, null, ClassLoader::class);
