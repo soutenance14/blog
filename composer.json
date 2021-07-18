@@ -4,6 +4,8 @@
             "": [
                 "app/controller/",
                 "app/model/",
+                "app/view/",
+                "app/entity/",
                 "app/exception/",
                 "BlogSession"
             ]

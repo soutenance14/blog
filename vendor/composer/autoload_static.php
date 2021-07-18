@@ -9,8 +9,10 @@ class ComposerStaticInitd673a7aa785d33e8728540448cfb384c
     public static $fallbackDirsPsr0 = array (
         0 => __DIR__ . '/../..' . '/app/controller',
         1 => __DIR__ . '/../..' . '/app/model',
-        2 => __DIR__ . '/../..' . '/app/exception',
-        3 => __DIR__ . '/../..' . '/BlogSession',
+        2 => __DIR__ . '/../..' . '/app/view',
+        3 => __DIR__ . '/../..' . '/app/entity',
+        4 => __DIR__ . '/../..' . '/app/exception',
+        5 => __DIR__ . '/../..' . '/BlogSession',
     );
 
     public static $classMap = array (

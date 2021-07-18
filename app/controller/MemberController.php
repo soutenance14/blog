@@ -1,21 +1,24 @@
 <?php
 
-define('USER_AUTHENTIFIED', 0);
-define('ADMIN', 1);
+require dirname(__DIR__) . '../../vendor/autoload.php';
+// define('USER_NOT_AUTHENTIFIED', null);
+// define('USER_AUTHENTIFIED', 'subscriber');
+// define('ADMIN', 'admin');
 
-Abstract Class MemberController
+ Class MemberController
 {
     //FORM
     public static function login()
     {
         echo "login";
-        echo "<form action ='auth' method ='post'><input name='login'><input name='password'><input type='submit' name ='submi' value='ok'></form>";
+        echo "<form action ='auth' method ='post'><input name='login'><input name='password'><input type='submit' name ='submit' value='ok'>
+        </form>";
     }
     
-    public static function formEditPassword()
+    public static function formEditPassword($userSession)
     {
-        echo "formEditPassword";
-        echo "<form action ='editPassword' method ='post'><input name='oldPassword'><input name='newPassword'><input name='confirmNewPassword'><input type='submit' name ='submit' value='ok'></form>";
+        MemberController::permission(USER_AUTHENTIFIED, $userSession);
+        echo MemberView::formEditPassword($userSession->getToken());
     }
 
     // NOT FORM
@@ -23,11 +26,19 @@ Abstract Class MemberController
     {
         try
         {
-            $member = MemberManager::auth($login, $password);
+            $memberEntity = new MemberEntity();
+            $memberEntity->setLogin($login);
+            $memberEntity->setPassword($password);
+
+            //seul les login et password sont crées pour le user
+            // si l'auth est fait, les autres caracteristiques
+            //seront recupérés dans la db
+            $member = MemberManager::auth($memberEntity);
             if($member != null)
             {
-                $blogSession->setUser($member);
-                echo'member model' , var_dump($member);
+                $memberEntity->hydrate($member);
+                $blogSession->setUserAuth($memberEntity);
+                echo'member model' , var_dump($memberEntity);
                 echo '<br> session user' , var_dump($blogSession->getUser());
             }
             else
@@ -41,21 +52,24 @@ Abstract Class MemberController
         }
     }
 
-    public static function editPassword($oldPassord, $newPassword, $userSession)
+    public static function editPassword($oldPassord, $newPassword, $tokenSent, $blogSession)
     {
         try
         {
             //use js for check new password and confirmNewPassword
-            MemberController::permission(USER_AUTHENTIFIED, $userSession); 
-            if( $userSession['password'] === $oldPassord)
+            $userSession = $blogSession->getUser();
+            MemberController::permission(USER_AUTHENTIFIED, $userSession, $tokenSent);
+            if( $userSession->getPassword() === $oldPassord)
             {
-                //user can only change his password, not for another member
-                MemberManager::editPassword($userSession['id'], $newPassword);
-                echo 'oui changement';
+                $userSession->setPassword($newPassword);
+                //update SESSION USER
+                $blogSession->setUser($userSession);
+                MemberManager::editPassword($userSession);
+                echo 'header:location/home';
             }
             else
             {
-                echo 'redirection mauvais old password';
+                echo MemberView::editPasswordFail();
             }
         }
         catch (\PDOException $e)
@@ -71,7 +85,7 @@ Abstract Class MemberController
     public static function disconnect($blogSession)
     {
         $blogSession->disconnect();
-        echo 'disconnect';
+        echo 'header:location/home';
     }
 
     // view if PDO exception
@@ -90,8 +104,14 @@ Abstract Class MemberController
         return Controller::ifAccessViolationExceptionView($e);
     }
 
+    private static function permissionToken(String $permission, $user, $tokenSent)
+    {
+        Controller::permission($permission, $user, $tokenSent);
+    }
+    
     private static function permission(String $permission, $user)
     {
         Controller::permission($permission, $user);
     }
+
 }

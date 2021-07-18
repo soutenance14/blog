@@ -36,22 +36,34 @@ Abstract Class Controller
         echo 'view pb access violation: ', $e->getMessage(), $e->getCode();
     }
 
-    public static function permission(String $permission, $user)
+    public static function permissionToken(String $permissionRequested, $user, $tokenSent)
+    {
+        if($user->getToken() != $tokenSent)
+        {
+            throw new AccessViolationException('Wrong token sent.', 96);
+        }
+        Controller::permission($permissionRequested, $user);
+    } 
+
+    public static function permission(String $permissionRequested, $user)
     {
         // require dirname(__DIR__) . "../exception/AccessViolationException.php";
-        switch($permission)
+        echo '<br>permissionRequested' , var_dump($permissionRequested);
+        echo '<br>typePermissionUser' , var_dump($user->getPermission());
+
+        switch($permissionRequested)
         {
             case USER_AUTHENTIFIED:
-                if(!isset($user['type']))
+                if($user->getPermission() === USER_NOT_AUTHENTIFIED)
                 {
                     throw new AccessViolationException('User not authenfied.', 97);
                 }
                 break;
                 
             case ADMIN:
-                if(isset($user['type']) )
+                if($user->getPermission() != USER_NOT_AUTHENTIFIED) 
                 {
-                    if( $user['type'] !== 'admin')
+                    if( $user->getPermission() != ADMIN)
                     {
                         throw new AccessViolationException('User is not admin.', 98);
                     }

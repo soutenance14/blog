@@ -1,8 +1,7 @@
 <?php
 
-// namespace App\Session;
-
-define('USER_NO_AUTHENTIFIED_SESSION', null);
+// require "entity/MemberEntity.php";
+// define('USER_NO_AUTHENTIFIED_SESSION', null);
 session_start();
 Class BlogSession
 {
@@ -12,13 +11,15 @@ Class BlogSession
     {
         if( !isset($_SESSION['user'])   )
         {
-            $_SESSION['user'] = USER_NO_AUTHENTIFIED_SESSION;
+            $_SESSION['user'] = new MemberEntity();
         }
         return $_SESSION['user'];
     }
     
-    public function setUser($user)
+    public function setUserAuth($user)
     {    
+        //assign token
+        $user->setToken(md5(bin2hex(openssl_random_pseudo_bytes(6))));
         $_SESSION['user'] = $user;
     }
 
@@ -28,3 +29,4 @@ Class BlogSession
     }
 
 }
+

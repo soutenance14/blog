@@ -1,19 +1,24 @@
 <?php
 
-define('USER_AUTHENTIFIED', 0);
-define('ADMIN', 1);
+require dirname(__DIR__) . '../../vendor/autoload.php';
+// define('USER_NOT_AUTHENTIFIED', null);
+// define('USER_AUTHENTIFIED', 0);
+// define('ADMIN', 1);
 
 Abstract Class PostController
 {
+    public static function home()
+    {
+        echo MemberView::home();
+    }
+
     // FORM
     public static function formPushPost($userSession)
     {
         try
         {
-            PostController::permission(USER_AUTHENTIFIED, $userSession);
-            
-            echo "formPushPost";
-            echo "<form action ='pushPost' method ='post'><input name='auteur'><input name='titre'><input name='chapo'><input name='contenu'><input type='submit' name ='submit' value='ok'></form>";
+            PostController::permission(ADMIN, $userSession );
+            echo PostView::formPushPost($userSession);
         }
         catch (AccessViolationException $e)
         {
@@ -25,23 +30,17 @@ Abstract Class PostController
     {
         try
         {
-            PostController::permission(USER_AUTHENTIFIED, $userSession);
+            PostController::permission(ADMIN, $userSession);
             $post = PostManager::get($id);
+            $postEntity = new PostEntity();
+            $postEntity->hydrate($post);
             if($post != null)
             {
-            echo "formEditPost";
-            echo "<br>created_at :" . $post['created_at'];
-            echo    "<form action ='editPost' method ='post'>
-                        <input name='auteur' value='".$post['auteur']."'>
-                        <input name='titre' value='".$post['titre']."'>
-                        <input name='chapo' value='".$post['chapo']."'>
-                        <input name='contenu' value='".$post['contenu']."'>
-                        <input type='submit' name ='submit' value='ok'>
-                    </form>";
+                echo PostView::formEditPost($postEntity, $userSession);
             }
             else
             {
-                echo 'redirection ce post n\'existe pas.';
+                echo PostView::getNotExist($id);
             }
             
         }
@@ -60,14 +59,22 @@ Abstract Class PostController
             $post = PostManager::get($id);
             if($post != null)
             {
-                echo 'Post ' , var_dump($post);
-                require dirname(__DIR__) . "../model/CommentManager.php";
-                $commentsPublished = CommentManager::getAllPostPublished($id);
-                echo '<br>published comment: ' , var_dump ($commentsPublished);
+                $postEntity = new PostEntity($post);
+                $postEntity->hydrate($post);
+                // require dirname(__DIR__) . "../model/CommentManager.php";
+                $listCommentsPublished = CommentManager::getAllPostPublished($id);
+                $listCommentsEntity = [];
+                foreach($listCommentsPublished as $commentPublished)
+                {
+                    $commentEntity = new CommentEntity();
+                    $commentEntity->hydrate($commentPublished);
+                    array_push( $listCommentsEntity , $commentEntity);
+                }
+                echo PostView::get($postEntity, $listCommentsEntity);
             }
             else
             {
-                echo 'redirection ce post n\'existe pas.';
+                echo PostView::getNotExist($id);
             }
         }
         catch (\PDOException $e)
@@ -81,21 +88,40 @@ Abstract Class PostController
     {
         try
         {
-            PostController::permission(ADMIN, $userSession); 
+            PostController::permission(ADMIN, $userSession);
 
             $post = PostManager::get($id);
             if($post != null)
             {
-                echo 'Post ' , var_dump($post);
-                require dirname(__DIR__) . "../model/CommentManager.php";
-                $commentsPublished = CommentManager::getAllPostPublished($id);
-                $commentsNotPublished = CommentManager::getAllPostNotPublished($id);
-                echo '<br>published' , var_dump ($commentsPublished);
-                echo '<br>not published' , var_dump ($commentsNotPublished);
+                $postEntity = new PostEntity($post);
+                $postEntity->hydrate($post);
+                // require dirname(__DIR__) . "../model/CommentManager.php";
+                $listCommentsPublished = CommentManager::getAllPostPublished($id);
+                $listCommentsPublishedEntity = [];
+                foreach($listCommentsPublished as $commentPublished)
+                {
+                    $commentPublishedEntity = new CommentEntity();
+                    $commentPublishedEntity->hydrate($commentPublished);
+                    array_push( $listCommentsPublishedEntity , $commentPublishedEntity);
+                }
+                
+                $listCommentsNotPublished = CommentManager::getAllPostNotPublished($id);
+                $listCommentsNotPublishedEntity = [];
+                foreach($listCommentsNotPublished as $commentNotPublished)
+                {
+                    $commentNotPublishedEntity = new CommentEntity();
+                    $commentNotPublishedEntity->hydrate($commentNotPublished);
+                    array_push( $listCommentsNotPublishedEntity , $commentNotPublishedEntity);
+                }
+                
+                $commentViewPublished = CommentView::getAllBack($listCommentsPublishedEntity, "Publiés", $userSession->getToken());
+                $commentViewNotPublished = CommentView::getAllBack($listCommentsNotPublishedEntity, "Non publiés", $userSession->getToken());
+
+                echo PostView::getBack($postEntity, $commentViewPublished, $commentViewNotPublished, $userSession->getToken());
             }
             else
             {
-                echo 'redirection ce post n\'existe pas.';
+               echo PostView::getNotExist($id);
             }
         }
         catch (\PDOException $e)
@@ -115,11 +141,18 @@ Abstract Class PostController
             $posts = PostManager::getAll();
             if($posts != null)
             {
-                var_dump($posts);
+                $listPostsEntity = [];
+                foreach($posts as $post)
+                {
+                    $postEntity = new PostEntity();
+                    $postEntity->hydrate($post);
+                    array_push($listPostsEntity, $postEntity);
+                }
+                echo PostView::getAll($listPostsEntity);
             }
             else
             {
-                echo 'redirection Il n\'ya aucun post.';
+                echo PostView::getNoPostExist();
             }
         } 
         catch (\PDOException $e)
@@ -127,21 +160,61 @@ Abstract Class PostController
             PostController::ifPDOExceptionView($e);
         }
     }
+    
+    public static function getAllBack($userSession)
+    {
+        try 
+        {
+            PostController::permission(ADMIN, $userSession);
+            $posts = PostManager::getAll();
+            if($posts != null)
+            {
+                $listPostsEntity = [];
+                foreach($posts as $post)
+                {
+                    $postEntity = new PostEntity();
+                    $postEntity->hydrate($post);
+                    array_push($listPostsEntity, $postEntity);
+                }
+                echo PostView::getAllBack($listPostsEntity, $userSession->getToken());
+            }
+            else
+            {
+                echo PostView::getNoPostExist();
+            }
+        } 
+        catch (\PDOException $e)
+        {
+            PostController::ifPDOExceptionView($e);
+        }
+        catch (AccessViolationException $e)
+        {
+            PostController::ifAccessViolationExceptionView($e);
+        }
+    }
 
-    public static function push( $auteur, $titre, $chapo, $contenu, $userSession)
+    public static function push( $auteur, $titre, $chapo, $contenu, $tokenSent, $userSession)
     {
         try{
             
-            PostController::permission(ADMIN, $userSession); 
-            
-            $affectedLines = PostManager::push( $auteur, $titre, $chapo, $contenu);
-            if($affectedLines != null)
+            PostController::permissionToken(ADMIN, $userSession, $tokenSent); 
+            $postEntity = new PostEntity();
+            $postEntity->hydrate(
+                array(
+                    "auteur"=>$auteur,
+                    "titre"=>$titre,
+                    "chapo"=>$chapo,
+                    "contenu"=>$contenu,
+                    )
+            );
+            $requestSuccess = PostManager::push( $postEntity);
+            if($requestSuccess != null)
             {
-                echo 'redirection push post success.';
+                echo 'header:location/blog/posts';
             }
             else
             {
-                echo 'redirection push post failed.';
+                echo PostView::pushFail();
             }
         }
         catch (\PDOException $e)
@@ -154,20 +227,30 @@ Abstract Class PostController
         }
     }
 
-    public static function edit($id, $auteur, $titre, $chapo, $contenu, $userSession)
+    public static function edit($id, $auteur, $titre, $chapo, $contenu, $tokenSent, $userSession)
     {
         try
         { 
-            PostController::permission(ADMIN, $userSession); 
+            PostController::permissionToken(ADMIN, $userSession, $tokenSent); 
             
-            $affectedLines = PostManager::edit($id, $auteur, $titre, $chapo, $contenu);
-            if($affectedLines != null)
+            $postEntity = new PostEntity();
+            $postEntity->hydrate(
+                array(
+                    "id"=>$id,
+                    "auteur"=>$auteur,
+                    "titre"=>$titre,
+                    "chapo"=>$chapo,
+                    "contenu"=>$contenu,
+                    )
+            );
+            $requestSuccess = PostManager::edit($postEntity);
+            if($requestSuccess != null)
             {
-                echo 'redirection edit post success.';
+                echo 'header:location/blog/posts';
             }
             else
             {
-                echo 'redirection edit post failed.';
+                echo PostView::editFail();
             }
         }
         catch (\PDOException $e)
@@ -180,20 +263,20 @@ Abstract Class PostController
         }
     }
 
-    public static function delete( $id, $userSession)
+    public static function delete( $id, $tokenSent, $userSession)
     {
         try
         {
-            PostController::permission(ADMIN, $userSession); 
+            PostController::permissionToken(ADMIN, $userSession, $tokenSent); 
 
-            $affectedLines = PostManager::delete( $id);
-            if($affectedLines != null)
+            $requestSuccess = PostManager::delete( $id);
+            if($requestSuccess == true)
             {
-                echo 'redirection delete post success.';
+                echo 'header:location/blog/posts';
             }
             else
             {
-                echo 'redirection delete post failed.';
+                echo PostView::deleteFail();
             }
             
         }
@@ -226,5 +309,10 @@ Abstract Class PostController
     private static function permission(String $permission, $user)
     {
         Controller::permission($permission, $user);
+    }
+    
+    private static function permissionToken(String $permission, $user, $tokenSent)
+    {
+        Controller::permissionToken($permission, $user, $tokenSent);
     }
 }

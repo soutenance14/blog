@@ -4,8 +4,11 @@ require dirname(__DIR__) . '../db/DatabaseConnexion.php';
 
 Class MemberManager{
 
-    public static function auth(String $login, String $password)
+    public static function auth($memberEntity)
     {
+        $login = $memberEntity->getLogin();
+        $password = $memberEntity->getPassword();
+
         $request = DatabaseConnexion::getPdo()->prepare(
             "SELECT id, login, password, type from MEMBER where login = :login and password = :password");
         $request->bindParam(':login', $login, \PDO::PARAM_STR);
@@ -15,8 +18,12 @@ Class MemberManager{
         return $member;
     }
 
-    public static function editPassword(String $id, String $password)
+    public static function editPassword($memberEntity)
     {
+
+        $id = $memberEntity->getId();
+        $password = $memberEntity->getPassword();
+
         $request = DatabaseConnexion::getPdo()->prepare(
             "UPDATE MEMBER set password =:password where id = :id");
         $request->bindParam(':id', $id, \PDO::PARAM_STR);
