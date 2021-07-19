@@ -1,8 +1,8 @@
 <?php
 
-define('USER_NOT_AUTHENTIFIED', null);
-define('USER_AUTHENTIFIED', 0);
-define('ADMIN', 1);
+define('USER_NOT_AUTHENTIFIED', 0);
+define('USER_AUTHENTIFIED', 1);
+define('ADMIN', 2);
 
 require dirname(__DIR__) . '../../vendor/autoload.php';
 Class MemberEntity extends Entity

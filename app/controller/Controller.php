@@ -54,6 +54,7 @@ Abstract Class Controller
         switch($permissionRequested)
         {
             case USER_AUTHENTIFIED:
+                
                 if($user->getPermission() === USER_NOT_AUTHENTIFIED)
                 {
                     throw new AccessViolationException('User not authenfied.', 97);
@@ -61,7 +62,9 @@ Abstract Class Controller
                 break;
                 
             case ADMIN:
-                if($user->getPermission() != USER_NOT_AUTHENTIFIED) 
+                
+                if($user->getPermission() === USER_AUTHENTIFIED 
+                    ||$user->getPermission() === ADMIN) 
                 {
                     if( $user->getPermission() != ADMIN)
                     {

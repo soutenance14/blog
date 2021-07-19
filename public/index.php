@@ -17,23 +17,30 @@ $router = new AltoRouter();
 // for user no auth
 // get
 $router->map('GET', '/', 'home');
+$router->map('GET', '/formContact', 'formContact');
+$router->map('GET', '/signUp', 'signUp');
 $router->map('GET', '/login', 'login');
 $router->map('GET', '/posts', 'posts');
 $router->map('GET', '/postsBack', 'postsBack');
 $router->map('GET', '/post/[i:id]', 'post');
 $router->map('GET', '/postBack/[i:id]', 'postBack');
+
 // post
 $router->map('POST', '/auth', 'auth');
+$router->map('POST', '/pushMember', 'pushMember');
 
 // for user auth
 //  get
 $router->map('GET', '/disconnect', 'disconnect');
 $router->map('GET', '/formEditPassword', 'formEditPassword');
 $router->map('GET', '/comm', 'formPushCommentASupprimer');// a supprimer, utiliser que pour les tests mais cest dans post que le formulaire sera
-$router->map('GET', '/deleteComment/[i:id]', 'deleteComment');
+$router->map('GET', '/deleteComment/[i:id]/[:token]', 'deleteComment');
 $router->map('GET', '/setPublishedComment/[i:id]/[i:published]/[:token]', 'setPublishedComment');//use post later is better
 
 // post
+//contact
+$router->map('POST', '/sendMessage', 'sendMessage');
+
 $router->map('POST', '/editPassword', 'editPassword');
 $router->map('POST', '/pushComment', 'pushComment');
 
@@ -55,6 +62,20 @@ function home()
     PostController::home();
 }
 
+function formContact()
+{
+    ContactController::formContact();
+}
+
+function sendMessage()
+{
+    if(isset($_POST['nom']) && isset( $_POST['mail']) &&  isset($_POST['contenu'] ))
+    {
+        ContactController::sendMessage($_POST['nom'], $_POST['mail'], $_POST['contenu']);
+    }
+}
+
+
 // FOR POST
     //form
 function formPushPost()
@@ -71,23 +92,12 @@ function formEditPost(String $id)
     PostController::formEditPost($id, $blogSession->getUser());
 }
 
-//later, delete is from the getBack($id_post), the view give the link for form or just url
-//A MODIFIER
-//A MODIFIER
-//A MODIFIER
-// function formDeletePost()
-// {
-//     $blogSession = new BlogSession();
-//     echo "formDeletePost";
-//     echo "<form action ='deletePost' method ='post'><input name='id'><input type='submit' name ='submit' value='ok'>
-//         <br> <input name ='token' value='".$blogSession->getUser()->getToken()."'>
-//     </form>";
-// }
     // controller need model
 function post($id)
 {
     // require  '../app/controller/PostController.php';
-    PostController::get($id);
+    $blogSession = new BlogSession();
+    PostController::get($id, $blogSession->getUser());
 }
 
 function postBack($id)
@@ -140,21 +150,6 @@ function editPost()
     }
 }
 
-// function deletePost()
-// {
-//     if( isset($_POST['id']) && isset($_POST['token'] ))
-//     {
-//         // require  '../app/controller/PostController.php';
-//         $blogSession = new BlogSession();
-//         PostController::delete($_POST['id'], $_POST['token'], $blogSession->getUser());
-//     }
-//     else
-//     {
-//         /// this call is not possible in theory
-//         echo 'problème, post(s) manquant(s).';
-//     }
-// }
-
 function deletePost($id, $token)
 {
     // require  '../app/controller/PostController.php';
@@ -189,11 +184,11 @@ function pushComment()
     }
 }
 
-function deleteComment($id)
+function deleteComment($id, $token)
 {
     // require  '../app/controller/CommentController.php';
     $blogSession = new BlogSession();
-    CommentController::delete($id, $blogSession->getUser());   
+    CommentController::delete($id, $token, $blogSession->getUser());   
 }
 
 // for user auth
@@ -210,8 +205,22 @@ function setPublishedComment($id, $published, $token)
 function login()
 {
     // require  '../app/controller/MemberController.php';
-    $blogSession = new BlogSession();
     MemberController::login();
+}
+
+function signUp()
+{
+    // require  '../app/controller/MemberController.php';
+    MemberController::signUp();
+}
+
+function pushMember()
+{
+    if(isset($_POST['login'], $_POST['password'] )){
+        $blogSession = new BlogSession();
+        // require  '../app/controller/MemberController.php';
+        MemberController::pushMember($_POST['login'], $_POST['password'], $blogSession);
+    }
 }
 
 function formEditPassword()

@@ -9,6 +9,21 @@ Class MemberView
         <form action ='auth' method ='post'><input name='login'><input name='password'><input type='submit' name ='submit' value='ok'>
         </form>";
     }
+    
+    public static function signUp()
+    {
+        return "Sign Up
+        <form action ='pushMember' method ='post'><input name='login'><input name='password'><input type='submit' name ='submit' value='ok'>
+        </form>";
+    }
+    
+    public static function memberExist($login)
+    {
+        return "Le login ".$login." est déja utilisé, veuillez en changer<br>.
+        <form action ='pushMember' method ='post'><input name='login'><input name='password'><input type='submit' name ='submit' value='ok'>
+        </form>
+        ";
+    }
 
     public static function formEditPassword( $token)
     {

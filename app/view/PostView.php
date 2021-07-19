@@ -31,15 +31,14 @@ Class PostView
                 </form>";
     }
 
-    public static function get($postEntity, $listCommentsEntity)
+    public static function get($postEntity, $listCommentsPublishedView)
     {
-        return 'Post ' . var_dump($postEntity).
-         '<br>published comment: ' . var_dump ($listCommentsEntity);
-    }
-
-    public static function getNotExist($id)
-    {
-        return 'redirection ce post '.$id.' n\'existe pas.';
+        return 
+        '<h4> Par '.$postEntity->getAuteur().' le '.$postEntity->getCreatedAt().'</h4>'
+        .'<h3>Titre :'.$postEntity->getTitre().'</h3>'
+        .'<h4>Chapo :'.$postEntity->getChapo().'</h4>'
+        .'<h4>Contenu :'.$postEntity->getContenu().'</h4>'
+        .$listCommentsPublishedView;
     }
 
     public static function getBack($postEntity, $listCommentsPublishedView, $listCommentsNotPublishedView)
@@ -50,6 +49,11 @@ Class PostView
         .'<h4>Chapo :'.$postEntity->getChapo().'</h4>'
         .'<h4>Contenu :'.$postEntity->getContenu().'</h4>'
         .$listCommentsPublishedView. $listCommentsNotPublishedView;
+    }
+    
+    public static function getNotExist($id)
+    {
+        return 'redirection ce post '.$id.' n\'existe pas.';
     }
 
     public static function getAll($listPostsEntity)

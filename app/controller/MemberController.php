@@ -10,11 +10,14 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
     //FORM
     public static function login()
     {
-        echo "login";
-        echo "<form action ='auth' method ='post'><input name='login'><input name='password'><input type='submit' name ='submit' value='ok'>
-        </form>";
+        echo MemberView::login();
     }
     
+    public static function signUp()
+    {
+        echo MemberView::signUp();
+    }
+
     public static function formEditPassword($userSession)
     {
         MemberController::permission(USER_AUTHENTIFIED, $userSession);
@@ -44,6 +47,36 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
             else
             {
                 echo 'redirection login + mess error auth';
+            }
+        }
+        catch (\PDOException $e)
+        {
+            MemberController::ifPDOExceptionView($e);
+        }
+    }
+
+    public static function pushMember($login, $password, $blogSession)
+    {
+        try
+        {
+            //check if member exist
+            $memberEntity = new MemberEntity();
+            $memberEntity->setLogin($login);
+            $memberEntity->setPassword($password);
+
+            $loginNotExist = MemberManager::loginNotExist($memberEntity);
+            if($loginNotExist)
+            {
+                MemberManager::push($memberEntity);
+                $member = MemberManager::auth($memberEntity);
+                //rehydrate memberEntity with model data
+                $memberEntity->hydrate($member);
+                $blogSession->setUserAuth($memberEntity);
+                echo 'header:location/home';
+            }
+            else
+            {
+                echo MemberView::memberExist($login);
             }
         }
         catch (\PDOException $e)

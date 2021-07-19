@@ -10,7 +10,7 @@ Class CommentManager{
     public static function get(String $id)
     {
         $request = DatabaseConnexion::getPdo()->prepare(
-            "SELECT id from COMMENT where id = :id");
+            "SELECT id, id_membre from COMMENT where id = :id");
         $request->bindParam(':id', $id, \PDO::PARAM_STR);
         $request->execute();
         $post = $request->fetch(\PDO::FETCH_ASSOC);

@@ -52,7 +52,7 @@ Abstract Class PostController
     
     //NOT FORM
     //get for the front-end
-    public static function get(String $id)
+    public static function get(String $id, $userSession)
     {
         try
         {
@@ -63,14 +63,15 @@ Abstract Class PostController
                 $postEntity->hydrate($post);
                 // require dirname(__DIR__) . "../model/CommentManager.php";
                 $listCommentsPublished = CommentManager::getAllPostPublished($id);
-                $listCommentsEntity = [];
+                $listCommentsPublishedEntity = [];
                 foreach($listCommentsPublished as $commentPublished)
                 {
-                    $commentEntity = new CommentEntity();
-                    $commentEntity->hydrate($commentPublished);
-                    array_push( $listCommentsEntity , $commentEntity);
+                    $commentPublishedEntity = new CommentEntity();
+                    $commentPublishedEntity->hydrate($commentPublished);
+                    array_push( $listCommentsPublishedEntity , $commentPublishedEntity);
                 }
-                echo PostView::get($postEntity, $listCommentsEntity);
+                $commentViewPublished = CommentView::getAll($listCommentsPublishedEntity, "Commentaires", $userSession);
+                echo PostView::get($postEntity, $commentViewPublished, $userSession);
             }
             else
             {
@@ -114,10 +115,10 @@ Abstract Class PostController
                     array_push( $listCommentsNotPublishedEntity , $commentNotPublishedEntity);
                 }
                 
-                $commentViewPublished = CommentView::getAllBack($listCommentsPublishedEntity, "Publiés", $userSession->getToken());
-                $commentViewNotPublished = CommentView::getAllBack($listCommentsNotPublishedEntity, "Non publiés", $userSession->getToken());
+                $commentViewPublished = CommentView::getAll($listCommentsPublishedEntity, "Publiés", $userSession);
+                $commentViewNotPublished = CommentView::getAll($listCommentsNotPublishedEntity, "Non publiés", $userSession);
 
-                echo PostView::getBack($postEntity, $commentViewPublished, $commentViewNotPublished, $userSession->getToken());
+                echo PostView::getBack($postEntity, $commentViewPublished, $commentViewNotPublished, $userSession);
             }
             else
             {

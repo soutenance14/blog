@@ -11,7 +11,7 @@ Abstract Class CommentController
     {
         try
         {
-            CommentController::permission(USER_AUTHENTIFIED, $userSession, $tokenSent);
+            CommentController::permissionToken(USER_AUTHENTIFIED, $userSession, $tokenSent);
             $commentEntity = new CommentEntity();
             $commentEntity->setIdMembre($userSession->getId());
             $commentEntity->setIdPost($id_post);
@@ -54,7 +54,7 @@ Abstract Class CommentController
         {
             try
             {
-                CommentController::permission(ADMIN, $userSession, $tokenSent);
+                CommentController::permissionToken(ADMIN, $userSession, $tokenSent);
                 $commentEntity = new CommentEntity();
                 $commentEntity->setId($id);
                 $commentEntity->setPublished($published);
@@ -92,22 +92,22 @@ Abstract Class CommentController
             {
                 $commentEntity = new CommentEntity();
                 $commentEntity->hydrate($comment);
+                var_dump($commentEntity);
                 CommentController::permissionThisIdMember( $userSession, $commentEntity->getIdMembre(), $tokenSent);
                 
                 $requestSuccess = CommentManager::delete( $id);
                 if($requestSuccess === true)
                 {
-                    echo 'redirection delete comment success.';
-                    var_dump($requestSuccess);
+                    echo 'header:location/home.';
                 }
                 else
                 {
-                    echo 'redirection delete comment failed.';
+                    echo CommentView::deleteFail();
                 }
             }
             else
             {
-                echo 'Ce commentaire n\'existe pas.';
+                echo CommentView::getNotExist($id);
             }
         }
         catch (\PDOException $e)
@@ -136,9 +136,9 @@ Abstract Class CommentController
         return Controller::ifAccessViolationExceptionView($e);
     }
 
-    private static function permission(String $permission, $user)
+    private static function permissionToken(String $permission, $user, $tokenSent)
     {
-        Controller::permission($permission, $user);
+        Controller::permissionToken($permission, $user, $tokenSent);
     }
     
     private static function permissionThisIdMember( $user, $id_member_permission, $tokenSent)
@@ -146,7 +146,6 @@ Abstract Class CommentController
         require dirname(__DIR__) . "../exception/AccessViolationException.php";
         if($user->getPermission() != USER_NOT_AUTHENTIFIED && $user->getToken() === $tokenSent) 
         {
-            echo '<br>'.$user->getPermission().'<br>';
             if( ($user->getId() != $id_member_permission) && ($user->getPermission() != ADMIN)    )
             {
                 throw new AccessViolationException('user is not the owner and not admin.', 101);
