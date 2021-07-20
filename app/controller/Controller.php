@@ -49,6 +49,7 @@ Abstract Class Controller
     {
         // require dirname(__DIR__) . "../exception/AccessViolationException.php";
         echo '<br>permissionRequested' , var_dump($permissionRequested);
+        echo '<br>typePermissionUser' , var_dump($user);
         echo '<br>typePermissionUser' , var_dump($user->getPermission());
 
         switch($permissionRequested)
@@ -79,6 +80,22 @@ Abstract Class Controller
             default:
                 throw new AccessViolationException('Unknown permission requested.', 100);
                 break;
+        }
+    }
+
+    public static function permissionThisIdMember( $user, $id_member_permission, $tokenSent)
+    {
+        require dirname(__DIR__) . "../exception/AccessViolationException.php";
+        if($user->getPermission() != USER_NOT_AUTHENTIFIED && $user->getToken() === $tokenSent) 
+        {
+            if( ($user->getId() != $id_member_permission) && ($user->getPermission() != ADMIN)    )
+            {
+                throw new AccessViolationException('user is not the owner and not admin.', 101);
+            }
+        }
+        else
+        {
+            throw new AccessViolationException('User not authenfied.', 97);
         }
     }
 }

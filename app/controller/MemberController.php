@@ -17,6 +17,48 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
     {
         echo MemberView::signUp();
     }
+    
+    public static function formDelete($userSession)
+    {
+        try
+        {
+            MemberController::permission(USER_AUTHENTIFIED, $userSession);
+            echo MemberView::formDelete($userSession);
+        }
+        catch (AccessViolationException $e)
+        {
+            MemberController::ifAccessViolationExceptionView($e);
+        }
+    }
+
+    public static function formDeleteBack($userSession)
+    {
+        try
+        {
+            MemberController::permission(ADMIN, $userSession);
+            $listSubscribersEntity = [];
+            $listSubscribers = MemberManager::getAllSubscribers();
+            
+            foreach($listSubscribers as $subscriber)
+            {
+                $memberEntity = new MemberEntity();
+                $memberEntity->hydrate($subscriber);
+                array_push($listSubscribersEntity, $memberEntity);
+            }
+
+            echo MemberView::formDeleteBack($userSession, $listSubscribersEntity);
+        }
+        catch (\PDOException $e)
+        {
+            MemberController::ifPDOExceptionView($e);
+        }
+        catch (AccessViolationException $e)
+        {
+            MemberController::ifAccessViolationExceptionView($e);
+        }
+    }
+
+
 
     public static function formEditPassword($userSession)
     {
@@ -55,7 +97,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
         }
     }
 
-    public static function pushMember($login, $password, $blogSession)
+    public static function push($login, $password, $blogSession)
     {
         try
         {
@@ -67,12 +109,19 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
             $loginNotExist = MemberManager::loginNotExist($memberEntity);
             if($loginNotExist)
             {
-                MemberManager::push($memberEntity);
-                $member = MemberManager::auth($memberEntity);
-                //rehydrate memberEntity with model data
-                $memberEntity->hydrate($member);
-                $blogSession->setUserAuth($memberEntity);
-                echo 'header:location/home';
+                $pushSuccess = MemberManager::push($memberEntity);
+                if($pushSuccess === true)
+                {
+                    $member = MemberManager::auth($memberEntity);
+                    //rehydrate memberEntity with model data
+                    $memberEntity->hydrate($member);
+                    $blogSession->setUserAuth($memberEntity);
+                    echo 'header:location/home';
+                }
+                else
+                {
+                    echo MemberView::pushFail();
+                }
             }
             else
             {
@@ -82,6 +131,41 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
         catch (\PDOException $e)
         {
             MemberController::ifPDOExceptionView($e);
+        }
+    }
+    
+    public static function delete($login, $id_member_to_delete, $tokenSent, $blogSession)
+    {
+        try
+        {
+            MemberController::permissionThisIdMember( $blogSession->getUser(), $id_member_to_delete, $tokenSent);
+            $memberEntity = new MemberEntity();
+            $memberEntity->setId($id_member_to_delete);
+            $memberEntity->setLogin($login);
+            $requestSuccess = MemberManager::delete($memberEntity);
+            if($requestSuccess === true)
+            {
+                if( MemberManager::memberNotExist($id_member_to_delete)   )
+                {
+                    $blogSession->disconnect();
+                }
+                else
+                {
+                    echo MemberView::wrongLoginForUser($login, $id_member_to_delete);
+                }
+            }
+            else
+            {
+                echo MemberView::deleteFail($login, $id_member_to_delete);
+            }
+        }
+        catch (\PDOException $e)
+        {
+            MemberController::ifPDOExceptionView($e);
+        }
+        catch (AccessViolationException $e)
+        {
+            MemberController::ifAccessViolationExceptionView($e);
         }
     }
 
@@ -145,6 +229,10 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
     private static function permission(String $permission, $user)
     {
         Controller::permission($permission, $user);
+    }
+    private static function permissionThisIdMember( $user, $id_member_permission, $tokenSent)
+    {
+        Controller::permissionThisIdMember( $user, $id_member_permission, $tokenSent);
     }
 
 }

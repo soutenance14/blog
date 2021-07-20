@@ -111,6 +111,11 @@ Class CommentView
         return 'Il n\'y a pas de Commentaire pour le moment';  
     }
     
+    public static function getNotExist($id)
+    {
+        return 'Le commentaire '.$id.' n\'existe pas';
+    }
+    
     public static function pushFail()
     {
         return 'Le push a échoué';  

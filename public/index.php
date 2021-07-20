@@ -15,7 +15,7 @@ $router = new AltoRouter();
 // ALL MAP ROUTES
 
 // for user no auth
-// get
+    //--GET
 $router->map('GET', '/', 'home');
 $router->map('GET', '/formContact', 'formContact');
 $router->map('GET', '/signUp', 'signUp');
@@ -25,31 +25,34 @@ $router->map('GET', '/postsBack', 'postsBack');
 $router->map('GET', '/post/[i:id]', 'post');
 $router->map('GET', '/postBack/[i:id]', 'postBack');
 
-// post
+    //--POST
 $router->map('POST', '/auth', 'auth');
 $router->map('POST', '/pushMember', 'pushMember');
+$router->map('POST', '/sendMessage', 'sendMessage');
 
 // for user auth
-//  get
+    //--GET
 $router->map('GET', '/disconnect', 'disconnect');
 $router->map('GET', '/formEditPassword', 'formEditPassword');
 $router->map('GET', '/comm', 'formPushCommentASupprimer');// a supprimer, utiliser que pour les tests mais cest dans post que le formulaire sera
 $router->map('GET', '/deleteComment/[i:id]/[:token]', 'deleteComment');
+$router->map('GET', '/formDeleteMember', 'formDeleteMember');
+$router->map('GET', '/formDeleteMemberBack', 'formDeleteMemberBack');
 $router->map('GET', '/setPublishedComment/[i:id]/[i:published]/[:token]', 'setPublishedComment');//use post later is better
 
-// post
-//contact
-$router->map('POST', '/sendMessage', 'sendMessage');
-
+    // POST
 $router->map('POST', '/editPassword', 'editPassword');
 $router->map('POST', '/pushComment', 'pushComment');
+$router->map('POST', '/deleteMember/[:token]', 'deleteMember');
 
 // for user admin
+    //--GET
 $router->map('GET', '/formPushPost', 'formPushPost');
 $router->map('GET', '/formEditPost/[i:id]/[:token]', 'formEditPost');
 $router->map('GET', '/formDeletePost', 'formDeletePost');
 $router->map('GET', '/deletePost/[i:id]/[:token]', 'deletePost');
-// post
+
+    //--POST
 $router->map('POST', '/editPost', 'editPost');
 $router->map('POST', '/pushPost', 'pushPost');
 // $router->map('POST', '/deletePost', 'deletePost');
@@ -214,12 +217,38 @@ function signUp()
     MemberController::signUp();
 }
 
+function formDeleteMember()
+{
+    // require  '../app/controller/MemberController.php';
+    $blogSession = new BlogSession();
+    
+    MemberController::formDelete($blogSession->getUser());
+}
+
+function formDeleteMemberBack()
+{
+    // require  '../app/controller/MemberController.php';
+    $blogSession = new BlogSession();
+    
+    MemberController::formDeleteBack($blogSession->getUser());
+}
+
+function deleteMember($token)
+{
+    if(isset($_POST['login'])   &&  isset($_POST['id'])    )
+    {
+        $blogSession = new BlogSession();
+        MemberController::delete($_POST['login'], $_POST['id'] , $token, $blogSession);
+    }
+    // require  '../app/controller/MemberController.php';
+}
+
 function pushMember()
 {
     if(isset($_POST['login'], $_POST['password'] )){
         $blogSession = new BlogSession();
         // require  '../app/controller/MemberController.php';
-        MemberController::pushMember($_POST['login'], $_POST['password'], $blogSession);
+        MemberController::push($_POST['login'], $_POST['password'], $blogSession);
     }
 }
 
