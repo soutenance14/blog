@@ -129,7 +129,8 @@ function pushPost()
     {
         // require  '../app/controller/PostController.php';
         $blogSession = new BlogSession();
-        PostController::push($_POST['auteur'], $_POST['titre'], $_POST['chapo'], $_POST['contenu'], $_POST['token'], $blogSession->getUser());
+        PostController::push(htmlentities($_POST['auteur']), htmlentities($_POST['titre']), htmlentities($_POST['chapo']),
+        htmlentities($_POST['contenu']), $_POST['token'], $blogSession->getUser());
     }
     else
     {
@@ -144,7 +145,8 @@ function editPost()
     {
         // require  '../app/controller/PostController.php';
         $blogSession = new BlogSession();
-        PostController::edit($_POST['id'], $_POST['auteur'], $_POST['titre'], $_POST['chapo'], $_POST['contenu'] ,$_POST['token'], $blogSession->getUser());
+        PostController::edit($_POST['id'], htmlentities($_POST['auteur']), htmlentities($_POST['titre']), htmlentities($_POST['chapo'])
+        , htmlentities($_POST['contenu']) ,$_POST['token'], $blogSession->getUser());
     }
     else
     {
@@ -183,7 +185,7 @@ function pushComment()
     {
         // require  '../app/controller/CommentController.php';
         $blogSession = new BlogSession();
-        CommentController::push($_POST['id_post'], $_POST['contenu'], $_POST['token'] ,$blogSession->getUser());
+        CommentController::push($_POST['id_post'], htmlentities($_POST['contenu']), $_POST['token'] ,$blogSession->getUser());
     }
 }
 
@@ -248,7 +250,7 @@ function pushMember()
     if(isset($_POST['login'], $_POST['password'] )){
         $blogSession = new BlogSession();
         // require  '../app/controller/MemberController.php';
-        MemberController::push($_POST['login'], $_POST['password'], $blogSession);
+        MemberController::push(htmlentities($_POST['login']), htmlentities($_POST['password']), $blogSession);
     }
 }
 
@@ -289,7 +291,7 @@ function editPassword()
     {
         // require  '../app/controller/MemberController.php';
         $blogSession = new BlogSession();
-        MemberController::editPassword($_POST['oldPassword'],  $_POST['newPassword'],  $_POST['confirmNewPassword'], $blogSession->getUser());
+        MemberController::editPassword(htmlentities($_POST['oldPassword']),  htmlentities($_POST['newPassword']),  $_POST['confirmNewPassword'], $blogSession->getUser());
     }
     else
     {
