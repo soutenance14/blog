@@ -1,6 +1,8 @@
 <?php
 
-Class PostView
+require dirname(__DIR__) . '../../vendor/autoload.php';
+
+Class PostView extends View
 {
     public static function home()
     {
@@ -31,24 +33,63 @@ Class PostView
                 </form>";
     }
 
-    public static function get($postEntity, $listCommentsPublishedView)
+    public static function get($postEntity, $listCommentsPublishedEntity, $user)
     {
-        return 
-        '<h4> Par '.$postEntity->getAuteur().' le '.$postEntity->getCreatedAt().'</h4>'
-        .'<h3>Titre :'.$postEntity->getTitre().'</h3>'
-        .'<h4>Chapo :'.$postEntity->getChapo().'</h4>'
-        .'<h4>Contenu :'.$postEntity->getContenu().'</h4>'
-        .$listCommentsPublishedView;
+
+        try 
+        {
+            // le dossier ou on trouve les templates
+            $loader = new Twig\Loader\FilesystemLoader('template');
+        
+            // initialiser l'environement Twig
+            $twig = new Twig\Environment($loader);
+        
+            // load template
+            $template = $twig->load('post.twig');
+        
+            // set template variables
+            // render template
+            // return $listCommentsPublishedView;
+            return $template->render(array(
+                'root'=>"../",
+                'postEntity'=> $postEntity,
+                'listCommentsPublishedEntity'=> $listCommentsPublishedEntity,
+                'user'=> $user,
+            ));
+        
+        } catch (Exception $e) 
+        {
+           echo PostView::renderViewFail($e);
+        }
     }
 
-    public static function getBack($postEntity, $listCommentsPublishedView, $listCommentsNotPublishedView)
+    public static function getBack($postEntity, $listCommentsPublishedEntity, $listCommentsNotPublishedEntity)
     {
-        return 
-        '<h4> Par '.$postEntity->getAuteur().' le '.$postEntity->getCreatedAt().'</h4>'
-        .'<h3>Titre :'.$postEntity->getTitre().'</h3>'
-        .'<h4>Chapo :'.$postEntity->getChapo().'</h4>'
-        .'<h4>Contenu :'.$postEntity->getContenu().'</h4>'
-        .$listCommentsPublishedView. $listCommentsNotPublishedView;
+        try 
+        {
+            // le dossier ou on trouve les templates
+            $loader = new Twig\Loader\FilesystemLoader('template');
+        
+            // initialiser l'environement Twig
+            $twig = new Twig\Environment($loader);
+        
+            // load template
+            $template = $twig->load('postBack.twig');
+        
+            // set template variables
+            // render template
+            // return $listCommentsPublishedView;
+            return $template->render(array(
+                'root'=>"../",
+                'postEntity'=> $postEntity,
+                'listCommentsPublishedEntity'=> $listCommentsPublishedEntity,
+                'listCommentsNotPublishedEntity'=> $listCommentsNotPublishedEntity,
+            ));
+        
+        } catch (Exception $e) 
+        {
+           echo PostView::renderViewFail($e);
+        }
     }
     
     public static function getNotExist($id)
@@ -58,17 +99,28 @@ Class PostView
 
     public static function getAll($listPostsEntity)
     {
-        $view = '<h1>Back : touts les posts</h1>';
-        foreach($listPostsEntity as $postEntity)
+
+        try 
         {
-            $view.= '<div>'
-                        .'<h4> Par '.$postEntity->getAuteur().' le '.$postEntity->getCreatedAt().'</h4>'
-                        .'<h3>Titre :'.$postEntity->getTitre().'</h3>'
-                        .'<h4>Chapo :'.$postEntity->getChapo().'</h4>'
-                        .'<h4><a href="post/'.$postEntity->getId().'">Voir Article</a></h4>'
-                    .'</div><hr>';
+            // le dossier ou on trouve les templates
+            $loader = new Twig\Loader\FilesystemLoader('template');
+        
+            // initialiser l'environement Twig
+            $twig = new Twig\Environment($loader);
+        
+            // load template
+            $template = $twig->load('posts.twig');
+        
+            // set template variables
+            // render template
+            echo $template->render(array(
+                'listPostsEntity'=> $listPostsEntity,
+            ));
+        
+        } catch (Exception $e) 
+        {
+           echo PostView::renderViewFail($e);
         }
-        return $view;  
     }
 
     public static function getAllBack($listPostsEntity, $token)
@@ -107,6 +159,11 @@ Class PostView
     public static function deleteFail()
     {
         return 'La suppression a échoué';  
+    }
+
+    public static function  renderViewFail(Exception $e)
+    {
+        return View::renderViewFail($e);
     }
     
 }

@@ -10,6 +10,8 @@ Class CommentEntity extends Entity
     private $contenu;
     private $login;
     private $published;
+    private $date;
+    private $time;
 
     // functions
 
@@ -156,5 +158,55 @@ Class CommentEntity extends Entity
         $this->published = $published;
 
         return $this;
+    }
+
+     /**
+     * Get the value of date
+     */ 
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set the value of date
+     *
+     * @return  self
+     */ 
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of time
+     */ 
+    public function getTime()
+    {
+        return $this->time;
+    }
+
+    /**
+     * Set the value of time
+     *
+     * @return  self
+     */ 
+    public function setTime($time)
+    {
+        $this->time = $time;
+        return $this;
+    }
+
+    public function setformattedCreatedAt()
+    {
+        $dates = explode(" ", $this->created_at);
+        $date = $dates[0];
+        $time = $dates[1];
+        
+        $formattedDate = Date('d-m-Y', strtotime($date));
+        $this->setDate($formattedDate);
+        $this->setTime($time);
     }
 }

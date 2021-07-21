@@ -70,8 +70,8 @@ Abstract Class PostController
                     $commentPublishedEntity->hydrate($commentPublished);
                     array_push( $listCommentsPublishedEntity , $commentPublishedEntity);
                 }
-                $commentViewPublished = CommentView::getAll($listCommentsPublishedEntity, "Commentaires", $userSession);
-                echo PostView::get($postEntity, $commentViewPublished, $userSession);
+                // $commentViewPublished = CommentView::getAll($listCommentsPublishedEntity, "Commentaires", $userSession);
+                echo PostView::get($postEntity, $listCommentsPublishedEntity, $userSession);
             }
             else
             {
@@ -115,10 +115,10 @@ Abstract Class PostController
                     array_push( $listCommentsNotPublishedEntity , $commentNotPublishedEntity);
                 }
                 
-                $commentViewPublished = CommentView::getAll($listCommentsPublishedEntity, "Publiés", $userSession);
-                $commentViewNotPublished = CommentView::getAll($listCommentsNotPublishedEntity, "Non publiés", $userSession);
+                // $commentViewPublished = CommentView::getAll($listCommentsPublishedEntity, "Publiés", $userSession);
+                // $commentViewNotPublished = CommentView::getAll($listCommentsNotPublishedEntity, "Non publiés", $userSession);
 
-                echo PostView::getBack($postEntity, $commentViewPublished, $commentViewNotPublished, $userSession);
+                echo PostView::getBack($postEntity, $listCommentsPublishedEntity, $listCommentsNotPublishedEntity, $userSession);
             }
             else
             {
