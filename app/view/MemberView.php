@@ -3,6 +3,11 @@
 Class MemberView
 {
 
+    public static function home()
+    {
+        return "Home";
+    }
+
     public static function login()
     {
         return "login
