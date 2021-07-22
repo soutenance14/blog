@@ -1,0 +1,23 @@
+<div class="container px-4 px-lg-5 comments">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <form method ='post' action ='{{root}}pushComment'>
+            <textarea style='width: 100%; height: 150px; font-size: 0.8em' name='contenu'>
+            </textarea>
+
+            <div class='hide'>
+                <input name='id_post' value='{{id_post}}'>
+                <input name='token' value='{{user.getToken()}}'>
+            </div>
+            {# <div class="form-floating">
+                <textarea class="form-control" id="message" placeholder="Enter your message here..." style="height: 12rem" data-sb-validations="required"></textarea>
+                <label for="message">Message</label>
+                <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+            </div>
+            <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div> #}
+            <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Envoyer</button>
+        </form>
+        <br>
+    </div>
+</div>
+<h6>Information: les commentaires sont soumis à une validation par un administrateur avant la publication.</h6>
+<hr>

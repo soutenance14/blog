@@ -16,7 +16,8 @@ $router = new AltoRouter();
 
 // for user no auth
     //--GET
-$router->map('GET', '/', 'home');
+$router->map('GET', '/', 'home0');
+$router->map('GET', '/home', 'home');
 $router->map('GET', '/formContact', 'formContact');
 $router->map('GET', '/signUp', 'signUp');
 $router->map('GET', '/login', 'login');
@@ -62,8 +63,15 @@ $router->map('POST', '/pushPost', 'pushPost');
 // CALLED FUNCTIONS
 function home()
 {
-    PostController::home();
+    $blogSession = new BlogSession();
+    MemberController::home($blogSession->getUser());
 }
+
+function home0()
+{
+    home();
+}
+
 
 function formContact()
 {
@@ -284,6 +292,7 @@ function disconnect()
 {
     // require  '../app/controller/MemberController.php';
     $blogSession = new BlogSession();
+    $root = '';
     MemberController::disconnect($blogSession);
 }
 

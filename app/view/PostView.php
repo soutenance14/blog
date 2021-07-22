@@ -33,7 +33,7 @@ Class PostView extends View
                 </form>";
     }
 
-    public static function get($postEntity, $listCommentsPublishedEntity, $user)
+    public static function get($postEntity, $listCommentsPublishedEntity, $user, $id_post)
     {
 
         try 
@@ -55,15 +55,16 @@ Class PostView extends View
                 'postEntity'=> $postEntity,
                 'listCommentsPublishedEntity'=> $listCommentsPublishedEntity,
                 'user'=> $user,
+                'id_post'=> $id_post,
             ));
         
         } catch (Exception $e) 
         {
-           echo PostView::renderViewFail($e);
+           return PostView::renderViewFail($e);
         }
     }
 
-    public static function getBack($postEntity, $listCommentsPublishedEntity, $listCommentsNotPublishedEntity, $user)
+    public static function getBack($postEntity, $listCommentsPublishedEntity, $listCommentsNotPublishedEntity, $user, $id_post)
     {
         try 
         {
@@ -85,11 +86,12 @@ Class PostView extends View
                 'listCommentsPublishedEntity'=> $listCommentsPublishedEntity,
                 'listCommentsNotPublishedEntity'=> $listCommentsNotPublishedEntity,
                 'user'=> $user,
+                'id_post'=> $id_post,
             ));
         
         } catch (Exception $e) 
         {
-           echo PostView::renderViewFail($e);
+           return PostView::renderViewFail($e);
         }
     }
     
@@ -114,14 +116,14 @@ Class PostView extends View
         
             // set template variables
             // render template
-            echo $template->render(array(
+            return $template->render(array(
                 'listPostsEntity'=> $listPostsEntity,
                 'user'=> $user,
             ));
         
         } catch (Exception $e) 
         {
-           echo PostView::renderViewFail($e);
+           return PostView::renderViewFail($e);
         }
     }
 
@@ -140,14 +142,14 @@ Class PostView extends View
         
             // set template variables
             // render template
-            echo $template->render(array(
+            return $template->render(array(
                 'listPostsEntity'=> $listPostsEntity,
-                '$user'=> $user,
+                'user'=> $user,
             ));
         
         } catch (Exception $e) 
         {
-           echo PostView::renderViewFail($e);
+           return PostView::renderViewFail($e);
         }  
     }
 

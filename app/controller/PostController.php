@@ -7,10 +7,6 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
 
 Abstract Class PostController
 {
-    public static function home()
-    {
-        echo MemberView::home();
-    }
 
     // FORM
     public static function formPushPost($userSession)
@@ -71,7 +67,7 @@ Abstract Class PostController
                     array_push( $listCommentsPublishedEntity , $commentPublishedEntity);
                 }
                 // $commentViewPublished = CommentView::getAll($listCommentsPublishedEntity, "Commentaires", $userSession);
-                echo PostView::get($postEntity, $listCommentsPublishedEntity, $userSession);
+                echo PostView::get($postEntity, $listCommentsPublishedEntity, $userSession, $id);
             }
             else
             {
@@ -118,7 +114,7 @@ Abstract Class PostController
                 // $commentViewPublished = CommentView::getAll($listCommentsPublishedEntity, "Publiés", $userSession);
                 // $commentViewNotPublished = CommentView::getAll($listCommentsNotPublishedEntity, "Non publiés", $userSession);
 
-                echo PostView::getBack($postEntity, $listCommentsPublishedEntity, $listCommentsNotPublishedEntity, $userSession);
+                echo PostView::getBack($postEntity, $listCommentsPublishedEntity, $listCommentsNotPublishedEntity, $userSession, $id);
             }
             else
             {

@@ -48,10 +48,7 @@ Abstract Class Controller
     public static function permission(String $permissionRequested, $user)
     {
         // require dirname(__DIR__) . "../exception/AccessViolationException.php";
-        echo '<br>permissionRequested' , var_dump($permissionRequested);
-        echo '<br>typePermissionUser' , var_dump($user);
-        echo '<br>typePermissionUser' , var_dump($user->getPermission());
-
+        
         switch($permissionRequested)
         {
             case USER_AUTHENTIFIED:

@@ -4,6 +4,8 @@
         {% block nav %}
             {% if user.getPermission() is not null %}
                 {% include 'menuAuth.twig' %}
+            {% else %}
+                {{parent()}}
             {% endif %}
         {% endblock %}
         
@@ -37,12 +39,6 @@
                             <p>
                                 {{postEntity.getContenu()}}
                             </p>
-                           <span class="meta">
-                                Posté par
-                                <a href="#!">{{postEntity.getAuteur()}}</a>
-                                {{postEntity.setformattedCreatedAt()}}
-                                le {{postEntity.getDate()}} à {{postEntity.getTime()}}
-                            </span>
                         </div>
                     </div>
                     <hr>

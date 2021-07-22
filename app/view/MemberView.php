@@ -3,9 +3,29 @@
 Class MemberView
 {
 
-    public static function home()
+    public static function home($user)
     {
-        return "Home";
+        try 
+        {
+            // le dossier ou on trouve les templates
+            $loader = new Twig\Loader\FilesystemLoader('template');
+        
+            // initialiser l'environement Twig
+            $twig = new Twig\Environment($loader);
+        
+            // load template
+            $template = $twig->load('home.twig');
+        
+            // set template variables
+            // render template
+            echo $template->render(array(
+                'user'=> $user,
+            ));
+        
+        } catch (Exception $e) 
+        {
+           echo PostView::renderViewFail($e);
+        }
     }
 
     public static function login()

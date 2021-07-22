@@ -7,6 +7,12 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
 
  Class MemberController
 {
+
+    public static function home($userSession)
+    {
+        echo MemberView::home($userSession);
+    }
+
     //FORM
     public static function login()
     {
@@ -83,8 +89,9 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
             {
                 $memberEntity->hydrate($member);
                 $blogSession->setUserAuth($memberEntity);
-                echo'member model' , var_dump($memberEntity);
-                echo '<br> session user' , var_dump($blogSession->getUser());
+                // echo'member model' , var_dump($memberEntity);
+                // echo '<br> session user' , var_dump($blogSession->getUser());
+                header('Location:home');
             }
             else
             {
@@ -202,7 +209,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
     public static function disconnect($blogSession)
     {
         $blogSession->disconnect();
-        echo 'header:location/home';
+        header('Location:home');
     }
 
     // view if PDO exception

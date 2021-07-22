@@ -1,0 +1,43 @@
+
+      
+       
+            {% extends "Base.twig" %}
+            {% block title %}Touts les articles{% endblock %}
+            {% block nav %}
+                {% if user.getPermission() is not null %}
+                    {% include 'menuAuth.twig' %}
+                {% else %}
+                {{parent()}}                    
+                {% endif %}
+            {% endblock %}
+            {% block container %}
+            <div class="container px-4 px-lg-5">
+                 <article class="mb-4">
+                    <div class="container px-4 px-lg-5">
+                        <div class="row gx-4 gx-lg-5 justify-content-center">
+                            <div class="col-md-10 col-lg-8 col-xl-7">
+                                <h3>
+                                    Qui suis-je?
+                                </h3>
+                                <p>
+                                    Je suis apprenti développeur PHP symfony, depuis 2021, vous pouvez consulter mon <span><a href="#">CV</a></span>, et me laisser
+                                    un <span><a href="#">message</a></span>. 
+                                </p>
+                                <h4>
+                                    A qui s'adresse ce blog?
+                                </h4>
+                                <p>
+                                    Si vous êtes passionnés d'informatique, notemment de développement, vous êtes au bon endroit.
+                                </p>
+                                <hr>
+                                <p>
+                                    Retrouvez chaque semaine de nouveaux articles concernant l'actualité informatique,
+                                    et mon actualité personnelle (projets, rencontres professionneles, trouvailles ...).
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            {% endblock %}
