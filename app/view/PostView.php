@@ -63,7 +63,7 @@ Class PostView extends View
         }
     }
 
-    public static function getBack($postEntity, $listCommentsPublishedEntity, $listCommentsNotPublishedEntity)
+    public static function getBack($postEntity, $listCommentsPublishedEntity, $listCommentsNotPublishedEntity, $user)
     {
         try 
         {
@@ -84,6 +84,7 @@ Class PostView extends View
                 'postEntity'=> $postEntity,
                 'listCommentsPublishedEntity'=> $listCommentsPublishedEntity,
                 'listCommentsNotPublishedEntity'=> $listCommentsNotPublishedEntity,
+                'user'=> $user,
             ));
         
         } catch (Exception $e) 
@@ -97,7 +98,7 @@ Class PostView extends View
         return 'redirection ce post '.$id.' n\'existe pas.';
     }
 
-    public static function getAll($listPostsEntity)
+    public static function getAll($listPostsEntity, $user)
     {
 
         try 
@@ -115,6 +116,7 @@ Class PostView extends View
             // render template
             echo $template->render(array(
                 'listPostsEntity'=> $listPostsEntity,
+                'user'=> $user,
             ));
         
         } catch (Exception $e) 
@@ -123,22 +125,30 @@ Class PostView extends View
         }
     }
 
-    public static function getAllBack($listPostsEntity, $token)
+    public static function getAllBack($listPostsEntity, $user)
     {
-        $view = '<h1>Back : touts les posts</h1>';
-        foreach($listPostsEntity as $postEntity)
+        try 
         {
-            $view.= '<div>'
-                        .'<h4> Par '.$postEntity->getAuteur().' le '.$postEntity->getCreatedAt().'</h4>'
-                        .'<h3>Titre :'.$postEntity->getTitre().'</h3>'
-                        .'<h4>Chapo :'.$postEntity->getChapo().'</h4>'
-                        .'<h4><a href="post/'.$postEntity->getId().'">Voir Article</a></h4>'
-                        .'<h4><a href="formEditPost/'.$postEntity->getId().'/'.$token.'">Modifier l\'article.</a></h4>'
-                        .'<h4><a href="deletePost/'.$postEntity->getId().'/'.$token.'">Supprimer Article</a></h4>'
-                        
-                    .'</div><hr>';
-        }
-        return $view;  
+            // le dossier ou on trouve les templates
+            $loader = new Twig\Loader\FilesystemLoader('template');
+        
+            // initialiser l'environement Twig
+            $twig = new Twig\Environment($loader);
+        
+            // load template
+            $template = $twig->load('postsBack.twig');
+        
+            // set template variables
+            // render template
+            echo $template->render(array(
+                'listPostsEntity'=> $listPostsEntity,
+                '$user'=> $user,
+            ));
+        
+        } catch (Exception $e) 
+        {
+           echo PostView::renderViewFail($e);
+        }  
     }
 
     public static function getNoPostExist($listPostsEntity)

@@ -48,7 +48,7 @@ Abstract Class CommentController
         }
     }
 
-    public static function setPublished($id, $published, $tokenSent, $userSession)
+    public static function setPublished($id, $published, $tokenSent, $userSession, $root)
     {
         if( $published === '0' || $published === '1')
         {
@@ -61,7 +61,13 @@ Abstract Class CommentController
                 $requestSuccess = CommentManager::setPublished($commentEntity);
                 if($requestSuccess === true)
                 {
-                    echo 'redirection setPublished comment success.';
+                    //recuperation de l'id_post pour la redirection
+                    // on aurait pu envoyé l'id dans l'url des le depart
+                    // ici on s'assure que l'on récupère le bon id_post
+                    $comment = CommentManager::get($id);
+                    $commentEntity->hydrate($comment);
+
+                    header('Location:'.$root.'postBack/'.$commentEntity->getIdPost());
                 }
                 else
                 {

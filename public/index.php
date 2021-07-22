@@ -113,7 +113,8 @@ function postBack($id)
 function posts()
 {
     // require  '../app/controller/PostController.php';
-    PostController::getAll();
+    $blogSession = new BlogSession();
+    PostController::getAll($blogSession->getUser());
 }
 
 function postsBack()
@@ -200,8 +201,9 @@ function deleteComment($id, $token)
 function setPublishedComment($id, $published, $token)
 {
     // require  '../app/controller/CommentController.php';
+    $root = '../../../';
     $blogSession = new BlogSession();
-    CommentController::setPublished($id, $published, $token, $blogSession->getUser());
+    CommentController::setPublished($id, $published, $token, $blogSession->getUser(), $root);
 }
 
 

@@ -1,33 +1,37 @@
-
-      
-       
-            
-           
-           <div class="container px-4 px-lg-5">
-                 {% for commentEntity in listCommentsPublishedEntity %}
-                    {# <li>{{ user.username|e }}</li> #}
-                    <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <!-- Post preview-->
-                        <div class="post-preview">
-                            <a href="post/{{commentEntity.getId()}}">
-                                <h2 class="post-title">{{commentEntity.getLogin()}}</h2>
-                                <h3 class="post-subtitle">{{commentEntity.getContenu()}}</h3>
+<div class="container px-4 px-lg-5 comments">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <h2 class="post-title">Commentaires</h2>
+        {% for commentEntity in listCommentsPublishedEntity %}
+            {% set classComment = 'comment' %}
+            {%  if  commentEntity.getIdMembre() == user.getId()    %}
+                {% set classComment = 'my' %}
+            {% endif %}
+            <div class="col-md-10 col-lg-8 col-xl-7" >
+                <!-- Divider-->
+                <hr class="my-4" />
+                <div class="post-preview {{classComment}}" >
+                    <h4 class="post-title">{{commentEntity.getLogin()}}</h4>
+                    <p class="post-meta">
+                        Posté
+                        {{commentEntity.setformattedCreatedAt()}}
+                        le {{commentEntity.getDate()}} à {{commentEntity.getTime()}}
+                    </p>
+                    <hp class="post-subtitle">{{commentEntity.getContenu()}}</hp>
+                    {%  if  commentEntity.getIdMembre() == user.getId()    %}
+                            <h6>
+                            <a href="{{root}}deleteComment/{{commentEntity.getId()}}/{{user.getToken()}}">
+                                    <span class="fa-stack fa-lg linkDelete" >
+                                    <i class="fas fa-trash fa-stack-1x"></i>
+                                    </span> 
                             </a>
-                            <p class="post-meta">
-                                Posté par
-                                <a href="#!">{{commentEntity.getAuteur()}}</a>
-                                {{commentEntity.setformattedCreatedAt()}}
-                                le {{commentEntity.getDate()}} à {{commentEntity.getTime()}}
-                            </p>
-                        </div>
-                        <!-- Divider-->
-                        <hr class="my-4" />
-                        <!-- Pager-->
-                    </div>
+                        </h6>
+                        <div class='clear'></div>
+                    {% endif %}
+                    
                 </div>
-                {% endfor %}
-                <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>                
+                {# <!-- Divider-->
+                <hr class="my-4" /> #}
             </div>
-           
-           
+        {% endfor %}
+    </div>
+</div>

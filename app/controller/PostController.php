@@ -135,7 +135,7 @@ Abstract Class PostController
         }
     }
 
-    public static function getAll()
+    public static function getAll($user)
     {
         try 
         {
@@ -149,7 +149,7 @@ Abstract Class PostController
                     $postEntity->hydrate($post);
                     array_push($listPostsEntity, $postEntity);
                 }
-                echo PostView::getAll($listPostsEntity);
+                echo PostView::getAll($listPostsEntity, $user);
             }
             else
             {
@@ -177,7 +177,7 @@ Abstract Class PostController
                     $postEntity->hydrate($post);
                     array_push($listPostsEntity, $postEntity);
                 }
-                echo PostView::getAllBack($listPostsEntity, $userSession->getToken());
+                echo PostView::getAllBack($listPostsEntity, $userSession);
             }
             else
             {

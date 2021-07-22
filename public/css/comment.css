@@ -23,7 +23,7 @@
 
 .linkDelete
 {
-    float:right;
+    float:left;
 }
 
 .clear
@@ -35,4 +35,16 @@
 {
     padding-bottom: 40px;
 }
+
+.published
+{
+    background-color: #E4F1D1;
+}
+
+.notPublished
+{
+    background-color: #F9C8C2;
+}
+
+
 
