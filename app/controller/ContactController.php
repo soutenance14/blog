@@ -6,9 +6,9 @@ use \Mailjet\Resources;
  Class ContactController
 {
     //FORM
-    public static function formContact()
+    public static function formContact($userSession)
     {
-        echo ContactView::formContact();
+        echo ContactView::formContact($userSession);
     }
     
     public static function sendMessage($nom, $mail, $contenu)
@@ -35,16 +35,16 @@ use \Mailjet\Resources;
             $subject = $nom. ' vous a envoyé un message le '.$date;
             $message = 
             '<html>
-            <h1>Vous avez reçu un nouveau message provenant du formulaire de contact:</h1>
-            <hr>
-            <h2>'.$nom.'</h2>
-            <h3>'.$mail.'</h3>
-            <h3>Le '.$date.'</h3>
-            <hr>
-            <p>
-            CONTENU DU MESSAGE:
-            '.$contenu.'
-            </p>
+                <h1>Vous avez reçu un nouveau message provenant du formulaire de contact:</h1>
+                <hr>
+                <h2>'.$nom.'</h2>
+                <h3>'.$mail.'</h3>
+                <h3>Le '.$date.'</h3>
+                <hr>
+                <p>
+                CONTENU DU MESSAGE:
+                '.$contenu.'
+                </p>
             </html>';
             $message = (new Swift_Message($subject))
             ->setFrom(['soutenance20@gmail.com' => 'Admin Contact 20'])
@@ -55,11 +55,12 @@ use \Mailjet\Resources;
             
             // Send the message
             $result = $mailer->send($message);
-            echo 'header/location/home/messageSuccess.';
+            // header('location:/home');
+            echo 'success';
         }
         catch (Exception $e)
         {
-            echo 'header/location/formContact/messageFailed';
+            echo 'fail';
         }
     }
 }

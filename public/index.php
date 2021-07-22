@@ -75,7 +75,8 @@ function home0()
 
 function formContact()
 {
-    ContactController::formContact();
+    $blogSession = new BlogSession();
+    ContactController::formContact($blogSession->getUser());
 }
 
 function sendMessage()
