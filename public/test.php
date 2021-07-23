@@ -1,24 +1,19 @@
 <?php
-// menu.php
-// inclure  l'autoloader
-require dirname(__DIR__) . '../vendor/autoload.php';
 
-try {
-    // le dossier ou on trouve les templates
-    $loader = new Twig\Loader\FilesystemLoader('template');
+$style='<style>
+input:invalid {
+    border: 2px dashed red;
+  }
+  
+  input:valid {
+    border: 1px solid black;
+  }
+</style>';
 
-    // initialiser l'environement Twig
-    $twig = new Twig\Environment($loader);
+$form ='<form>
 
-    // load template
-    $template = $twig->load('heritage.twig');
+<input id="choose" name="i_like" required pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z.]{2,}">
 
-    // set template variables
-    // render template
-    echo $template->render(array(
-        'title'=>'test',
-    ));
-
-} catch (Exception $e) {
-    die ('ERROR: ' . $e->getMessage());
-}
+<button>Soumettre</button>
+</form>';
+echo $style.$form;

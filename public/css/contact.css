@@ -1,15 +1,15 @@
-#progress_bar
+/* #progress_bar
 {
   display:none;
-}
+} */
 
 #submitSuccessMessage
 {
-  color:#6FA771
+  color:#6FA771;
 }
 
 #waitingMessage
 {
-  color:#DA9045
+  color:#DA9045;
 }
 

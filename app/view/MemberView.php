@@ -73,13 +73,36 @@ Class MemberView
         ";
     }
 
-    public static function formEditPassword( $token)
+    public static function formEditPassword( $user)
     {
-        return "formEditPassword
-        <form action ='editPassword' method ='post'><input name='oldPassword'><input name='newPassword'><input name='confirmNewPassword'>
-        <input type='submit' name ='submit' value='ok'>
-        <br> <input name ='token' value='".$token."'>
-        </form>";
+        try 
+        {
+            // le dossier ou on trouve les templates
+            $loader = new Twig\Loader\FilesystemLoader('template');
+        
+            // initialiser l'environement Twig
+            $twig = new Twig\Environment($loader);
+        
+            // load template
+            $template = $twig->load('editPassword.twig');
+        
+            // set template variables
+            // render template
+            return $template->render(array(
+                'user'=> $user,
+            ));
+        
+        }
+         catch (Exception $e) 
+        {
+           return View::renderViewFail($e);
+        }
+
+        // return "formEditPassword
+        // <form action ='editPassword' method ='post'><input name='oldPassword'><input name='newPassword'><input name='confirmNewPassword'>
+        // <input type='submit' name ='submit' value='ok'>
+        // <br> <input name ='token' value='".$token."'>
+        // </form>";
     }
 
     public static function pushFail()

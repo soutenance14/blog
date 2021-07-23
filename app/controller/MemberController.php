@@ -64,12 +64,10 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
         }
     }
 
-
-
     public static function formEditPassword($userSession)
     {
         MemberController::permission(USER_AUTHENTIFIED, $userSession);
-        echo MemberView::formEditPassword($userSession->getToken());
+        echo MemberView::formEditPassword($userSession);
     }
 
     // NOT FORM
@@ -88,7 +86,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
             if($member != null)
             {
                 $memberEntity->hydrate($member);
-                $blogSession->setUserAuth($memberEntity);
+                $blogSession->setUser($memberEntity);
                 // echo'member model' , var_dump($memberEntity);
                 // echo '<br> session user' , var_dump($blogSession->getUser());
                 header('Location:home');
@@ -122,7 +120,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
                     $member = MemberManager::auth($memberEntity);
                     //rehydrate memberEntity with model data
                     $memberEntity->hydrate($member);
-                    $blogSession->setUserAuth($memberEntity);
+                    $blogSession->setUser($memberEntity);
                     echo 'header:location/home';
                 }
                 else
@@ -176,7 +174,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
         }
     }
 
-    public static function editPassword($oldPassord, $newPassword, $tokenSent, $blogSession)
+    public static function editPassword($oldPassord, $newPassword, $tokenSent,$blogSession)
     {
         try
         {
@@ -189,20 +187,22 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
                 //update SESSION USER
                 $blogSession->setUser($userSession);
                 MemberManager::editPassword($userSession);
-                echo 'header:location/home';
+                echo 'success';
             }
             else
             {
-                echo MemberView::editPasswordFail();
+                echo 'L\'ancien mot de passe est érroné.'.$oldPassord;
             }
         }
         catch (\PDOException $e)
         {
-            MemberController::ifPDOExceptionView($e);
+            echo 'Problème avec la base de données : '. $e->getMessage(). " ". $e->getCode();
+            // MemberController::ifPDOExceptionView($e);
         }
         catch (AccessViolationException $e)
         {
-            MemberController::ifAccessViolationExceptionView($e);
+            echo 'Problème de permission d\'accées : '. $e->getMessage(). " ". $e->getCode();
+            // MemberController::ifAccessViolationExceptionView($e);
         }
     }
 

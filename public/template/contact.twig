@@ -15,32 +15,27 @@
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <p>Besoin d'une information, ou me faire part d'un message quelquoncque?</p>
                 <div class="my-5">
-                    <form id="contactForm" action ='sendMessage' method ='post' data-sb-form-api-token="API_TOKEN">
-                        <div class="form-floating">
-                            <input class="form-control" id="name" name="nom" type="text" placeholder="Entrez votre nom..." data-sb-validations="required" />
+                    <div id="form" method ='post'>
+                        <div class="form-floating post-form" id="name">
+                            <input class="form-control" name="nom" type="text" placeholder="Entrez votre nom..." data-sb-validations="required" />
                             <label for="name">Nom</label>
                             <div class="invalid-feedback" data-sb-feedback="name:required">Un nom est nécessaire.</div>
                         </div>
-                        <div class="form-floating">
-                            <input class="form-control" id="email" name="mail" type="email" placeholder="Enter your email..." data-sb-validations="required,email" />
+                        <div class="form-floating post-form" id="email">
+                            <input class="form-control"  name="mail" type="email" placeholder="Enter your email..." data-sb-validations="required,email" />
                             <label for="email">Email</label>
-                            <div class="invalid-feedback" data-sb-feedback="email:required">Une adresse email est nécessaire.</div>
+                            <div class="invalid-feedback" data-sb-feedback="email:required">Une adresse email au bon format est nécessaire.</div>
                             <div class="invalid-feedback" data-sb-feedback="email:email">L'adresse email n'est pas valide.</div>
                         </div>
-                        {# <div class="form-floating">
-                            <input class="form-control" id="phone" type="tel" placeholder="Enter your phone number..." data-sb-validations="required" />
-                            <label for="phone">Phone Number</label>
-                            <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
-                        </div> #}
-                        <div class="form-floating">
-                            <textarea class="form-control" id="message" name="contenu" placeholder="Enter your message here..." style="height: 12rem" data-sb-validations="required"></textarea>
+                        <div class="form-floating post-form" id="message" >
+                            <textarea class="form-control" name="contenu" type="text" placeholder="Enter your message here..." style="height: 12rem" data-sb-validations="required"></textarea>
                             <label for="message">Message</label>
-                            <div class="invalid-feedback" data-sb-feedback="message:required">Un message est nécessaire.</div>
+                            <div class="invalid-feedback" data-sb-feedback="message:required">Un message de 10 caractères minimum est nécessaire.</div>
                         </div>
                         <br />
-                       <img id="progress_bar" src="assets/img/gif/chargement2.gif"/>
+                       <img id="progress_bar" class="hide" src="assets/img/gif/chargement2.gif"/>
                         
-                        <div class="d-none" id="submitSuccessMessage">
+                        <div id="submitSuccessMessage">
                             <div class="text-center mb-3">
                                 <div class="fw-bolder">Le message a bien été envoyé</div>
                             </div>
@@ -50,11 +45,11 @@
                         <!---->
                         <!-- This is what your users will see when there is-->
                         <!-- an error submitting the form-->
-                        <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                        <div id="submitErrorMessage"><div class="text-center text-danger mb-3">Erreur le message n'a pas été envoyé.</div></div>
                         <!-- Submit Button-->
                         {# <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Envoyer</button> #}
-                        <button class="btn btn-primary text-uppercase disabled" id="submitButton" type="submit">Envoyer</button>
-                    </form>
+                        <button class="btn btn-primary text-uppercase" id="submitButton">Envoyer</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -63,6 +58,37 @@
 {% endblock %}
 
 {% block js %}
-    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-    <script src="{{root}}js/submitContact.js"></script>
+    {# <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script> #}
+
+    <script>
+
+        var progress_bar = document.getElementById("progress_bar");
+
+        // specific element will be verified
+        var url = 'sendMessage';
+
+        function displaySomethingSpecific()
+        {
+            progress_bar.style.display = 'block';
+        }
+        
+        function hideSomethingSpecific()
+        {
+            progress_bar.style.display = 'none';
+        }
+
+        function validFormSpecificPage()
+        {
+            //this function is obligatory
+            //nothing special for me
+            return true;
+        }
+        // ce script doit être ecexuter avant le script ci dessous
+    </script>
+
+
+
+
+    {# <script src="{{root}}js/submitContact.js"></script> #}
+    <script src="{{root}}js/submit.js"></script>
 {% endblock %}

@@ -73,6 +73,7 @@ submitButton.addEventListener('click', event => {
     XHR.send(urlEncodedData);
   }
 
+  //another method
   function sendData2(data)
   {
     data = {nom: "barium", mail: "barium", contenu: "barium" };

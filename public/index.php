@@ -299,14 +299,19 @@ function disconnect()
 
 function editPassword()
 {
-    if( isset($_POST['oldPassword'])  && isset($_POST['newPassword']) && isset($_POST['confirmNewPassword']) )
+    if( isset($_POST['oldPassword'])  && isset($_POST['newPassword']) && isset($_POST['token']) )
     {
         // require  '../app/controller/MemberController.php';
         $blogSession = new BlogSession();
-        MemberController::editPassword(htmlentities($_POST['oldPassword']),  htmlentities($_POST['newPassword']),  $_POST['confirmNewPassword'], $blogSession->getUser());
+        MemberController::editPassword(htmlentities($_POST['oldPassword']),  htmlentities($_POST['newPassword']), $_POST['token'], $blogSession);
     }
     else
     {
+        if(isset($_POST))
+        {
+            var_dump($_POST);
+        }
+        else{echo 'non';}
         // this call is not possible in theory
         echo 'problème, post(s) manquant(s).';
     }

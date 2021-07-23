@@ -24,10 +24,8 @@ Class ContactView
         }
          catch (Exception $e) 
         {
-           echo PostView::renderViewFail($e);
+           echo View::renderViewFail($e);
         }
-
-
         // return "Contact
         // <form action ='sendMessage' method ='post'><input name='nom'><input name='mail'><input name='contenu'><input type='submit' name ='submit' value='ok'>
         // </form>";

@@ -4,8 +4,9 @@
 
 // echo $a;
 
-$day = date('d');
-$month = date('m');
-$year = date('Y');
-
-echo $month;
+$form ='<form>
+<label for="choose">Préférez-vous la banane ou la cerise ?</label>
+<input id="choose" name="i_like" required>
+<button>Soumettre</button>
+</form>';
+echo $form;

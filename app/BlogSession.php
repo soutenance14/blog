@@ -16,7 +16,7 @@ Class BlogSession
         return $_SESSION['user'];
     }
     
-    public function setUserAuth($user)
+    public function setUser($user)
     {    
         //assign token
         $user->setToken(md5(bin2hex(openssl_random_pseudo_bytes(6))));

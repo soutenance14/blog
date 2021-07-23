@@ -55,12 +55,11 @@ use \Mailjet\Resources;
             
             // Send the message
             $result = $mailer->send($message);
-            // header('location:/home');
             echo 'success';
         }
         catch (Exception $e)
         {
-            echo 'fail';
+            echo 'Echec lors de l\'envoie, le message n\a pas été envoyé.';
         }
     }
 }
