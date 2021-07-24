@@ -1,7 +1,7 @@
 <div class="container px-4 px-lg-5 comments">
     <div class="row gx-4 gx-lg-5 justify-content-center">
         <h2 class="post-title">Commentaires</h2>
-        {% include "formComment.twig" %}
+        {% include "comment/formComment.twig" %}
         <h4 class="post-title">Commentaires Publiés</h4>
         {% if listCommentsPublishedEntity|length <1 %}
             <h6>Il n'y a pas de commentaires publiés pour le moment.</h6>
@@ -25,17 +25,16 @@
                         
                         <h6>
                             <a href="{{root}}deleteComment/{{commentEntity.getId()}}/{{user.getToken()}}">
-                                    <span class="fa-stack fa-lg linkDelete" >
+                                    <span class="fa-stack fa-lg " >
                                     <i class="fas fa-trash fa-stack-1x"></i>
                                     </span> 
                             </a>
                             <a href="{{root}}setPublishedComment/{{commentEntity.getId()}}/0/{{user.getToken()}}">
-                                    <span class="fa-stack fa-lg linkDelete" >
+                                    <span class="fa-stack fa-lg " >
                                     <i class="fas fa-ban fa-stack-1x"></i>
                                     </span> 
                             </a>
                         </h6>
-                        <div class='clear'></div> 
                     </div>
                     {# <!-- Divider-->
                     <hr class="my-4" /> #}
@@ -69,17 +68,16 @@
                         
                         <h6>
                             <a href="{{root}}deleteComment/{{commentEntity.getId()}}/{{user.getToken()}}">
-                                    <span class="fa-stack fa-lg linkDelete" >
+                                    <span class="fa-stack fa-lg " >
                                     <i class="fas fa-trash fa-stack-1x"></i>
                                     </span> 
                             </a>
                             <a href="{{root}}setPublishedComment/{{commentEntity.getId()}}/1/{{user.getToken()}}">
-                                    <span class="fa-stack fa-lg linkDelete" >
+                                    <span class="fa-stack fa-lg " >
                                     <i class="fas fa-check fa-stack-1x"></i>
                                     </span> 
                             </a>
                         </h6>
-                        <div class='clear'></div>
 
                     </div>
                     {# <!-- Divider-->

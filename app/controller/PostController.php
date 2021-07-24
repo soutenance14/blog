@@ -18,7 +18,7 @@ Abstract Class PostController
         }
         catch (AccessViolationException $e)
         {
-            PostController::ifAccessViolationExceptionView($e);
+            echo PostController::ifAccessViolationExceptionView($e);
         }
     }
     
@@ -42,7 +42,7 @@ Abstract Class PostController
         }
         catch (AccessViolationException $e)
         {
-            PostController::ifAccessViolationExceptionView($e);
+            echo PostController::ifAccessViolationExceptionView($e);
         }
     }
     
@@ -76,7 +76,7 @@ Abstract Class PostController
         }
         catch (\PDOException $e)
         {
-            PostController::ifPDOExceptionView($e);
+            echo PostController::ifPDOExceptionView($e);
         }
     }
 
@@ -123,11 +123,11 @@ Abstract Class PostController
         }
         catch (\PDOException $e)
         {
-            PostController::ifPDOExceptionView($e);
+            echo PostController::ifPDOExceptionView($e);
         }
         catch (AccessViolationException $e)
         {
-            PostController::ifAccessViolationExceptionView($e);
+            echo PostController::ifAccessViolationExceptionView($e);
         }
     }
 
@@ -154,7 +154,7 @@ Abstract Class PostController
         } 
         catch (\PDOException $e)
         {
-            PostController::ifPDOExceptionView($e);
+            echo PostController::ifPDOExceptionView($e);
         }
     }
     
@@ -182,11 +182,11 @@ Abstract Class PostController
         } 
         catch (\PDOException $e)
         {
-            PostController::ifPDOExceptionView($e);
+            echo PostController::ifPDOExceptionView($e);
         }
         catch (AccessViolationException $e)
         {
-            PostController::ifAccessViolationExceptionView($e);
+            echo PostController::ifAccessViolationExceptionView($e);
         }
     }
 
@@ -207,20 +207,20 @@ Abstract Class PostController
             $requestSuccess = PostManager::push( $postEntity);
             if($requestSuccess != null)
             {
-                echo 'header:location/blog/posts';
+                echo 'success';
             }
             else
             {
-                echo PostView::pushFail();
+                echo 'Erreur lors de l\'enregistrement en base de données, l\'article n\'a pas été crée.';
             }
         }
         catch (\PDOException $e)
         {
-            PostController::ifPDOExceptionView($e);
+            echo PostController::ifPDOExceptionView($e);
         }
         catch (AccessViolationException $e)
         {
-            PostController::ifAccessViolationExceptionView($e);
+            echo PostController::ifAccessViolationExceptionView($e);
         }
     }
 
@@ -243,24 +243,24 @@ Abstract Class PostController
             $requestSuccess = PostManager::edit($postEntity);
             if($requestSuccess != null)
             {
-                echo 'header:location/blog/posts';
+                echo 'success';
             }
             else
             {
-                echo PostView::editFail();
+                echo 'Erreur lors de la requête, les modifications, n\'ont pas été enregistrés.';
             }
         }
         catch (\PDOException $e)
         {
-            PostController::ifPDOExceptionView($e);
+            echo PostController::ifPDOExceptionView($e);
         }
         catch (AccessViolationException $e)
         {
-            PostController::ifAccessViolationExceptionView($e);
+            echo PostController::ifAccessViolationExceptionView($e);
         }
     }
 
-    public static function delete( $id, $tokenSent, $userSession)
+    public static function delete( $id, $tokenSent, $userSession, $root)
     {
         try
         {
@@ -269,7 +269,7 @@ Abstract Class PostController
             $requestSuccess = PostManager::delete( $id);
             if($requestSuccess == true)
             {
-                echo 'header:location/blog/posts';
+                header('Location:'.$root.'postsBack');
             }
             else
             {
@@ -279,11 +279,11 @@ Abstract Class PostController
         }
         catch (\PDOException $e)
         {
-            PostController::ifPDOExceptionView($e);
+            echo PostController::ifPDOExceptionView($e);
         }
         catch (AccessViolationException $e)
         {
-            PostController::ifAccessViolationExceptionView($e);
+            echo PostController::ifAccessViolationExceptionView($e);
         }
     }
 

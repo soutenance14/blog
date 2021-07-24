@@ -97,9 +97,10 @@ function validateType(editText)
   return $validateType;
 }
 
-function hideAllErrorMessage()
+function hideAllErrorAndSuccessMessage()
 {
   errorMessage.style.display = 'none';
+  successMessage.style.display = 'none';
   for(floatingForm of floatingForms)
     {
       //hide specific error
@@ -120,7 +121,7 @@ function sendDataOnClick(post, url)
   //     sendData(post, url);
   //   });
   submitButton.addEventListener('click', event => {
-    hideAllErrorMessage();
+    hideAllErrorAndSuccessMessage();
     if(validateForm() && validFormSpecificPage())
       {
         displaySomethingSpecific();

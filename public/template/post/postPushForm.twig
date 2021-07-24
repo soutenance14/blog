@@ -1,0 +1,110 @@
+{% extends "Base.twig" %}
+{% block title %}Touts les articles{% endblock %}
+{% block css %}<link href="{{root}}css/post.css" rel="stylesheet" />{% endblock %}
+{% block nav %}
+    {% if user.getPermission() is not null %}
+        {% include 'menu/menuAuth.twig' %}
+    {% else %}
+    {{parent()}}                    
+    {% endif %}
+{% endblock %}
+{% block container %}
+<main class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <p>Créer un nouvel article</p>
+                <div class="my-5">
+                    <div id="form" method ='post'>
+                        <div class="form-floating post-form" id="auteur">
+                            <input class="form-control" name="auteur" type="text" placeholder="Entrez votre nom..." data-sb-validations="required" />
+                            <label for="auteur">Auteur</label>
+                            <div class="invalid-feedback" data-sb-feedback="auteur:required">Un nom est nécessaire.</div>
+                        </div>
+                        <div class="form-floating post-form" id="titre">
+                            <input class="form-control" name="titre" type="text" placeholder="Entrez un titre..." data-sb-validations="required" />
+                            <label for="titre">Titre</label>
+                            <div class="invalid-feedback" data-sb-feedback="titre:required">Un titre est nécessaire.</div>
+                        </div>
+                       
+                        <div class="form-floating post-form" id="chapo">
+                            <input class="form-control" name="chapo" type="text" placeholder="Entrez un chapo..." data-sb-validations="required" />
+                            <label for="chapo">Chapo</label>
+                            <div class="invalid-feedback" data-sb-feedback="chapo:required">Un chapo est nécessaire.</div>
+                        </div>
+                       
+                        <div class="form-floating post-form" id="contenu" >
+                            <textarea class="form-control postTextarea" name="contenu" type="text" placeholder="Enter your message here..." style="height: 12rem" data-sb-validations="required"></textarea>
+                            <label for="contenu">Contenu</label>
+                            <div class="invalid-feedback" data-sb-feedback="contenu:required">Un texte de 150 caractères minimum est nécessaire.</div>
+                            <div class="invalid-feedback specific-feedback" data-sb-feedback="newPassword:required">Le texte est inférieur à 150 caractères!</div>
+                        </div>
+
+                        <div class="post-form hide"  id="token">
+                            <input class="form-control" name="token" type="password" value="{{user.getToken()}}" />   
+                        </div>  
+                        <br />
+                       <img id="progress_bar" class="hide" src="assets/img/gif/chargement2.gif"/>
+                        
+                        <div id="submitSuccessMessage">
+                            <div class="text-center mb-3">
+                                <div class="fw-bolder">L'article a été enregistré avec succés.</div>
+                            </div>
+                        </div>
+
+                        <!-- Submit error message-->
+                        <!---->
+                        <!-- This is what your users will see when there is-->
+                        <!-- an error submitting the form-->
+                        <div id="submitErrorMessage"><div class="text-center text-danger mb-3">Erreur l'article n'a pas été enregistré.</div></div>
+                        <!-- Submit Button-->
+                        {# <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Envoyer</button> #}
+                        <button class="btn btn-primary text-uppercase" id="submitButton">Créer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block js %}
+    {# <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script> #}
+
+    <script>
+
+        var contenu = (document.getElementById("contenu").getElementsByClassName("form-control"))[0];
+
+        var invalidSpecificContenu = (document.getElementById("contenu").getElementsByClassName("specific-feedback"))[0];
+
+        // specific element will be verified
+        var url = 'pushPost';
+
+        function displaySomethingSpecific()
+        {
+            //progress_bar.style.display = 'block';
+        }
+        
+        function hideSomethingSpecific()
+        {
+            //progress_bar.style.display = 'none';
+        }
+
+        function validFormSpecificPage()
+        {
+            var $validFormSpecificPage = true;
+
+            if(contenu['value'].length < 150)
+            { 
+                $validFormSpecificPage = false;
+                invalidSpecificContenu.style.display = 'block';
+                invalidSpecificContenu.style.display = 'block';
+            }
+            return $validFormSpecificPage;
+        }
+        // ce script doit être ecexuter avant le script ci dessous
+    </script>
+
+    {# <script src="{{root}}js/submitContact.js"></script> #}
+    <script src="{{root}}js/submit.js"></script>
+{% endblock %}

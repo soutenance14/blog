@@ -14,7 +14,7 @@ Class MemberView
             $twig = new Twig\Environment($loader);
         
             // load template
-            $template = $twig->load('home.twig');
+            $template = $twig->load('member/home.twig');
         
             // set template variables
             // render template
@@ -84,7 +84,7 @@ Class MemberView
             $twig = new Twig\Environment($loader);
         
             // load template
-            $template = $twig->load('editPassword.twig');
+            $template = $twig->load('member/editPassword.twig');
         
             // set template variables
             // render template

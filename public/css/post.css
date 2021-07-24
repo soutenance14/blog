@@ -1,0 +1,39 @@
+
+#submitSuccessMessage
+{
+  color:#6FA771;
+}
+
+#waitingMessage
+{
+  color:#DA9045;
+}
+
+.postTextarea
+{
+  resize:none;
+}
+
+.editArticleButton
+{
+  float: left;
+}
+
+.deleteArticleButton
+{
+  float: right;
+}
+
+.editArticleButton a, .deleteArticleButton a
+{
+  color:#FFF;
+  border : 1px solid #FFF;
+  border-radius : 5px;
+  padding: 5px;
+}
+
+.editArticleButton a:hover, .deleteArticleButton a:hover
+{
+  color: bisque;
+}
+

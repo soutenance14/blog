@@ -3,19 +3,36 @@
         {% block title %}Article{% endblock %}
         {% block nav %}
             {% if user.getPermission() is not null %}
-                {% include 'menuAuth.twig' %}
+                {% include 'menu/menuAuth.twig' %}
             {% else %}
                 {{parent()}}
             {% endif %}
         {% endblock %}
         
-        {% block css %}<link href="{{root}}css/comment.css" rel="stylesheet" />{% endblock %}
+        {% block css %}
+            <link href="{{root}}css/comment.css" rel="stylesheet" />
+            <link href="{{root}}css/post.css" rel="stylesheet" />
+        {% endblock %}
         {% block header %}
         <header class="masthead" style="background-image: url('{{root}}assets/img/post-bg.jpg')">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="post-heading">
+                            <h3>
+                                <span class="editArticleButton" >
+                                    <a href="{{root}}formEditPost/{{postEntity.getId()}}">
+                                        Modifier article 
+                                    </a>
+                                </span> 
+                                <span class="deleteArticleButton" >
+                                    <a href="{{root}}deletePost/{{postEntity.getId()}}/{{user.getToken()}}">
+                                        Supprimer article
+                                    </a>
+                                </span> 
+                            </h3>
+                            <div class="clear"></div>
+                            <br>
                             <h1>{{postEntity.getTitre()}}</h1>
                             <h2 class="subheading">{{postEntity.getChapo()}}</h2>
                             <span class="meta">
@@ -35,7 +52,7 @@
                 <div class="container px-4 px-lg-5">
                     <div class="row gx-4 gx-lg-5 justify-content-center">
                         <div class="col-md-10 col-lg-8 col-xl-7">
-                            {# <h2 class="subheading">{{postEntity.getChapo()}}</h2> #}
+                            
                             <p>
                                 {{postEntity.getContenu()}}
                             </p>
@@ -44,6 +61,6 @@
                     <hr>
                 </div>
             </article>
-            {% include 'comments.twig' %}           
+            {% include 'comment/commentsBack.twig' %}           
         {% endblock %}
 

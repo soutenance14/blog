@@ -40,11 +40,11 @@ Abstract Class CommentController
         }
         catch (\PDOException $e)
         {
-            CommentController::ifPDOExceptionView($e);
+            echo CommentController::ifPDOExceptionView($e);
         }
         catch (AccessViolationException $e)
         {
-            CommentController::ifAccessViolationExceptionView($e);
+            echo CommentController::ifAccessViolationExceptionView($e);
         }
     }
 
@@ -76,11 +76,11 @@ Abstract Class CommentController
             }
             catch (\PDOException $e)
             {
-                CommentController::ifPDOExceptionView($e);
+                echo CommentController::ifPDOExceptionView($e);
             }
             catch (AccessViolationException $e)
             {
-                CommentController::ifAccessViolationExceptionView($e);
+                echo CommentController::ifAccessViolationExceptionView($e);
             }
         }
         else
@@ -118,11 +118,11 @@ Abstract Class CommentController
         }
         catch (\PDOException $e)
         {
-            CommentController::ifPDOExceptionView($e);
+            echo CommentController::ifPDOExceptionView($e);
         }
         catch (AccessViolationException $e)
         {
-            CommentController::ifAccessViolationExceptionView($e);
+            echo CommentController::ifAccessViolationExceptionView($e);
         }
     }
 

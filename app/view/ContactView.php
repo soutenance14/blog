@@ -13,7 +13,7 @@ Class ContactView
             $twig = new Twig\Environment($loader);
         
             // load template
-            $template = $twig->load('contact.twig');
+            $template = $twig->load('contact/contact.twig');
         
             // set template variables
             // render template

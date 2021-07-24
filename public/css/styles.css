@@ -10817,3 +10817,8 @@ header.masthead .site-heading .h1 {
 {
   display : none;
 }
+
+.clear
+{
+  clear:both;
+}

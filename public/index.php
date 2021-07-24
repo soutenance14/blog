@@ -49,7 +49,7 @@ $router->map('POST', '/deleteMember/[:token]', 'deleteMember');
 // for user admin
     //--GET
 $router->map('GET', '/formPushPost', 'formPushPost');
-$router->map('GET', '/formEditPost/[i:id]/[:token]', 'formEditPost');
+$router->map('GET', '/formEditPost/[i:id]', 'formEditPost');
 $router->map('GET', '/formDeletePost', 'formDeletePost');
 $router->map('GET', '/deletePost/[i:id]/[:token]', 'deletePost');
 
@@ -72,7 +72,6 @@ function home0()
     home();
 }
 
-
 function formContact()
 {
     $blogSession = new BlogSession();
@@ -86,7 +85,6 @@ function sendMessage()
         ContactController::sendMessage($_POST['nom'], $_POST['mail'], $_POST['contenu']);
     }
 }
-
 
 // FOR POST
     //form
@@ -168,8 +166,10 @@ function editPost()
 function deletePost($id, $token)
 {
     // require  '../app/controller/PostController.php';
+
+    $root = '../../';
     $blogSession = new BlogSession();
-    PostController::delete($id, $token, $blogSession->getUser());
+    PostController::delete($id, $token, $blogSession->getUser(), $root);
 }
 
 

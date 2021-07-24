@@ -3,7 +3,7 @@
         {% block title %}Article{% endblock %}
         {% block nav %}
             {% if user.getPermission() is not null %}
-                {% include 'menuAuth.twig' %}
+                {% include 'menu/menuAuth.twig' %}
             {% else %}
                 {{parent()}}
             {% endif %}
@@ -44,6 +44,6 @@
                     <hr>
                 </div>
             </article>
-            {% include 'commentsBack.twig' %}           
+            {% include 'comment/commentsBack.twig' %}       
         {% endblock %}
 

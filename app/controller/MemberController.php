@@ -33,7 +33,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
         }
         catch (AccessViolationException $e)
         {
-            MemberController::ifAccessViolationExceptionView($e);
+            echo MemberController::ifAccessViolationExceptionView($e);
         }
     }
 
@@ -56,18 +56,25 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
         }
         catch (\PDOException $e)
         {
-            MemberController::ifPDOExceptionView($e);
+            echo MemberController::ifPDOExceptionView($e);
         }
         catch (AccessViolationException $e)
         {
-            MemberController::ifAccessViolationExceptionView($e);
+            echo MemberController::ifAccessViolationExceptionView($e);
         }
     }
 
     public static function formEditPassword($userSession)
     {
-        MemberController::permission(USER_AUTHENTIFIED, $userSession);
-        echo MemberView::formEditPassword($userSession);
+        try
+        {
+            MemberController::permission(USER_AUTHENTIFIED, $userSession);
+            echo MemberView::formEditPassword($userSession);
+        }
+        catch (AccessViolationException $e)
+        {
+            echo MemberController::ifAccessViolationExceptionView($e);
+        }
     }
 
     // NOT FORM
@@ -98,7 +105,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
         }
         catch (\PDOException $e)
         {
-            MemberController::ifPDOExceptionView($e);
+            echo MemberController::ifPDOExceptionView($e);
         }
     }
 
@@ -135,7 +142,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
         }
         catch (\PDOException $e)
         {
-            MemberController::ifPDOExceptionView($e);
+            echo MemberController::ifPDOExceptionView($e);
         }
     }
     
@@ -166,11 +173,11 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
         }
         catch (\PDOException $e)
         {
-            MemberController::ifPDOExceptionView($e);
+            echo MemberController::ifPDOExceptionView($e);
         }
         catch (AccessViolationException $e)
         {
-            MemberController::ifAccessViolationExceptionView($e);
+            echo MemberController::ifAccessViolationExceptionView($e);
         }
     }
 
@@ -180,6 +187,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
         {
             //use js for check new password and confirmNewPassword
             $userSession = $blogSession->getUser();
+            
             MemberController::permission(USER_AUTHENTIFIED, $userSession, $tokenSent);
             if( $userSession->getPassword() === $oldPassord)
             {
@@ -196,13 +204,11 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
         }
         catch (\PDOException $e)
         {
-            echo 'Problème avec la base de données : '. $e->getMessage(). " ". $e->getCode();
-            // MemberController::ifPDOExceptionView($e);
+            echo MemberController::ifPDOExceptionView($e);
         }
         catch (AccessViolationException $e)
         {
-            echo 'Problème de permission d\'accées : '. $e->getMessage(). " ". $e->getCode();
-            // MemberController::ifAccessViolationExceptionView($e);
+            echo MemberController::ifAccessViolationExceptionView($e);
         }
     }
 

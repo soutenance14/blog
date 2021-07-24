@@ -4,7 +4,7 @@
         {% if user.getPermission is null %}
             <p><a href="{{root}}login">S'identifier</a> ou <a href="{{root}}signUp">s'inscrire</a> pour laisser un commentaire.</p>
         {% else %}
-            {% include "formComment.twig" %}
+            {% include "comment/formComment.twig" %}
         {% endif %}
         {% if listCommentsPublishedEntity|length <1 %}
             <h6>Il n'y a pas de commentaires pour le moment.</h6>
@@ -26,16 +26,14 @@
                         </p>
                         <hp class="post-subtitle">{{commentEntity.getContenu()}}</hp>
                         {%  if  commentEntity.getIdMembre() == user.getId()    %}
-                                <h6>
+                            <h6>
                                 <a href="{{root}}deleteComment/{{commentEntity.getId()}}/{{user.getToken()}}">
                                         <span class="fa-stack fa-lg linkDelete" >
                                         <i class="fas fa-trash fa-stack-1x"></i>
                                         </span> 
                                 </a>
                             </h6>
-                            <div class='clear'></div>
                         {% endif %}
-                        
                     </div>
                     {# <!-- Divider-->
                     <hr class="my-4" /> #}

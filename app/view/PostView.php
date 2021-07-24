@@ -11,30 +11,46 @@ Class PostView extends View
 
     public static function formPushPost($user)
     {
-        return "formPushPost
-        <form action ='pushPost' method ='post'><input name='auteur'><input name='titre'><input name='chapo'><input name='contenu'>
-        <input type='submit' name ='submit' value='ok'>
-        <br> <input name ='token' value='".$user->getToken()."'>
-        </form>";
+        try 
+        {
+            // le dossier ou on trouve les templates
+            $loader = new Twig\Loader\FilesystemLoader('template');
+        
+            // initialiser l'environement Twig
+            $twig = new Twig\Environment($loader);
+        
+            // load template
+            $template = $twig->load('post/postPushForm.twig');
+        
+            // set template variables
+            // render template
+            // return $listCommentsPublishedView;
+            return $template->render(array(
+                //A MODIFIER ROOT DANS PARAM
+                'root'=>"../",
+                'user'=> $user,
+            ));
+        
+        } catch (Exception $e) 
+        {
+           return PostView::renderViewFail($e);
+        }
     }
 
     public static function formEditPost($postEntity, $user)
     {
-        return "formEditPost
-        <br>created_at :" . $postEntity->getCreatedAt()
-        ."<form action ='../../editPost' method ='post'>
-                <input name='id' readonly value='".$postEntity->getId()."'>
-                <input name='auteur' value='".$postEntity->getAuteur()."'>
-                <input name='titre' value='".$postEntity->getTitre()."'>
-                <input name='chapo' value='".$postEntity->getChapo()."'>
-                <input name='contenu' value='".$postEntity->getContenu()."'>
-                <input type='submit' name ='submit' value='ok'>
-                <br> <input name ='token' value='".$user->getToken()."'>
-                </form>";
-    }
 
-    public static function get($postEntity, $listCommentsPublishedEntity, $user, $id_post)
-    {
+        // return "formEditPost
+        // <br>created_at :" . $postEntity->getCreatedAt()
+        // ."<form action ='../../editPost' method ='post'>
+        //         <input name='id' readonly value='".$postEntity->getId()."'>
+        //         <input name='auteur' value='".$postEntity->getAuteur()."'>
+        //         <input name='titre' value='".$postEntity->getTitre()."'>
+        //         <input name='chapo' value='".$postEntity->getChapo()."'>
+        //         <input name='contenu' value='".$postEntity->getContenu()."'>
+        //         <input type='submit' name ='submit' value='ok'>
+        //         <br> <input name ='token' value='".$user->getToken()."'>
+        //         </form>";
 
         try 
         {
@@ -45,12 +61,44 @@ Class PostView extends View
             $twig = new Twig\Environment($loader);
         
             // load template
-            $template = $twig->load('post.twig');
+            $template = $twig->load('post/postEditForm.twig');
         
             // set template variables
             // render template
             // return $listCommentsPublishedView;
             return $template->render(array(
+                //A MODIFIER ROOT DANS PARAM
+                'root'=>"../",
+                'user'=> $user,
+                'postEntity'=> $postEntity,
+            ));
+        
+        } catch (Exception $e) 
+        {
+            return PostView::renderViewFail($e);
+        }
+
+
+    }
+
+    public static function get($postEntity, $listCommentsPublishedEntity, $user, $id_post)
+    {
+        try 
+        {
+            // le dossier ou on trouve les templates
+            $loader = new Twig\Loader\FilesystemLoader('template');
+        
+            // initialiser l'environement Twig
+            $twig = new Twig\Environment($loader);
+        
+            // load template
+            $template = $twig->load('post/post.twig');
+        
+            // set template variables
+            // render template
+            // return $listCommentsPublishedView;
+            return $template->render(array(
+                //A MODIFIER ROOT DANS PARAM
                 'root'=>"../",
                 'postEntity'=> $postEntity,
                 'listCommentsPublishedEntity'=> $listCommentsPublishedEntity,
@@ -75,7 +123,7 @@ Class PostView extends View
             $twig = new Twig\Environment($loader);
         
             // load template
-            $template = $twig->load('postBack.twig');
+            $template = $twig->load('post/postBack.twig');
         
             // set template variables
             // render template
@@ -112,7 +160,7 @@ Class PostView extends View
             $twig = new Twig\Environment($loader);
         
             // load template
-            $template = $twig->load('posts.twig');
+            $template = $twig->load('post/posts.twig');
         
             // set template variables
             // render template
@@ -138,7 +186,7 @@ Class PostView extends View
             $twig = new Twig\Environment($loader);
         
             // load template
-            $template = $twig->load('postsBack.twig');
+            $template = $twig->load('post/postsBack.twig');
         
             // set template variables
             // render template
@@ -153,7 +201,7 @@ Class PostView extends View
         }  
     }
 
-    public static function getNoPostExist($listPostsEntity)
+    public static function getNoPostExist()
     {
         return 'Il n\'y a pas de post pour le moment';  
     }

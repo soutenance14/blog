@@ -1,4 +1,4 @@
-{% extends 'menu.twig' %}   
+{% extends 'menu/menu.twig' %}   
 
 {% block menuName %}
     Menu pour {{user.getLogin()}}
@@ -10,6 +10,7 @@
 {% endblock %}
 {% block articles %}
     {% if user.getType == 'admin' %}
+        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{root}}formPushPost">créer un article</a></li>
         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{root}}postsBack">Articles</a></li>
     {% else %}
         {{parent()}}
