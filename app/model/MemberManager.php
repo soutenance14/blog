@@ -26,7 +26,6 @@ Class MemberManager{
         $request->bindParam(':login', $login, \PDO::PARAM_STR);
         $request->execute();
         $login = $request->fetch(\PDO::FETCH_ASSOC)['login'];
-        var_dump($login);
         $loginNotExist = false;
         if( $login === null )
         {

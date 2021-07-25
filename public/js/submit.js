@@ -103,7 +103,7 @@ function hideAllErrorAndSuccessMessage()
   successMessage.style.display = 'none';
   for(floatingForm of floatingForms)
     {
-      //hide specific error
+      //hide specific errorif exists
       var specificFeedback = floatingForm.getElementsByClassName("specific-feedback")[0];
       if(typeof specificFeedback !== 'undefined'  )
       {
@@ -126,7 +126,11 @@ function sendDataOnClick(post, url)
       {
         displaySomethingSpecific();
         sendData(post, url);
-      } 
+      }
+      // else
+      // {
+      //   alert('Un promème innatendue est survenue, la requete n\'a pas été effectué.');
+      // }
     });
 }
 
@@ -175,6 +179,7 @@ function sendData(data, url)
           if(XHR.responseText === 'success')
           {
               successMessage.style.display = 'block';
+              doSomethingSpecificSuccess();
           }
           else
           {
@@ -182,7 +187,7 @@ function sendData(data, url)
             errorMessage.style.display = 'block';
             errorMessage.innerHTML = XHR.responseText;
             errorMessage.className = "text-center text-danger mb-3";
-            console.log(errorMessage);
+            doSomethingSpecificError();
           }
       }
       // else{

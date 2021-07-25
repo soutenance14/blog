@@ -1,6 +1,6 @@
 {% extends "Base.twig" %}
-{% block title %}Touts les articles{% endblock %}
 {% block css %}<link href="{{root}}css/contact.css" rel="stylesheet" />{% endblock %}
+{% block headerImage %}contact-bg{% endblock %}
 {% block nav %}
     {% if user.getPermission() is not null %}
         {% include 'menu/menuAuth.twig' %}
@@ -67,6 +67,7 @@
         // specific element will be verified
         var url = 'sendMessage';
 
+        //specific calling after click
         function displaySomethingSpecific()
         {
             progress_bar.style.display = 'block';
@@ -77,6 +78,18 @@
             progress_bar.style.display = 'none';
         }
 
+        function doSomethingSpecificSuccess()
+        {
+            //this function is obligatory
+            //nothing for me
+        }
+        
+        function doSomethingSpecificError()
+        {
+            //this function is obligatory
+            //nothing for me
+        }
+
         function validFormSpecificPage()
         {
             //this function is obligatory
@@ -85,10 +98,5 @@
         }
         // ce script doit être ecexuter avant le script ci dessous
     </script>
-
-
-
-
-    {# <script src="{{root}}js/submitContact.js"></script> #}
     <script src="{{root}}js/submit.js"></script>
 {% endblock %}

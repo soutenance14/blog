@@ -14,7 +14,7 @@ Class PostView extends View
         try 
         {
             // le dossier ou on trouve les templates
-            $loader = new Twig\Loader\FilesystemLoader('template');
+            $loader = new Twig\Loader\FilesystemLoader('../app/template');
         
             // initialiser l'environement Twig
             $twig = new Twig\Environment($loader);
@@ -27,6 +27,7 @@ Class PostView extends View
             // return $listCommentsPublishedView;
             return $template->render(array(
                 //A MODIFIER ROOT DANS PARAM
+                'title'=>'Créer article',
                 'root'=>"../",
                 'user'=> $user,
             ));
@@ -39,23 +40,10 @@ Class PostView extends View
 
     public static function formEditPost($postEntity, $user)
     {
-
-        // return "formEditPost
-        // <br>created_at :" . $postEntity->getCreatedAt()
-        // ."<form action ='../../editPost' method ='post'>
-        //         <input name='id' readonly value='".$postEntity->getId()."'>
-        //         <input name='auteur' value='".$postEntity->getAuteur()."'>
-        //         <input name='titre' value='".$postEntity->getTitre()."'>
-        //         <input name='chapo' value='".$postEntity->getChapo()."'>
-        //         <input name='contenu' value='".$postEntity->getContenu()."'>
-        //         <input type='submit' name ='submit' value='ok'>
-        //         <br> <input name ='token' value='".$user->getToken()."'>
-        //         </form>";
-
         try 
         {
             // le dossier ou on trouve les templates
-            $loader = new Twig\Loader\FilesystemLoader('template');
+            $loader = new Twig\Loader\FilesystemLoader('../app/template');
         
             // initialiser l'environement Twig
             $twig = new Twig\Environment($loader);
@@ -69,6 +57,7 @@ Class PostView extends View
             return $template->render(array(
                 //A MODIFIER ROOT DANS PARAM
                 'root'=>"../",
+                'title'=>'Modifie : '.$postEntity->getTitre(),
                 'user'=> $user,
                 'postEntity'=> $postEntity,
             ));
@@ -86,7 +75,7 @@ Class PostView extends View
         try 
         {
             // le dossier ou on trouve les templates
-            $loader = new Twig\Loader\FilesystemLoader('template');
+            $loader = new Twig\Loader\FilesystemLoader('../app/template');
         
             // initialiser l'environement Twig
             $twig = new Twig\Environment($loader);
@@ -100,6 +89,7 @@ Class PostView extends View
             return $template->render(array(
                 //A MODIFIER ROOT DANS PARAM
                 'root'=>"../",
+                'title'=>$postEntity->getTitre(),
                 'postEntity'=> $postEntity,
                 'listCommentsPublishedEntity'=> $listCommentsPublishedEntity,
                 'user'=> $user,
@@ -117,7 +107,7 @@ Class PostView extends View
         try 
         {
             // le dossier ou on trouve les templates
-            $loader = new Twig\Loader\FilesystemLoader('template');
+            $loader = new Twig\Loader\FilesystemLoader('../app/template');
         
             // initialiser l'environement Twig
             $twig = new Twig\Environment($loader);
@@ -130,6 +120,7 @@ Class PostView extends View
             // return $listCommentsPublishedView;
             return $template->render(array(
                 'root'=>"../",
+                'title'=>$postEntity->getTitre(),
                 'postEntity'=> $postEntity,
                 'listCommentsPublishedEntity'=> $listCommentsPublishedEntity,
                 'listCommentsNotPublishedEntity'=> $listCommentsNotPublishedEntity,
@@ -154,7 +145,7 @@ Class PostView extends View
         try 
         {
             // le dossier ou on trouve les templates
-            $loader = new Twig\Loader\FilesystemLoader('template');
+            $loader = new Twig\Loader\FilesystemLoader('../app/template');
         
             // initialiser l'environement Twig
             $twig = new Twig\Environment($loader);
@@ -165,6 +156,7 @@ Class PostView extends View
             // set template variables
             // render template
             return $template->render(array(
+                'title'=> 'Liste des articles',
                 'listPostsEntity'=> $listPostsEntity,
                 'user'=> $user,
             ));
@@ -180,7 +172,7 @@ Class PostView extends View
         try 
         {
             // le dossier ou on trouve les templates
-            $loader = new Twig\Loader\FilesystemLoader('template');
+            $loader = new Twig\Loader\FilesystemLoader('../app/template');
         
             // initialiser l'environement Twig
             $twig = new Twig\Environment($loader);

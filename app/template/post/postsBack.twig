@@ -2,7 +2,7 @@
       
        
             {% extends "Base.twig" %}
-            {% block title %}Touts les articles{% endblock %}
+            {% block headerImage %}posts-bg{% endblock %}
             {% block nav %}
                 {% if user.getPermission() is not null %}
                     {% include 'menu/menuAuth.twig' %}
@@ -20,7 +20,7 @@
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <!-- Post preview-->
                         <div class="post-preview">
-                            <a href="post/{{postEntity.getId()}}">
+                            <a href="postBack/{{postEntity.getId()}}">
                                 <h2 class="post-title">{{postEntity.getTitre()}}</h2>
                                 <h3 class="post-subtitle">{{postEntity.getChapo()}}</h3>
                             </a>
@@ -30,6 +30,18 @@
                                 {{postEntity.setformattedCreatedAt()}}
                                 le {{postEntity.getDate()}} à {{postEntity.getTime()}}
                             </p>
+                            <h6>
+                                <a href="{{root}}deletePost/{{postEntity.getId()}}/{{user.getToken()}}">
+                                        <span class="fa-stack fa-lg " >
+                                        <i class="fas fa-trash fa-stack-1x"></i>
+                                        </span> 
+                                </a>
+                                <a href="{{root}}formEditPost/{{postEntity.getId()}}">
+                                        <span class="fa-stack fa-lg " >
+                                        <i class="fas fa-edit fa-stack-1x"></i>
+                                        </span> 
+                                </a>
+                            </h6>
                         </div>
                         <!-- Divider-->
                         <hr class="my-4" />

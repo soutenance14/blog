@@ -1,0 +1,100 @@
+{% extends "Base.twig" %}
+{% block css %}<link href="{{root}}css/contact.css" rel="stylesheet" />{% endblock %}
+{% block headerImage %}login-bg{% endblock %}
+{# {% block nav %}
+    {% if user.getPermission() is not null %}
+        {% include 'menu/menuAuth.twig' %}
+    {% else %}
+    {{parent()}}                    
+    {% endif %}
+{% endblock %} #}
+{% block container %}
+<main class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <p>S'identifier</p>
+                <div class="my-5">
+                    <div id="form" method ='post'>
+                        <div class="form-floating post-form" id="login">
+                            <input class="form-control"  name="login" type="text" 
+                            placeholder="Ancien mot de passe..." required pattern="[a-zA-Z0-9._-]" />
+                            <label for="name">Login</label>
+                            <div class="invalid-feedback" data-sb-feedback="login:required">Le login est nécessaire et doit être supérieur à 6 caractères.</div>
+                        </div>
+                        <div class="form-floating post-form" id="password">
+                            <input class="form-control"  name="password" type="password" placeholder="Nouveau mot de passe..." data-sb-validations="required" />
+                            <label for="email">Mot de passe</label>
+                            <div class="invalid-feedback" data-sb-feedback="password:required">Le mot de passe est nécesaire et doit être supérieur ou égal à 6 caractères.</div>
+                        </div>             
+                        <br />
+                        <div id="submitSuccessMessage">
+                            <div class="text-center mb-3">
+                                <div class="fw-bolder">Authentification réussie</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Submit error message-->
+                        <!---->
+                        <!-- This is what your users will see when there is-->
+                        <!-- an error submitting the form-->
+                        <div id="submitErrorMessage"><div class="text-center text-danger mb-3">Erreur, l'utilisateur n'a pas été trouvé, veuillez réessayer.</div></div>
+                        <!-- Submit Button-->
+                        {# <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Envoyer</button> #}
+                        <button class="btn btn-primary text-uppercase" id="submitButton" >Valider</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block js %}
+    {# <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script> #}
+    <script>
+
+        var floatingForms = document.getElementsByClassName("form-floating");
+        var postForms = document.getElementsByClassName("post-form");
+
+        var form = document.forms["form"];
+
+        // specific element will be verified
+        {# var login = (document.getElementById("login").getElementsByClassName("form-control"))[0];
+        var password = (document.getElementById("password").getElementsByClassName("form-control"))[0]; #}
+
+        var url = 'auth';
+
+        //specific calling after click
+        function displaySomethingSpecific()
+        {
+            //this function is obligatory
+            //nothing for me
+        }
+        
+        function hideSomethingSpecific()
+        {
+            //this function is obligatory
+            //nothing for me
+        }
+        
+        function doSomethingSpecificSuccess()
+        {
+            document.location.href="home";
+        }
+
+        function doSomethingSpecificError()
+        {
+            //this function is obligatory
+            //nothing for me
+        }
+
+        function validFormSpecificPage()
+        {
+            return true;
+            //nothing special
+        }
+        // ce script doit être ecexuter avant le script ci dessous
+    </script>
+    <script src="{{root}}js/submit.js"></script>
+{% endblock %}

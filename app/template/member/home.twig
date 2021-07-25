@@ -2,7 +2,6 @@
       
        
             {% extends "Base.twig" %}
-            {% block title %}Touts les articles{% endblock %}
             {% block nav %}
                 {% if user.getPermission() is not null %}
                     {% include 'menu/menuAuth.twig' %}

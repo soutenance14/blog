@@ -96,11 +96,11 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
                 $blogSession->setUser($memberEntity);
                 // echo'member model' , var_dump($memberEntity);
                 // echo '<br> session user' , var_dump($blogSession->getUser());
-                header('Location:home');
+                echo 'success';
             }
             else
             {
-                echo 'redirection login + mess error auth';
+                echo 'Erreur, l\'utilisateur n\'a pas été trouvé, veuillez réessayer.';
             }
         }
         catch (\PDOException $e)
