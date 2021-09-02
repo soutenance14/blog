@@ -8,7 +8,7 @@ Class PostView extends View
     {
         $array = array(
             'title'=>'Créer article',
-            'root'=>"../",
+            'root'=>"//blog/",
             'user'=> $user,
         );
         return PostView::renderView('post/postPushForm.twig', $array);
@@ -17,7 +17,7 @@ Class PostView extends View
     public static function formEditPost($postEntity, $user)
     { 
         $array = array(
-            'root'=>"../",
+            'root'=>"//blog/",
             'title'=>'Modifie : '.$postEntity->getTitre(),
             'user'=> $user,
             'postEntity'=> $postEntity,
@@ -25,15 +25,14 @@ Class PostView extends View
         return PostView::renderView('post/postEditForm.twig', $array);
     }
 
-    public static function get($postEntity, $listCommentsPublishedEntity, $user, $id_post)
+    public static function get($postEntity, $listCommentsPublishedEntity, $user)
     {
         $array = array(         
-            'root'=>"../",
+            'root'=>"//blog/",
             'title'=>$postEntity->getTitre(),
             'postEntity'=> $postEntity,
             'listCommentsPublishedEntity'=> $listCommentsPublishedEntity,
             'user'=> $user,
-            'id_post'=> $id_post,
         );
         return PostView::renderView('post/post.twig', $array);
     }
@@ -41,7 +40,7 @@ Class PostView extends View
     public static function getBack($postEntity, $listCommentsPublishedEntity, $listCommentsNotPublishedEntity, $user, $id_post)
     {
         $array = array(
-            'root'=>"../",
+            'root'=>"//blog/",
             'title'=>$postEntity->getTitre(),
             'postEntity'=> $postEntity,
             'listCommentsPublishedEntity'=> $listCommentsPublishedEntity,

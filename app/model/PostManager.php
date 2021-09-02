@@ -4,11 +4,11 @@ require dirname(__DIR__) . '../db/DatabaseConnexion.php';
 
 Class PostManager{
     
-    public static function get(String $id)
+    public static function get(String $slug)
     {
         $request = DatabaseConnexion::getPdo()->prepare(
-            "SELECT id, auteur, titre, chapo, contenu, created_at from POST where id = :id");
-        $request->bindParam(':id', $id, \PDO::PARAM_STR);
+            "SELECT id, auteur, titre, slug, chapo, contenu, created_at from POST where slug = :slug");
+        $request->bindParam(':slug', $slug, \PDO::PARAM_STR);
         $request->execute();
         $post = $request->fetch(\PDO::FETCH_ASSOC);
         return $post;
@@ -17,7 +17,7 @@ Class PostManager{
     public static function getAll()
     {
         $request = DatabaseConnexion::getPdo()->prepare(
-            "SELECT id, auteur, titre, chapo, contenu, created_at from POST");
+            "SELECT id, auteur, titre, slug, chapo, contenu, created_at from POST");
         $request->execute();
         $posts = $request->fetchAll(\PDO::FETCH_ASSOC);
         return $posts;
@@ -27,13 +27,15 @@ Class PostManager{
     {
         $auteur = $postEntity->getAuteur();
         $titre = $postEntity->getTitre();
+        $slug = $postEntity->getSlug();
         $chapo = $postEntity->getChapo();
         $contenu = $postEntity->getContenu();
 
         $request = DatabaseConnexion::getPdo()->prepare(
-            "INSERT INTO POST (auteur, titre, chapo, contenu, created_at) values (:auteur, :titre, :chapo, :contenu, current_timestamp)");
+            "INSERT INTO POST (auteur, titre, slug, chapo, contenu, created_at) values (:auteur, :titre, :slug, :chapo, :contenu, current_timestamp)");
             $request->bindParam(':auteur', $auteur, \PDO::PARAM_STR);
             $request->bindParam(':titre', $titre, \PDO::PARAM_STR);
+            $request->bindParam(':slug', $slug, \PDO::PARAM_STR);
             $request->bindParam(':chapo', $chapo, \PDO::PARAM_STR);
             $request->bindParam(':contenu', $contenu, \PDO::PARAM_STR);
             $requestSuccess = $request->execute();
@@ -45,14 +47,16 @@ Class PostManager{
         $id = $postEntity->getId();
         $auteur = $postEntity->getAuteur();
         $titre = $postEntity->getTitre();
+        $slug = $postEntity->getSlug();
         $chapo = $postEntity->getChapo();
         $contenu = $postEntity->getContenu();
 
         $request = DatabaseConnexion::getPdo()->prepare(
-            "UPDATE POST set auteur = :auteur, titre = :titre, chapo = :chapo, contenu = :contenu, created_at = current_timestamp where id = :id");
+            "UPDATE POST set auteur = :auteur, titre = :titre, slug = :slug, chapo = :chapo, contenu = :contenu, created_at = current_timestamp where id = :id");
             $request->bindParam(':id', $id, \PDO::PARAM_STR);
             $request->bindParam(':auteur', $auteur, \PDO::PARAM_STR);
             $request->bindParam(':titre', $titre, \PDO::PARAM_STR);
+            $request->bindParam(':slug', $slug, \PDO::PARAM_STR);
             $request->bindParam(':chapo', $chapo, \PDO::PARAM_STR);
             $request->bindParam(':contenu', $contenu, \PDO::PARAM_STR);
             $requestSuccess = $request->execute();

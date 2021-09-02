@@ -18,7 +18,7 @@ Class View
             'message_special'=> $message_special,
             'title'=> $title,
             'imageHeader'=> $imageHeader,
-            'root'=>"../",
+            'root'=>"//blog/",
         ); 
         return View::renderView('message/exception.twig', $array);
     }
@@ -28,7 +28,7 @@ Class View
         $array = array(
             'title'=> "Oops, petit ptoblème",
             'message'=> $message,
-            'root'=>"../",
+            'root'=>"//blog/",
         ); 
         return View::renderView('message/simpleMessage.twig', $array);
     }

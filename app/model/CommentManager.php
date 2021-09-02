@@ -26,7 +26,7 @@ Class CommentManager{
     //     return $posts;
     // }
 
-    public static function getAllPostPublished(String $id_post)
+    public static function getAllPublished(String $id_post)
     {
         $request = DatabaseConnexion::getPdo()->prepare(
             "SELECT comment.id as id, contenu, published, created_at, id_post, id_membre,
@@ -42,7 +42,7 @@ Class CommentManager{
         
     }
     
-    public static function getAllPostNotPublished(String $id_post)
+    public static function getAllNotPublished(String $id_post)
     {
         $request = DatabaseConnexion::getPdo()->prepare(
             "SELECT comment.id as id, contenu, published, created_at, id_post, id_membre,
