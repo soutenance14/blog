@@ -5,7 +5,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
 // define('USER_AUTHENTIFIED', 'subscriber');
 // define('ADMIN', 'admin');
 
- Class MemberController
+ Class MemberController extends Controller
 {
 
     public static function home($userSession)
@@ -29,7 +29,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
         try
         {
             MemberController::permission(USER_AUTHENTIFIED, $userSession);
-            echo MemberView::formDelete($userSession);
+            // echo MemberView::formDelete($userSession);
         }
         catch (AccessViolationException $e)
         {
@@ -43,16 +43,16 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
         {
             MemberController::permission(ADMIN, $userSession);
             $listSubscribersEntity = [];
-            $listSubscribers = MemberManager::getAllSubscribers();
+            // $listSubscribers = MemberManager::getAllSubscribers();
             
-            foreach($listSubscribers as $subscriber)
-            {
-                $memberEntity = new MemberEntity();
-                $memberEntity->hydrate($subscriber);
-                array_push($listSubscribersEntity, $memberEntity);
-            }
+            // foreach($listSubscribers as $subscriber)
+            // {
+            //     $memberEntity = new MemberEntity();
+            //     $memberEntity->hydrate($subscriber);
+            //     array_push($listSubscribersEntity, $memberEntity);
+            // }
 
-            echo MemberView::formDeleteBack($userSession, $listSubscribersEntity);
+            // echo MemberView::formDeleteBack($userSession, $listSubscribersEntity);
         }
         catch (\PDOException $e)
         {
@@ -216,36 +216,6 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
     {
         $blogSession->disconnect();
         header('Location:home');
-    }
-
-    // view if PDO exception
-    private static function ifPDOExceptionView(\PDOException $e)
-    {
-        // Class is static, no instance, heritage is not possible
-        // no parent::ifPDOExceptionView($e);
-        return Controller::ifPDOExceptionView($e);
-    }
-
-    // view if exception AccessViolationException
-    private static function ifAccessViolationExceptionView(AccessViolationException $e)
-    {
-        // Class is static, no instance, heritage is not possible
-        // no parent::ifPDOExceptionView($e);
-        return Controller::ifAccessViolationExceptionView($e);
-    }
-
-    private static function permissionToken(String $permission, $user, $tokenSent)
-    {
-        Controller::permission($permission, $user, $tokenSent);
-    }
-    
-    private static function permission(String $permission, $user)
-    {
-        Controller::permission($permission, $user);
-    }
-    private static function permissionThisIdMember( $user, $id_member_permission, $tokenSent)
-    {
-        Controller::permissionThisIdMember( $user, $id_member_permission, $tokenSent);
     }
 
 }

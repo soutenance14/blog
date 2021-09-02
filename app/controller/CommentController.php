@@ -5,7 +5,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
 // define('USER_AUTHENTIFIED', 'subscriber');
 // define('ADMIN', 'admin');
 
-Abstract Class CommentController
+Abstract Class CommentController extends Controller
 {
     public static function push( $id_post, $contenu, $tokenSent, $userSession)
     {
@@ -124,32 +124,6 @@ Abstract Class CommentController
         {
             echo CommentController::ifAccessViolationExceptionView($e);
         }
-    }
-
-    // view if PDO exception
-    private static function ifPDOExceptionView(\PDOException $e)
-    {
-        // Class is static, no instance, heritage is not possible
-        // no parent::ifPDOExceptionView($e);
-        return Controller::ifPDOExceptionView($e);
-    }
-
-    // view if exception AccessViolationException
-    private static function ifAccessViolationExceptionView(AccessViolationException $e)
-    {
-        // Class is static, no instance, heritage is not possible
-        // no parent::ifPDOExceptionView($e);
-        return Controller::ifAccessViolationExceptionView($e);
-    }
-
-    private static function permissionToken(String $permission, $user, $tokenSent)
-    {
-        Controller::permissionToken($permission, $user, $tokenSent);
-    }
-    
-    private static function permissionThisIdMember( $user, $id_member_permission, $tokenSent)
-    {
-        Controller::permissionThisIdMember( $user, $id_member_permission, $tokenSent);
     }
 
 }
