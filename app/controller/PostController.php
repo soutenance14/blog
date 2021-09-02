@@ -1,9 +1,6 @@
 <?php
 
 require dirname(__DIR__) . '../../vendor/autoload.php';
-// define('USER_NOT_AUTHENTIFIED', null);
-// define('USER_AUTHENTIFIED', 0);
-// define('ADMIN', 1);
 
 Abstract Class PostController extends Controller
 {

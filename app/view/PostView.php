@@ -66,72 +66,35 @@ Class PostView extends View
         {
             return PostView::renderViewFail($e);
         }
-
-
     }
 
     public static function get($postEntity, $listCommentsPublishedEntity, $user, $id_post)
     {
-        try 
-        {
-            // le dossier ou on trouve les templates
-            $loader = new Twig\Loader\FilesystemLoader('../app/template');
-        
-            // initialiser l'environement Twig
-            $twig = new Twig\Environment($loader);
-        
-            // load template
-            $template = $twig->load('post/post.twig');
-        
-            // set template variables
-            // render template
-            // return $listCommentsPublishedView;
-            return $template->render(array(
-                //A MODIFIER ROOT DANS PARAM
-                'root'=>"../",
-                'title'=>$postEntity->getTitre(),
-                'postEntity'=> $postEntity,
-                'listCommentsPublishedEntity'=> $listCommentsPublishedEntity,
-                'user'=> $user,
-                'id_post'=> $id_post,
-            ));
-        
-        } catch (Exception $e) 
-        {
-           return PostView::renderViewFail($e);
-        }
+        $array = array(
+            //A MODIFIER ROOT DANS PARAM
+            'root'=>"../",
+            'title'=>$postEntity->getTitre(),
+            'postEntity'=> $postEntity,
+            'listCommentsPublishedEntity'=> $listCommentsPublishedEntity,
+            'user'=> $user,
+            'id_post'=> $id_post,
+        );
+        return PostView::renderView('post/post.twig', $array);
     }
 
     public static function getBack($postEntity, $listCommentsPublishedEntity, $listCommentsNotPublishedEntity, $user, $id_post)
     {
-        try 
-        {
-            // le dossier ou on trouve les templates
-            $loader = new Twig\Loader\FilesystemLoader('../app/template');
-        
-            // initialiser l'environement Twig
-            $twig = new Twig\Environment($loader);
-        
-            // load template
-            $template = $twig->load('post/postBack.twig');
-        
-            // set template variables
-            // render template
-            // return $listCommentsPublishedView;
-            return $template->render(array(
-                'root'=>"../",
-                'title'=>$postEntity->getTitre(),
-                'postEntity'=> $postEntity,
-                'listCommentsPublishedEntity'=> $listCommentsPublishedEntity,
-                'listCommentsNotPublishedEntity'=> $listCommentsNotPublishedEntity,
-                'user'=> $user,
-                'id_post'=> $id_post,
-            ));
-        
-        } catch (Exception $e) 
-        {
-           return PostView::renderViewFail($e);
-        }
+        $array = array(
+            'root'=>"../",
+            'title'=>$postEntity->getTitre(),
+            'postEntity'=> $postEntity,
+            'listCommentsPublishedEntity'=> $listCommentsPublishedEntity,
+            'listCommentsNotPublishedEntity'=> $listCommentsNotPublishedEntity,
+            'user'=> $user,
+            'id_post'=> $id_post,
+        );
+
+        return PostView::renderView('post/postBack.twig', $array); 
     }
     
     public static function getNotExist($id)
@@ -141,56 +104,22 @@ Class PostView extends View
 
     public static function getAll($listPostsEntity, $user)
     {
-
-        try 
-        {
-            // le dossier ou on trouve les templates
-            $loader = new Twig\Loader\FilesystemLoader('../app/template');
-        
-            // initialiser l'environement Twig
-            $twig = new Twig\Environment($loader);
-        
-            // load template
-            $template = $twig->load('post/posts.twig');
-        
-            // set template variables
-            // render template
-            return $template->render(array(
-                'title'=> 'Liste des articles',
-                'listPostsEntity'=> $listPostsEntity,
-                'user'=> $user,
-            ));
-        
-        } catch (Exception $e) 
-        {
-           return PostView::renderViewFail($e);
-        }
+        $array = array(
+            'title'=> 'Liste des articles',
+            'listPostsEntity'=> $listPostsEntity,
+            'user'=> $user,
+        );
+    
+        return PostView::renderView('post/posts.twig', $array); 
     }
 
     public static function getAllBack($listPostsEntity, $user)
     {
-        try 
-        {
-            // le dossier ou on trouve les templates
-            $loader = new Twig\Loader\FilesystemLoader('../app/template');
-        
-            // initialiser l'environement Twig
-            $twig = new Twig\Environment($loader);
-        
-            // load template
-            $template = $twig->load('post/postsBack.twig');
-        
-            // set template variables
-            // render template
-            return $template->render(array(
-                'listPostsEntity'=> $listPostsEntity,
-                'user'=> $user,
-            ));
-        
-        } catch (Exception $e) 
-        {
-           return PostView::renderViewFail($e);
-        }  
+        $array = array(
+            'listPostsEntity'=> $listPostsEntity,
+            'user'=> $user,
+        );
+        return PostView::renderView('post/postsBack.twig', $array); 
     }
 
     public static function getNoPostExist()
@@ -212,10 +141,4 @@ Class PostView extends View
     {
         return 'La suppression a échoué';  
     }
-
-    public static function  renderViewFail(Exception $e)
-    {
-        return View::renderViewFail($e);
-    }
-    
 }
