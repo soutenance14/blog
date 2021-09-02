@@ -1,6 +1,6 @@
 <?php
 
-Class CommentView
+Class CommentView extends View
 {
     
     public static function formPushPost($user)
@@ -29,31 +29,31 @@ Class CommentView
 
     // public static function get($commentEntity, $listCommentsEntity)
     // {
-    //     return 'Post ' . var_dump($commentEntity).
+    //     return CommentView::renderViewMessage('Post ' . var_dump($commentEntity).
     //      '<br>published comment: ' . var_dump ($listCommentsEntity);
     // }
 
     // public static function getNotExist($id)
     // {
-    //     return 'redirection ce post '.$id.' n\'existe pas.';
+    //     return CommentView::renderViewMessage('redirection ce post '.$id.' n\'existe pas.');
     // }
 
     // public static function getBack($commentEntity, $listCommentsPublishedEntity, $listCommentsNotPublishedEntity)
     // {
-    //     return 'Post' . var_dump($commentEntity).
+    //     return CommentView::renderViewMessage('Post' . var_dump($commentEntity).
     //     '<br>published' . var_dump ($listCommentsPublishedEntity).
     //     '<br>not published' . var_dump ($listCommentsNotPublishedEntity);
     // }
 
     // public static function getAll($listCommentsEntity)
     // {
-    //     $view = '<h1>Back : touts les comments</h1>';
+    //     $view = '<h1>Back : touts les comments</h1>');
     //     foreach($listCommentsEntity as $commentEntity)
     //     {
     //         $view.= '<div>'
     //                     .'<h4> Par '.$commentEntity->getLogin().' le '.$commentEntity->getCreatedAt().'</h4>'
     //                     .'<h4>Contenu :'.$commentEntity->getContenu().'</h4>'
-    //                 .'</div><hr>';
+    //                 .'</div><hr>');
     //     }
     //     return $view;  
     // }
@@ -110,30 +110,29 @@ Class CommentView
         return $linkCommentManage;
     }
 
-
     public static function getNoCommentExist($listCommentsEntity)
     {
-        return 'Il n\'y a pas de Commentaire pour le moment';  
+        return CommentView::renderViewMessage('Il n\'y a pas de Commentaire pour le moment');  
     }
     
     public static function getNotExist($id)
     {
-        return 'Le commentaire '.$id.' n\'existe pas';
+        return CommentView::renderViewMessage('Le commentaire '.$id.' n\'existe pas');
     }
     
     public static function pushFail()
     {
-        return 'Le push a échoué';  
+        return CommentView::renderViewMessage('Le push a échoué');  
     }
     
     public static function editFail()
     {
-        return 'L\'edition  a échoué';  
+        return CommentView::renderViewMessage('L\'edition  a échoué');  
     }
     
     public static function deleteFail()
     {
-        return 'La suppression a échoué';  
+        return CommentView::renderViewMessage('La suppression a échoué');  
     }
     
 }

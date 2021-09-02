@@ -1,9 +1,5 @@
 <?php
-
 require dirname(__DIR__) . '../../vendor/autoload.php';
-// define('USER_NOT_AUTHENTIFIED', null);
-// define('USER_AUTHENTIFIED', 'subscriber');
-// define('ADMIN', 'admin');
 
  Class MemberController extends Controller
 {

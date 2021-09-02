@@ -1,13 +1,8 @@
 <?php
-
 require dirname(__DIR__) . '../../vendor/autoload.php';
-// define('USER_NOT_AUTHENTIFIED', null);
-// define('USER_AUTHENTIFIED', 0);
-// define('ADMIN', 1);
 
 Abstract Class PostController extends Controller
 {
-
     // FORM
     public static function formPushPost($userSession)
     {
@@ -37,8 +32,7 @@ Abstract Class PostController extends Controller
             else
             {
                 echo PostView::getNotExist($id);
-            }
-            
+            } 
         }
         catch (AccessViolationException $e)
         {
@@ -193,7 +187,6 @@ Abstract Class PostController extends Controller
     public static function push( $auteur, $titre, $chapo, $contenu, $tokenSent, $userSession)
     {
         try{
-            
             PostController::permissionToken(ADMIN, $userSession, $tokenSent); 
             $postEntity = new PostEntity();
             $postEntity->hydrate(
@@ -274,8 +267,7 @@ Abstract Class PostController extends Controller
             else
             {
                 echo PostView::deleteFail();
-            }
-            
+            } 
         }
         catch (\PDOException $e)
         {
@@ -286,5 +278,4 @@ Abstract Class PostController extends Controller
             echo PostController::ifAccessViolationExceptionView($e);
         }
     }
-
 }
