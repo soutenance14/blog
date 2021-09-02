@@ -169,7 +169,8 @@ function deletePost($id, $token)
 {
     // require  '../app/controller/PostController.php';
 
-    $root = '../../';
+    // $root = '../../';
+    $root = '//blog/';
     $blogSession = new BlogSession();
     PostController::delete($id, $token, $blogSession->getUser(), $root);
 }
