@@ -2,7 +2,7 @@
 
 Abstract Class Controller
 {
-    private static $root = "//blog";
+    private static $root = "//blog/";
     
     public static function ifPDOExceptionView(\PDOException $e)
     {

@@ -9,12 +9,12 @@ Abstract Class PostController extends Controller
     {
         try
         {
-            PostController::permission(ADMIN, $userSession );
+            self::permission(ADMIN, $userSession );
             echo PostView::formPushPost($userSession);
         }
         catch (AccessViolationException $e)
         {
-            echo PostController::ifAccessViolationExceptionView($e);
+            echo self::ifAccessViolationExceptionView($e);
         }
     }
     
@@ -22,8 +22,8 @@ Abstract Class PostController extends Controller
     {
         try
         {
-            PostController::permission(ADMIN, $userSession);
-            $post = PostManager::get($id);
+            self::permission(ADMIN, $userSession);
+            $post = PostManager::getFromId($id);
             $postEntity = new PostEntity();
             $postEntity->hydrate($post);
             if($post != null)
@@ -37,7 +37,7 @@ Abstract Class PostController extends Controller
         }
         catch (AccessViolationException $e)
         {
-            echo PostController::ifAccessViolationExceptionView($e);
+            echo self::ifAccessViolationExceptionView($e);
         }
     }
     
@@ -71,7 +71,7 @@ Abstract Class PostController extends Controller
         }
         catch (\PDOException $e)
         {
-            echo PostController::ifPDOExceptionView($e);
+            echo self::ifPDOExceptionView($e);
         }
     }
 
@@ -80,7 +80,7 @@ Abstract Class PostController extends Controller
     {
         try
         {
-            PostController::permission(ADMIN, $userSession);
+            self::permission(ADMIN, $userSession);
 
             $post = PostManager::get($slug);
             if($post != null)
@@ -115,11 +115,11 @@ Abstract Class PostController extends Controller
         }
         catch (\PDOException $e)
         {
-            echo PostController::ifPDOExceptionView($e);
+            echo self::ifPDOExceptionView($e);
         }
         catch (AccessViolationException $e)
         {
-            echo PostController::ifAccessViolationExceptionView($e);
+            echo self::ifAccessViolationExceptionView($e);
         }
     }
 
@@ -146,7 +146,7 @@ Abstract Class PostController extends Controller
         } 
         catch (\PDOException $e)
         {
-            echo PostController::ifPDOExceptionView($e);
+            echo self::ifPDOExceptionView($e);
         }
     }
     
@@ -154,7 +154,7 @@ Abstract Class PostController extends Controller
     {
         try 
         {
-            PostController::permission(ADMIN, $userSession);
+            self::permission(ADMIN, $userSession);
             $posts = PostManager::getAll();
             if($posts != null)
             {
@@ -174,18 +174,18 @@ Abstract Class PostController extends Controller
         } 
         catch (\PDOException $e)
         {
-            echo PostController::ifPDOExceptionView($e);
+            echo self::ifPDOExceptionView($e);
         }
         catch (AccessViolationException $e)
         {
-            echo PostController::ifAccessViolationExceptionView($e);
+            echo self::ifAccessViolationExceptionView($e);
         }
     }
 
     public static function push( $auteur, $titre, $chapo, $contenu, $tokenSent, $userSession)
     {
         try{
-            PostController::permissionToken(ADMIN, $userSession, $tokenSent); 
+            self::permissionToken(ADMIN, $userSession, $tokenSent); 
             $slugify = new Slugify();
             $slug = $slugify->slugify($titre); 
             $postEntity = new PostEntity();
@@ -210,11 +210,11 @@ Abstract Class PostController extends Controller
         }
         catch (\PDOException $e)
         {
-            echo PostController::ifPDOExceptionView($e);
+            echo self::ifPDOExceptionView($e);
         }
         catch (AccessViolationException $e)
         {
-            echo PostController::ifAccessViolationExceptionView($e);
+            echo self::ifAccessViolationExceptionView($e);
         }
     }
 
@@ -222,14 +222,16 @@ Abstract Class PostController extends Controller
     {
         try
         { 
-            PostController::permissionToken(ADMIN, $userSession, $tokenSent); 
-            
+            self::permissionToken(ADMIN, $userSession, $tokenSent); 
+            $slugify = new Slugify();
+            $slug = $slugify->slugify($titre); 
             $postEntity = new PostEntity();
             $postEntity->hydrate(
                 array(
                     "id"=>$id,
                     "auteur"=>$auteur,
                     "titre"=>$titre,
+                    "slug"=>$slug,
                     "chapo"=>$chapo,
                     "contenu"=>$contenu,
                     )
@@ -246,11 +248,11 @@ Abstract Class PostController extends Controller
         }
         catch (\PDOException $e)
         {
-            echo PostController::ifPDOExceptionView($e);
+            echo self::ifPDOExceptionView($e);
         }
         catch (AccessViolationException $e)
         {
-            echo PostController::ifAccessViolationExceptionView($e);
+            echo self::ifAccessViolationExceptionView($e);
         }
     }
 
@@ -258,7 +260,7 @@ Abstract Class PostController extends Controller
     {
         try
         {
-            PostController::permissionToken(ADMIN, $userSession, $tokenSent); 
+            self::permissionToken(ADMIN, $userSession, $tokenSent); 
 
             $requestSuccess = PostManager::delete( $id);
             if($requestSuccess == true)
@@ -272,11 +274,11 @@ Abstract Class PostController extends Controller
         }
         catch (\PDOException $e)
         {
-            echo PostController::ifPDOExceptionView($e);
+            echo self::ifPDOExceptionView($e);
         }
         catch (AccessViolationException $e)
         {
-            echo PostController::ifAccessViolationExceptionView($e);
+            echo self::ifAccessViolationExceptionView($e);
         }
     }
 
@@ -285,9 +287,10 @@ Abstract Class PostController extends Controller
         if($e->getCode() === "23000")// key constraint pb
         {
             return View::renderViewException(
-                $e, "Problème avec la base de données", "databaseError-bg", 
+                $e, "Problème de clé dans la base de données", "databaseError-bg", 
                 "Si vous souhaiter créer un article, 
-                veuillez changer le titre il doit exister un article avec un titre (slug) similaire.");
+                veuillez changer le titre il doit exister un article avec un titre (slug) similaire.
+                Pour tout autre cas, une contrainte de clé empêche la requête demandée");
         }
         else
         {

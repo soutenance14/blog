@@ -13,6 +13,17 @@ Class PostManager{
         $post = $request->fetch(\PDO::FETCH_ASSOC);
         return $post;
     }
+    
+    public static function getFromId(String $id)
+    {
+        $request = DatabaseConnexion::getPdo()->prepare(
+            "SELECT id, auteur, titre, slug, chapo, contenu, created_at from POST where id = :id");
+        $request->bindParam(':id', $id, \PDO::PARAM_STR);
+        $request->execute();
+        $post = $request->fetch(\PDO::FETCH_ASSOC);
+        return $post;
+    }
+
 
     public static function getAll()
     {

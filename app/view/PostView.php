@@ -18,7 +18,7 @@ Class PostView extends View
     { 
         $array = array(
             'root'=>"//blog/",
-            'title'=>'Modifie : '.$postEntity->getTitre(),
+            'title'=>'Modifier : '.$postEntity->getTitre(),
             'user'=> $user,
             'postEntity'=> $postEntity,
         );
