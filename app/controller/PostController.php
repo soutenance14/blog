@@ -5,7 +5,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
 // define('USER_AUTHENTIFIED', 0);
 // define('ADMIN', 1);
 
-Abstract Class PostController
+Abstract Class PostController extends Controller
 {
 
     // FORM
@@ -287,29 +287,4 @@ Abstract Class PostController
         }
     }
 
-    // view if PDO exception
-    private static function ifPDOExceptionView(\PDOException $e)
-    {
-        // Class is static, no instance, heritage is not possible
-        // no parent::ifPDOExceptionView($e);
-        return Controller::ifPDOExceptionView($e);
-    }
-    
-    // view if exception AccessViolationException
-    private static function ifAccessViolationExceptionView(AccessViolationException $e)
-    {
-        // Class is static, no instance, heritage is not possible
-        // no parent::ifPDOExceptionView($e);
-        return Controller::ifAccessViolationExceptionView($e);
-    }
-
-    private static function permission(String $permission, $user)
-    {
-        Controller::permission($permission, $user);
-    }
-    
-    private static function permissionToken(String $permission, $user, $tokenSent)
-    {
-        Controller::permissionToken($permission, $user, $tokenSent);
-    }
 }
