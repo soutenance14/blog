@@ -254,7 +254,7 @@ Abstract Class PostController extends Controller
         }
     }
 
-    public static function delete( $id, $tokenSent, $userSession, $root)
+    public static function delete( $id, $tokenSent, $userSession)
     {
         try
         {
@@ -263,7 +263,7 @@ Abstract Class PostController extends Controller
             $requestSuccess = PostManager::delete( $id);
             if($requestSuccess == true)
             {
-                header('Location:'.$root.'postsBack');
+                header('Location:'.self::getRoot().'postsBack');
             }
             else
             {
@@ -277,6 +277,21 @@ Abstract Class PostController extends Controller
         catch (AccessViolationException $e)
         {
             echo PostController::ifAccessViolationExceptionView($e);
+        }
+    }
+
+    public static function ifPDOExceptionView(\PDOException $e)
+    {
+        if($e->getCode() === "23000")// key constraint pb
+        {
+            return View::renderViewException(
+                $e, "Problème avec la base de données", "databaseError-bg", 
+                "Si vous souhaiter créer un article, 
+                veuillez changer le titre il doit exister un article avec un titre (slug) similaire.");
+        }
+        else
+        {
+            return parent::ifPDOExceptionView($e);
         }
     }
 }

@@ -92,14 +92,12 @@ function sendMessage()
     //form
 function formPushPost()
 {
-    // require  '../app/controller/PostController.php';
     $blogSession = new BlogSession();
     PostController::formPushPost($blogSession->getUser());
 }
 
 function formEditPost(String $id)
 {
-    // require  '../app/controller/PostController.php';
     $blogSession = new BlogSession();
     PostController::formEditPost($id, $blogSession->getUser());
 }
@@ -107,29 +105,24 @@ function formEditPost(String $id)
     // controller need model
 function post($slug)
 {
-    // require  '../app/controller/PostController.php';
     $blogSession = new BlogSession();
     PostController::get($slug, $blogSession->getUser());
 }
 
 function postBack($slug)
 {
-    // require  '../app/controller/PostController.php';
-    $blogSession = new BlogSession();
+   $blogSession = new BlogSession();
     PostController::getBack($slug, $blogSession->getUser());
 }
 
 function posts()
-{
-    // require  '../app/controller/PostController.php';
-    $blogSession = new BlogSession();
+{    $blogSession = new BlogSession();
     PostController::getAll($blogSession->getUser());
 }
 
 function postsBack()
 {
-    // require  '../app/controller/PostController.php';
-    $blogSession = new BlogSession();
+   $blogSession = new BlogSession();
     PostController::getAllBack($blogSession->getUser());
 }
 
@@ -137,7 +130,6 @@ function pushPost()
 {
     if( isset($_POST['auteur']) && isset($_POST['titre']) && isset($_POST['chapo']) && isset($_POST['contenu']) && isset($_POST['token']))
     {
-        // require  '../app/controller/PostController.php';
         $blogSession = new BlogSession();
         PostController::push(htmlentities($_POST['auteur']), htmlentities($_POST['titre']), htmlentities($_POST['chapo']),
         htmlentities($_POST['contenu']), $_POST['token'], $blogSession->getUser());
@@ -153,7 +145,6 @@ function editPost()
 {
     if( isset($_POST['id']) && isset($_POST['auteur']) && isset($_POST['titre']) && isset($_POST['chapo']) && isset($_POST['contenu']) && isset($_POST['token']))
     {
-        // require  '../app/controller/PostController.php';
         $blogSession = new BlogSession();
         PostController::edit($_POST['id'], htmlentities($_POST['auteur']), htmlentities($_POST['titre']), htmlentities($_POST['chapo'])
         , htmlentities($_POST['contenu']) ,$_POST['token'], $blogSession->getUser());
@@ -167,14 +158,9 @@ function editPost()
 
 function deletePost($id, $token)
 {
-    // require  '../app/controller/PostController.php';
-
-    // $root = '../../';
-    $root = '//blog/';
     $blogSession = new BlogSession();
-    PostController::delete($id, $token, $blogSession->getUser(), $root);
+    PostController::delete($id, $token, $blogSession->getUser());
 }
-
 
     //END POST===END POST===END POST===END POST===END POST===END POST===END POST===
 
@@ -196,7 +182,6 @@ function pushComment()
 {
     if(isset($_POST['id_post']) && isset($_POST['contenu']) && isset($_POST['token']))
     {
-        // require  '../app/controller/CommentController.php';
         $blogSession = new BlogSession();
         CommentController::push($_POST['id_post'], htmlentities($_POST['contenu']), $_POST['token'] ,$blogSession->getUser());
     }
@@ -204,7 +189,6 @@ function pushComment()
 
 function deleteComment($id, $token)
 {
-    // require  '../app/controller/CommentController.php';
     $blogSession = new BlogSession();
     CommentController::delete($id, $token, $blogSession->getUser());   
 }
@@ -212,40 +196,32 @@ function deleteComment($id, $token)
 // for user auth
 function setPublishedComment($id, $published, $token)
 {
-    // require  '../app/controller/CommentController.php';
-    $root = '../../../';
     $blogSession = new BlogSession();
-    CommentController::setPublished($id, $published, $token, $blogSession->getUser(), $root);
+    CommentController::setPublished($id, $published, $token, $blogSession->getUser());
 }
 
 
     // FOR MEMBER
         // form
 function login()
-{
-    // require  '../app/controller/MemberController.php';
+{   
     MemberController::login();
 }
 
 function signUp()
 {
-    // require  '../app/controller/MemberController.php';
     MemberController::signUp();
 }
 
 function formDeleteMember()
 {
-    // require  '../app/controller/MemberController.php';
-    $blogSession = new BlogSession();
-    
+    $blogSession = new BlogSession();   
     MemberController::formDelete($blogSession->getUser());
 }
 
 function formDeleteMemberBack()
-{
-    // require  '../app/controller/MemberController.php';
-    $blogSession = new BlogSession();
-    
+{   
+    $blogSession = new BlogSession();   
     MemberController::formDeleteBack($blogSession->getUser());
 }
 
@@ -256,21 +232,19 @@ function deleteMember($token)
         $blogSession = new BlogSession();
         MemberController::delete($_POST['login'], $_POST['id'] , $token, $blogSession);
     }
-    // require  '../app/controller/MemberController.php';
+    
 }
 
 function pushMember()
 {
     if(isset($_POST['login'], $_POST['password'] )){
         $blogSession = new BlogSession();
-        // require  '../app/controller/MemberController.php';
         MemberController::push(htmlentities($_POST['login']), htmlentities($_POST['password']), $blogSession);
     }
 }
 
 function formEditPassword()
 {
-    // require  '../app/controller/MemberController.php';
     $blogSession = new BlogSession();
     MemberController::formEditPassword($blogSession->getUser());
 }
@@ -281,7 +255,6 @@ function auth()
 {
     if( isset($_POST['login'])  && isset($_POST['password']) )
     {
-        // require  '../app/controller/MemberController.php';
         $blogSession = new BlogSession();
         MemberController::auth($_POST['login'],    $_POST['password'] , $blogSession);
     }
@@ -294,9 +267,7 @@ function auth()
 
 function disconnect()
 {
-    // require  '../app/controller/MemberController.php';
     $blogSession = new BlogSession();
-    $root = '';
     MemberController::disconnect($blogSession);
 }
 
@@ -304,7 +275,6 @@ function editPassword()
 {
     if( isset($_POST['oldPassword'])  && isset($_POST['newPassword']) && isset($_POST['token']) )
     {
-        // require  '../app/controller/MemberController.php';
         $blogSession = new BlogSession();
         MemberController::editPassword(htmlentities($_POST['oldPassword']),  htmlentities($_POST['newPassword']), $_POST['token'], $blogSession);
     }
@@ -333,7 +303,6 @@ if( is_array($match))
 {
     if( is_callable( $match['target'] ) ) 
     {
-    
 	    call_user_func_array( $match['target'], $match['params'] ); 
     }
      else 
