@@ -340,5 +340,5 @@ if( is_array($match))
 }
 else
 {
-    echo '404 Redirection';
+    echo RedirectionController::getPage404();
 }
