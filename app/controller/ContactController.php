@@ -13,6 +13,7 @@ use \Mailjet\Resources;
     
     public static function sendMessage($nom, $mail, $contenu)
     {
+        require dirname(__DIR__) . '../../app/config/configMailLocal.php';
         try
         {
 
@@ -22,9 +23,9 @@ use \Mailjet\Resources;
             
             $date = $day. " ". $month." ".$year;
             // Create the Transport
-            $transport = (new Swift_SmtpTransport('in-v3.mailjet.com', 587))
-            ->setUsername('9a12076fa51e88fe69d977d2312ef96d')
-            ->setPassword('b51c774ab5a29ab8e0d1f4fc2e7c9fbc')
+            $transport = (new Swift_SmtpTransport($SERVER, $PORT))
+            ->setUsername($USER)
+            ->setPassword($PASS)
             ;
             
             // Create the Mailer using your created Transport
@@ -47,9 +48,9 @@ use \Mailjet\Resources;
                 </p>
             </html>';
             $message = (new Swift_Message($subject))
-            ->setFrom(['soutenance20@gmail.com' => 'Admin Contact 20'])
-            ->setTo(['soutenance14@gmail.com' => 'Admin Contact'])
-            // ->setTo(['soutenance14@gmail.com', 'soutenance13@gmail.com' => 'Admin Contact'])
+            ->setFrom([$EMAIL => $NAME_EMAIL])
+            ->setTo([$EMAIL => $NAME_EMAIL])
+            // ->setTo(['example1@gmail.com', 'example2@gmail.com' => 'Name email']) multiple
             ->setBody($message, 'text/html')
             ;
             
