@@ -1,6 +1,3 @@
-
-      
-       
             {% extends "Base.twig" %}
             {% block headerImage %}posts-bg{% endblock %}
             {% block nav %}
@@ -20,7 +17,7 @@
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <!-- Post preview-->
                         <div class="post-preview">
-                            <a href="postBack/{{postEntity.getId()}}">
+                            <a href="post/back/{{postEntity.getSlug()}}">
                                 <h2 class="post-title">{{postEntity.getTitre()}}</h2>
                                 <h3 class="post-subtitle">{{postEntity.getChapo()}}</h3>
                             </a>
@@ -31,12 +28,12 @@
                                 le {{postEntity.getDate()}} à {{postEntity.getTime()}}
                             </p>
                             <h6>
-                                <a href="{{root}}deletePost/{{postEntity.getId()}}/{{user.getToken()}}">
+                                <a href="{{root}}delete/post/{{postEntity.getId()}}/{{user.getToken()}}">
                                         <span class="fa-stack fa-lg " >
                                         <i class="fas fa-trash fa-stack-1x"></i>
                                         </span> 
                                 </a>
-                                <a href="{{root}}formEditPost/{{postEntity.getId()}}">
+                                <a href="{{root}}form/edit/post/{{postEntity.getId()}}">
                                         <span class="fa-stack fa-lg " >
                                         <i class="fas fa-edit fa-stack-1x"></i>
                                         </span> 

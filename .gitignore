@@ -2,4 +2,5 @@
 ###> config ###
 /app/config/configMailLocal.php
 /public/assets
+/public/vendor
 

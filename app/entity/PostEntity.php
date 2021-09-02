@@ -6,6 +6,7 @@ Class PostEntity extends Entity
     private $id;
     private $auteur;
     private $titre;
+    private $slug;
     private $chapo;
     private $contenu;
     private $created_at;
@@ -187,5 +188,23 @@ Class PostEntity extends Entity
         $formattedDate = Date('d-m-Y', strtotime($date));
         $this->setDate($formattedDate);
         $this->setTime($time);
+    }
+
+    /**
+     * Get the value of slug
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set the value of slug
+     */
+    public function setSlug($slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }

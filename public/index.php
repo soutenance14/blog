@@ -23,8 +23,10 @@ $router->map('GET', '/signUp', 'signUp');
 $router->map('GET', '/login', 'login');
 $router->map('GET', '/posts', 'posts');
 $router->map('GET', '/postsBack', 'postsBack');
-$router->map('GET', '/post/[i:id]', 'post');
-$router->map('GET', '/postBack/[i:id]', 'postBack');
+// $router->map('GET', '/post/[i:id]', 'post');
+// $router->map('GET', '/post/back/[i:id]', 'postBack');
+$router->map('GET', '/post/[:slug]', 'post');
+$router->map('GET', '/post/back/[:slug]', 'postBack');
 
     //--POST
 $router->map('POST', '/auth', 'auth');
@@ -36,26 +38,26 @@ $router->map('POST', '/sendMessage', 'sendMessage');
 $router->map('GET', '/disconnect', 'disconnect');
 $router->map('GET', '/formEditPassword', 'formEditPassword');
 $router->map('GET', '/comm', 'formPushCommentASupprimer');// a supprimer, utiliser que pour les tests mais cest dans post que le formulaire sera
-$router->map('GET', '/deleteComment/[i:id]/[:token]', 'deleteComment');
+$router->map('GET', '/delete/comment/[i:id]/[:token]', 'deleteComment');
 $router->map('GET', '/formDeleteMember', 'formDeleteMember');
 $router->map('GET', '/formDeleteMemberBack', 'formDeleteMemberBack');
-$router->map('GET', '/setPublishedComment/[i:id]/[i:published]/[:token]', 'setPublishedComment');//use post later is better
+$router->map('GET', '/published/comment/[i:id]/[i:published]/[:token]', 'setPublishedComment');//use post later is better
 
     // POST
 $router->map('POST', '/editPassword', 'editPassword');
-$router->map('POST', '/pushComment', 'pushComment');
+$router->map('POST', '/push/comment', 'pushComment');
 $router->map('POST', '/deleteMember/[:token]', 'deleteMember');
 
 // for user admin
     //--GET
 $router->map('GET', '/formPushPost', 'formPushPost');
-$router->map('GET', '/formEditPost/[i:id]', 'formEditPost');
+$router->map('GET', '/form/edit/post/[i:id]', 'formEditPost');
 $router->map('GET', '/formDeletePost', 'formDeletePost');
-$router->map('GET', '/deletePost/[i:id]/[:token]', 'deletePost');
+$router->map('GET', '/delete/post/[i:id]/[:token]', 'deletePost');
 
     //--POST
 $router->map('POST', '/editPost', 'editPost');
-$router->map('POST', '/pushPost', 'pushPost');
+$router->map('POST', '/push/post', 'pushPost');
 // $router->map('POST', '/deletePost', 'deletePost');
 
 //END MAP ROUTES===END MAP ROUTES===END MAP ROUTES===END MAP ROUTES===END MAP ROUTES===
@@ -103,18 +105,18 @@ function formEditPost(String $id)
 }
 
     // controller need model
-function post($id)
+function post($slug)
 {
     // require  '../app/controller/PostController.php';
     $blogSession = new BlogSession();
-    PostController::get($id, $blogSession->getUser());
+    PostController::get($slug, $blogSession->getUser());
 }
 
-function postBack($id)
+function postBack($slug)
 {
     // require  '../app/controller/PostController.php';
     $blogSession = new BlogSession();
-    PostController::getBack($id, $blogSession->getUser());
+    PostController::getBack($slug, $blogSession->getUser());
 }
 
 function posts()
@@ -167,7 +169,8 @@ function deletePost($id, $token)
 {
     // require  '../app/controller/PostController.php';
 
-    $root = '../../';
+    // $root = '../../';
+    $root = '//blog/';
     $blogSession = new BlogSession();
     PostController::delete($id, $token, $blogSession->getUser(), $root);
 }

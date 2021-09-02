@@ -1,5 +1,6 @@
 <?php
 require dirname(__DIR__) . '../../vendor/autoload.php';
+use \Cocur\Slugify\Slugify;
 
 Abstract Class PostController extends Controller
 {
@@ -42,17 +43,17 @@ Abstract Class PostController extends Controller
     
     //NOT FORM
     //get for the front-end
-    public static function get(String $id, $userSession)
+    public static function get(String $slug, $userSession)
     {
         try
         {
-            $post = PostManager::get($id);
+            $post = PostManager::get($slug);
             if($post != null)
             {
                 $postEntity = new PostEntity($post);
                 $postEntity->hydrate($post);
                 // require dirname(__DIR__) . "../model/CommentManager.php";
-                $listCommentsPublished = CommentManager::getAllPostPublished($id);
+                $listCommentsPublished = CommentManager::getAllPublished($postEntity->getId());
                 $listCommentsPublishedEntity = [];
                 foreach($listCommentsPublished as $commentPublished)
                 {
@@ -61,11 +62,11 @@ Abstract Class PostController extends Controller
                     array_push( $listCommentsPublishedEntity , $commentPublishedEntity);
                 }
                 // $commentViewPublished = CommentView::getAll($listCommentsPublishedEntity, "Commentaires", $userSession);
-                echo PostView::get($postEntity, $listCommentsPublishedEntity, $userSession, $id);
+                echo PostView::get($postEntity, $listCommentsPublishedEntity, $userSession);
             }
             else
             {
-                echo PostView::getNotExist($id);
+                echo PostView::getNotExist($slug);
             }
         }
         catch (\PDOException $e)
@@ -75,19 +76,19 @@ Abstract Class PostController extends Controller
     }
 
     //get for the back-end
-    public static function getBack(String $id, $userSession)
+    public static function getBack(String $slug, $userSession)
     {
         try
         {
             PostController::permission(ADMIN, $userSession);
 
-            $post = PostManager::get($id);
+            $post = PostManager::get($slug);
             if($post != null)
             {
                 $postEntity = new PostEntity($post);
                 $postEntity->hydrate($post);
                 // require dirname(__DIR__) . "../model/CommentManager.php";
-                $listCommentsPublished = CommentManager::getAllPostPublished($id);
+                $listCommentsPublished = CommentManager::getAllPublished($postEntity->getId());
                 $listCommentsPublishedEntity = [];
                 foreach($listCommentsPublished as $commentPublished)
                 {
@@ -96,7 +97,7 @@ Abstract Class PostController extends Controller
                     array_push( $listCommentsPublishedEntity , $commentPublishedEntity);
                 }
                 
-                $listCommentsNotPublished = CommentManager::getAllPostNotPublished($id);
+                $listCommentsNotPublished = CommentManager::getAllNotPublished($postEntity->getId());
                 $listCommentsNotPublishedEntity = [];
                 foreach($listCommentsNotPublished as $commentNotPublished)
                 {
@@ -104,15 +105,12 @@ Abstract Class PostController extends Controller
                     $commentNotPublishedEntity->hydrate($commentNotPublished);
                     array_push( $listCommentsNotPublishedEntity , $commentNotPublishedEntity);
                 }
-                
-                // $commentViewPublished = CommentView::getAll($listCommentsPublishedEntity, "Publiés", $userSession);
-                // $commentViewNotPublished = CommentView::getAll($listCommentsNotPublishedEntity, "Non publiés", $userSession);
 
-                echo PostView::getBack($postEntity, $listCommentsPublishedEntity, $listCommentsNotPublishedEntity, $userSession, $id);
+                echo PostView::getBack($postEntity, $listCommentsPublishedEntity, $listCommentsNotPublishedEntity, $userSession, $slug);
             }
             else
             {
-               echo PostView::getNotExist($id);
+               echo PostView::getNotExist($slug);
             }
         }
         catch (\PDOException $e)
@@ -188,11 +186,14 @@ Abstract Class PostController extends Controller
     {
         try{
             PostController::permissionToken(ADMIN, $userSession, $tokenSent); 
+            $slugify = new Slugify();
+            $slug = $slugify->slugify($titre); 
             $postEntity = new PostEntity();
             $postEntity->hydrate(
                 array(
                     "auteur"=>$auteur,
                     "titre"=>$titre,
+                    "slug"=>$slug,
                     "chapo"=>$chapo,
                     "contenu"=>$contenu,
                     )

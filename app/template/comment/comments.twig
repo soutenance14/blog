@@ -27,7 +27,7 @@
                         <hp class="post-subtitle">{{commentEntity.getContenu()}}</hp>
                         {%  if  commentEntity.getIdMembre() == user.getId()    %}
                             <h6>
-                                <a href="{{root}}deleteComment/{{commentEntity.getId()}}/{{user.getToken()}}">
+                                <a href="{{root}}delete/comment/{{commentEntity.getId()}}/{{user.getToken()}}">
                                         <span class="fa-stack fa-lg linkDelete" >
                                         <i class="fas fa-trash fa-stack-1x"></i>
                                         </span> 

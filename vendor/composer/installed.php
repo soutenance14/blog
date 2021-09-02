@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'f4b969c2e35e7bfcdd31518f523aa4713de478e0',
+        'reference' => '0b2e6b95bf8cb6b8fc69db13c43d60b693fdc319',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'f4b969c2e35e7bfcdd31518f523aa4713de478e0',
+            'reference' => '0b2e6b95bf8cb6b8fc69db13c43d60b693fdc319',
             'dev_requirement' => false,
         ),
         'altorouter/altorouter' => array(
@@ -26,6 +26,15 @@
             'install_path' => __DIR__ . '/../altorouter/altorouter',
             'aliases' => array(),
             'reference' => '127f6e96998708a31ef32252985bea82e3b03888',
+            'dev_requirement' => false,
+        ),
+        'cocur/slugify' => array(
+            'pretty_version' => 'v4.0.0',
+            'version' => '4.0.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../cocur/slugify',
+            'aliases' => array(),
+            'reference' => '3f1ffc300f164f23abe8b64ffb3f92d35cec8307',
             'dev_requirement' => false,
         ),
         'doctrine/lexer' => array(
