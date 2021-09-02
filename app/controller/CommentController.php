@@ -44,7 +44,7 @@ Abstract Class CommentController extends Controller
         }
     }
 
-    public static function setPublished($id, $published, $tokenSent, $userSession, $root)
+    public static function setPublished($id, $published, $tokenSent, $userSession)
     {
         if( $published === '0' || $published === '1')
         {
@@ -63,7 +63,7 @@ Abstract Class CommentController extends Controller
                     $comment = CommentManager::get($id);
                     $commentEntity->hydrate($comment);
 
-                    header('Location:'.$root.'postBack/'.$commentEntity->getIdPost());
+                    header('Location:'.self::getRoot().'postBack/'.$commentEntity->getIdPost());
                 }
                 else
                 {

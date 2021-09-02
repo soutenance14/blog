@@ -8,7 +8,7 @@ Abstract Class RedirectionController
     {
         $array = array(
             'title'=> "Erreur 404, page non trouvé",
-            'root'=>"../",
+            'root'=>"//blog/",
         ); 
         echo View::renderView("message/404.twig" ,$array);
     }

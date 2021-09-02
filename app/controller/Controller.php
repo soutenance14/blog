@@ -2,6 +2,8 @@
 
 Abstract Class Controller
 {
+    private static $root = "//blog";
+    
     public static function ifPDOExceptionView(\PDOException $e)
     {
         switch($e->getCode())
@@ -97,4 +99,10 @@ Abstract Class Controller
             throw new AccessViolationException('User not authenfied.', 97);
         }
     }
+
+    public static function getRoot()
+    {
+        return self::$root;
+    }
+
 }
