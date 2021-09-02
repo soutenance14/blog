@@ -4,15 +4,9 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
 
 Class PostView extends View
 {
-    public static function home()
-    {
-        return 'home';
-    }
-
     public static function formPushPost($user)
     {
         $array = array(
-            
             'title'=>'Créer article',
             'root'=>"../",
             'user'=> $user,
@@ -55,13 +49,12 @@ Class PostView extends View
             'user'=> $user,
             'id_post'=> $id_post,
         );
-
         return PostView::renderView('post/postBack.twig', $array); 
     }
     
     public static function getNotExist($id)
     {
-        return 'redirection ce post '.$id.' n\'existe pas.';
+        return PostView::renderViewMessage('redirection ce post '.$id.' n\'existe pas.');
     }
 
     public static function getAll($listPostsEntity, $user)
@@ -71,7 +64,6 @@ Class PostView extends View
             'listPostsEntity'=> $listPostsEntity,
             'user'=> $user,
         );
-    
         return PostView::renderView('post/posts.twig', $array); 
     }
 
@@ -86,21 +78,21 @@ Class PostView extends View
 
     public static function getNoPostExist()
     {
-        return 'Il n\'y a pas de post pour le moment';  
+        return PostView::renderViewMessage('Il n\'y a pas de post pour le moment');  
     }
     
     public static function pushFail()
     {
-        return 'Le push a échoué';  
+        return PostView::renderViewMessage('Le push a échoué');  
     }
     
     public static function editFail()
     {
-        return 'L\'edition  a échoué';  
+        return PostView::renderViewMessage('L\'edition  a échoué');  
     }
     
     public static function deleteFail()
     {
-        return 'La suppression a échoué';  
+        return PostView::renderViewMessage('La suppression a échoué');  
     }
 }
