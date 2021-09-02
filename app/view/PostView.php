@@ -11,67 +11,29 @@ Class PostView extends View
 
     public static function formPushPost($user)
     {
-        try 
-        {
-            // le dossier ou on trouve les templates
-            $loader = new Twig\Loader\FilesystemLoader('../app/template');
-        
-            // initialiser l'environement Twig
-            $twig = new Twig\Environment($loader);
-        
-            // load template
-            $template = $twig->load('post/postPushForm.twig');
-        
-            // set template variables
-            // render template
-            // return $listCommentsPublishedView;
-            return $template->render(array(
-                //A MODIFIER ROOT DANS PARAM
-                'title'=>'Créer article',
-                'root'=>"../",
-                'user'=> $user,
-            ));
-        
-        } catch (Exception $e) 
-        {
-           return PostView::renderViewFail($e);
-        }
+        $array = array(
+            
+            'title'=>'Créer article',
+            'root'=>"../",
+            'user'=> $user,
+        );
+        return PostView::renderView('post/postPushForm.twig', $array);
     }
 
     public static function formEditPost($postEntity, $user)
-    {
-        try 
-        {
-            // le dossier ou on trouve les templates
-            $loader = new Twig\Loader\FilesystemLoader('../app/template');
-        
-            // initialiser l'environement Twig
-            $twig = new Twig\Environment($loader);
-        
-            // load template
-            $template = $twig->load('post/postEditForm.twig');
-        
-            // set template variables
-            // render template
-            // return $listCommentsPublishedView;
-            return $template->render(array(
-                //A MODIFIER ROOT DANS PARAM
-                'root'=>"../",
-                'title'=>'Modifie : '.$postEntity->getTitre(),
-                'user'=> $user,
-                'postEntity'=> $postEntity,
-            ));
-        
-        } catch (Exception $e) 
-        {
-            return PostView::renderViewFail($e);
-        }
+    { 
+        $array = array(
+            'root'=>"../",
+            'title'=>'Modifie : '.$postEntity->getTitre(),
+            'user'=> $user,
+            'postEntity'=> $postEntity,
+        );
+        return PostView::renderView('post/postEditForm.twig', $array);
     }
 
     public static function get($postEntity, $listCommentsPublishedEntity, $user, $id_post)
     {
-        $array = array(
-            //A MODIFIER ROOT DANS PARAM
+        $array = array(         
             'root'=>"../",
             'title'=>$postEntity->getTitre(),
             'postEntity'=> $postEntity,
