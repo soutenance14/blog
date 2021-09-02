@@ -1,0 +1,25 @@
+{% extends "Base.twig" %}
+{% block headerImage %}{{ imageHeader }}{% endblock %}
+{% block nav %}
+    {% if user.getPermission() is not null %}
+        {% include 'menu/menuAuth.twig' %}
+    {% else %}
+    {{parent()}}                    
+    {% endif %}
+{% endblock %}
+{% block container %}
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <h1>Erreur, vous ne pouvez accédez à cette adresse pour cause de:</h1>
+            {% if message_special %}
+                {# For pdo exception, message is confidential, so not display the e.getMessage #}
+                {# but message special #}
+                <h4>{{ message_special }}</h4>
+            {% else %}
+            <h4>{{ e.getMessage() }}</h4>
+            {% endif %}
+            <h4>Code : {{ e.getCode() }}</h4>
+            <a class="px-lg-3 py-3 py-lg-4" href="{{root}}home">Retour à l'accueil</a>
+        </div>
+    </div>
+{% endblock %}

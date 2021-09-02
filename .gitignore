@@ -1,4 +1,5 @@
 
 ###> config ###
 /app/config/configMailLocal.php
+/public/assets
 

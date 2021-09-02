@@ -1,7 +1,5 @@
 <?php
 
-// require_once dirname(__DIR__) . "../config/constant.php";
-
 Abstract Class Controller
 {
     public static function ifPDOExceptionView(\PDOException $e)
@@ -9,31 +7,38 @@ Abstract Class Controller
         switch($e->getCode())
         {
             case '1049':
-                echo 'view pb avec la db: connexion impossible à la db.' , $e->getCode(), $e->getMessage();
+                return View::renderViewException(
+                    $e, "Problème avec la base de données", 
+                    "databaseError-bg","Connexion impossible à la base de données.");
                 break;    
             case '42S22':
-                echo 'view pb avec la db: impossible de récupérer les données d\'une colonne.' , $e->getCode(), $e->getMessage();
+                return View::renderViewException(
+                    $e, "Problème avec la base de données",
+                     "databaseError-bg", "Impossible de récupérer les données d\'une colonne 
+                dans une table de la base de données.");
                 break;    
             case '42S02':
-                echo 'view pb avec la db: impossible de se connecter à une table.' , $e->getCode(), $e->getMessage();
+                return View::renderViewException(
+                    $e, "Problème avec la base de données", "databaseError-bg", 
+                    "Impossible de se connecter à une table de la base de données.");
                 break;    
             case '42000':
-                echo 'view pb avec la db: erreur de syntaxe.' , $e->getCode(), $e->getMessage();
+                return View::renderViewException(
+                    $e, "Problème avec la base de données", "databaseError-bg", "Erreur de syntaxe SQL");
                 break;
             case '23000':
-                //can not add or update a child, foreign constraitn failed
-                echo 'view pb l\'élement recherché n\'existe pas dans la db.' , $e->getCode(), $e->getMessage();
+                return View::renderViewException(
+                    $e, "Problème avec la base de données", "databaseError-bg", "Problème de contrainte(s) de clé(s).");
                 break;
-
             default:
-                echo 'view pb avec la db: une erreur inatendue est arrivé avec la db.' , $e->getCode(), $e->getMessage();
-                // throw new \PDOException($e->getMessage(), (int)$e->getCode());  
+                return View::renderViewException(
+                    $e, "Problème avec la base de données", "databaseError-bg", "Un problème innatendue est arrivée en lien avec la base de données.");
         }
     }
     
     public static function ifAccessViolationExceptionView(AccessViolationException $e)
     {
-        echo 'view pb access violation: ', $e->getMessage(), $e->getCode();
+        return View::renderViewException($e, "Problème de droit d'accées", "accessViolation-bg", false);
     }
 
     public static function permissionToken(String $permissionRequested, $user, $tokenSent)
@@ -46,15 +51,13 @@ Abstract Class Controller
     } 
 
     public static function permission(String $permissionRequested, $user)
-    {
-        // require dirname(__DIR__) . "../exception/AccessViolationException.php";
-        
+    {   
         switch($permissionRequested)
         {
             case USER_AUTHENTIFIED:
                 if($user->getPermission() === USER_NOT_AUTHENTIFIED)
                 {
-                    throw new AccessViolationException('User not authenfied.', 97);
+                    throw new AccessViolationException('User not authentified.', 97);
                 }
                 break;
                 

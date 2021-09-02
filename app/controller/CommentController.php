@@ -98,7 +98,8 @@ Abstract Class CommentController extends Controller
             {
                 $commentEntity = new CommentEntity();
                 $commentEntity->hydrate($comment);
-                var_dump($commentEntity);
+                //TODO A MOODIFIER ICI
+                // var_dump($commentEntity);
                 CommentController::permissionThisIdMember( $userSession, $commentEntity->getIdMembre(), $tokenSent);
                 
                 $requestSuccess = CommentManager::delete( $id);
