@@ -30,6 +30,14 @@ Class MemberView extends View
         return MemberView::renderView('member/login.twig', $array); 
     }
     
+    public static function administration()
+    {
+        $array = array(
+            'title'=> 'Administration',
+        );
+        return MemberView::renderView('member/administration.twig', $array); 
+    }
+
     public static function signUp()
     {
         $array = array(

@@ -1,0 +1,14 @@
+{% extends "Base.twig" %}
+{% block nav %}
+    {% if user.getPermission() is not null %}
+        {% include 'menu/menuAuth.twig' %}
+    {% else %}
+    {{parent()}}                    
+    {% endif %}
+{% endblock %}
+{% block container %}
+    <div class="container px-4 px-lg-5">
+        <a class="nav-link px-lg-3 py-3 py-lg-4" href="{{root}}formPushPost">Créer un article</a>
+        <a class="nav-link px-lg-3 py-3 py-lg-4" href="{{root}}postsBack">Voir Articles</a>
+    </div>
+{% endblock %}
