@@ -51,9 +51,15 @@ Class PostView extends View
         return PostView::renderView('post/postBack.twig', $array); 
     }
     
-    public static function getNotExist($id)
+    public static function getNotExist($id, $user)
     {
-        return PostView::renderViewMessage('Le post "'.$id.'" n\'existe pas.');
+        $array = array(
+            'user'=> $user,
+            'title'=> 'Oops petit problème',
+            'message'=> 'Le post "'.$id.'" n\'existe pas.',
+            'root'=>"//blog/",
+        ); 
+        return PostView::renderViewMessage($array);
     }
 
     public static function getAll($listPostsEntity, $user)
@@ -75,23 +81,47 @@ Class PostView extends View
         return PostView::renderView('post/postsBack.twig', $array); 
     }
 
-    public static function getNoPostExist()
+    public static function getNoPostExist($user)
     {
-        return PostView::renderViewMessageTitle('Pas de post trouvé', 'Il n\'y a pas de post pour le moment');  
+        $array = array(
+            'user'=> $user,
+            'title'=> 'Pas de post trouvé',
+            'message'=> 'Il n\'y a pas de post pour le moment',
+            'root'=>"//blog/",
+        ); 
+        return PostView::renderViewMessage($array);  
     }
     
-    public static function pushFail()
+    public static function pushFail($user)
     {
-        return PostView::renderViewMessage('Le push a échoué');  
+        $array = array(
+            'user'=> $user,
+            'title'=> 'Oops petit problème',
+            'message'=> 'Le push a échoué',
+            'root'=>"//blog/",
+        ); 
+        return PostView::renderViewMessage($array);  
     }
     
-    public static function editFail()
+    public static function editFail($user)
     {
-        return PostView::renderViewMessage('L\'edition  a échoué');  
+        $array = array(
+            'user'=> $user,
+            'title'=> 'Oops petit problème',
+            'message'=> 'L\'edition  a échoué',
+            'root'=>"//blog/",
+        ); 
+        return PostView::renderViewMessage($array);  
     }
     
-    public static function deleteFail()
+    public static function deleteFail($user)
     {
-        return PostView::renderViewMessage('La suppression a échoué');  
+        $array = array(
+            'user'=> $user,
+            'title'=> 'Oops petit problème',
+            'message'=> 'La suppression a échoué',
+            'root'=>"//blog/",
+        ); 
+        return PostView::renderViewMessage($array);  
     }
 }

@@ -1,13 +1,13 @@
 
             {% extends "Base.twig" %}
             {% block headerImage %}posts-bg{% endblock %}
-            {% block nav %}
+            {# {% block nav %}
                 {% if user.getPermission() is not null %}
                     {% include 'menu/menuAuth.twig' %}
                 {% else %}
                 {{parent()}}                    
                 {% endif %}
-            {% endblock %}
+            {% endblock %} #}
             {% block container %}
             {# {{ parent() }} #}
            

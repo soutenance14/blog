@@ -1,13 +1,6 @@
 {% extends "Base.twig" %}
 {% block css %}<link href="{{root}}css/contact.css" rel="stylesheet" />{% endblock %}
 {% block headerImage %}contact-bg{% endblock %}
-{% block nav %}
-    {% if user.getPermission() is not null %}
-        {% include 'menu/menuAuth.twig' %}
-    {% else %}
-    {{parent()}}                    
-    {% endif %}
-{% endblock %}
 {% block container %}
 <main class="mb-4">
     <div class="container px-4 px-lg-5">

@@ -1,11 +1,4 @@
             {% extends "Base.twig" %}
-            {% block nav %}
-                {% if user.getPermission() is not null %}
-                    {% include 'menu/menuAuth.twig' %}
-                {% else %}
-                {{parent()}}                    
-                {% endif %}
-            {% endblock %}
             {% block container %}
             <div class="container px-4 px-lg-5">
                  <article class="mb-4">

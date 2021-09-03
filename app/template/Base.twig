@@ -24,8 +24,12 @@
     <body>
         <!-- Navigation-->
         {% block nav %}
-            {% include 'menu/menuBase.twig' %}   
-        {% endblock %}
+                {% if user.getPermission() is not null %}
+                    {% include 'menu/menuAuth.twig' %}
+                {% else %}                  
+                    {% include 'menu/menuBase.twig' %}
+                {% endif %}
+            {% endblock %}
         <!-- Page Header-->
         {% block header %}
         {# {% endblock %} #}

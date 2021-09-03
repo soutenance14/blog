@@ -32,7 +32,7 @@ Abstract Class PostController extends Controller
             }
             else
             {
-                echo PostView::getNotExist($id);
+                echo PostView::getNotExist($id, $userSession);
             } 
         }
         catch (AccessViolationException $e)
@@ -66,7 +66,7 @@ Abstract Class PostController extends Controller
             }
             else
             {
-                echo PostView::getNotExist($slug);
+                echo PostView::getNotExist($slug, $userSession);
             }
         }
         catch (\PDOException $e)
@@ -110,7 +110,7 @@ Abstract Class PostController extends Controller
             }
             else
             {
-               echo PostView::getNotExist($slug);
+               echo PostView::getNotExist($slug, $userSession);
             }
         }
         catch (\PDOException $e)
@@ -141,7 +141,7 @@ Abstract Class PostController extends Controller
             }
             else
             {
-                echo PostView::getNoPostExist();
+                echo PostView::getNoPostExist($user);
             }
         } 
         catch (\PDOException $e)
@@ -169,7 +169,7 @@ Abstract Class PostController extends Controller
             }
             else
             {
-                echo PostView::getNoPostExist();
+                echo PostView::getNoPostExist($userSession);
             }
         } 
         catch (\PDOException $e)
@@ -269,7 +269,7 @@ Abstract Class PostController extends Controller
             }
             else
             {
-                echo PostView::deleteFail();
+                echo PostView::deleteFail($userSession);
             } 
         }
         catch (\PDOException $e)

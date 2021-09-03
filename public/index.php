@@ -327,5 +327,6 @@ if( is_array($match))
 }
 else
 {
-    echo RedirectionController::getPage404();
+    $blogSession = new BlogSession();
+    echo RedirectionController::getPage404($blogSession->getUser());
 }

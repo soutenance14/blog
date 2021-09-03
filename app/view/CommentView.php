@@ -110,29 +110,59 @@ Class CommentView extends View
         return $linkCommentManage;
     }
 
-    public static function getNoCommentExist($listCommentsEntity)
+    public static function getNoCommentExist($user)
     {
-        return CommentView::renderViewMessage('Il n\'y a pas de Commentaire pour le moment');  
+        $array = array(
+            'user'=> $user,
+            'title'=> 'Oops petit problème',
+            'message'=> 'Il n\'y a pas de Commentaire pour le moment',
+            'root'=>"//blog/",
+        ); 
+        return CommentView::renderViewMessage($array);  
     }
     
-    public static function getNotExist($id)
+    public static function getNotExist($id, $user)
     {
-        return CommentView::renderViewMessage('Le commentaire '.$id.' n\'existe pas');
+        $array = array(
+            'user'=> $user,
+            'title'=> 'Oops petit problème',
+            'message'=> 'Le commentaire '.$id.' n\'existe pas',
+            'root'=>"//blog/",
+        ); 
+        return CommentView::renderViewMessage($array);
     }
     
-    public static function pushFail()
+    public static function pushFail($user)
     {
-        return CommentView::renderViewMessage('Le push a échoué');  
+        $array = array(
+            'user'=> $user,
+            'title'=> 'Oops petit problème',
+            'message'=> 'Le push a échoué',
+            'root'=>"//blog/",
+        ); 
+        return CommentView::renderViewMessage($array);  
     }
     
-    public static function editFail()
+    public static function editFail($user)
     {
-        return CommentView::renderViewMessage('L\'edition  a échoué');  
+        $array = array(
+            'user'=> $user,
+            'title'=> 'Oops petit problème',
+            'message'=> 'L\'edition  a échoué',
+            'root'=>"//blog/",
+        ); 
+        return CommentView::renderViewMessage($array);  
     }
     
-    public static function deleteFail()
+    public static function deleteFail($user)
     {
-        return CommentView::renderViewMessage('La suppression a échoué');  
+        $array = array(
+            'user'=> $user,
+            'title'=> 'Oops petit problème',
+            'message'=> 'La suppression a échoué',
+            'root'=>"//blog/",
+        ); 
+        return CommentView::renderViewMessage($array);  
     }
     
 }
