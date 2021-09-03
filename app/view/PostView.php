@@ -53,7 +53,7 @@ Class PostView extends View
     
     public static function getNotExist($id)
     {
-        return PostView::renderViewMessage('redirection ce post '.$id.' n\'existe pas.');
+        return PostView::renderViewMessage('Le post "'.$id.'" n\'existe pas.');
     }
 
     public static function getAll($listPostsEntity, $user)
