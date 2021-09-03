@@ -3,6 +3,10 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
 
  Class MemberController extends Controller
 {
+    public static function cv()
+    {
+        echo MemberView::cv();
+    }
 
     public static function home($userSession)
     {

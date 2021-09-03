@@ -18,6 +18,7 @@ $router = new AltoRouter();
     //--GET
 $router->map('GET', '/', 'home0');
 $router->map('GET', '/home', 'home');
+$router->map('GET', '/cv', 'cv');
 $router->map('GET', '/formContact', 'formContact');
 $router->map('GET', '/signUp', 'signUp');
 $router->map('GET', '/login', 'login');
@@ -288,6 +289,11 @@ function editPassword()
         // this call is not possible in theory
         echo 'problème, post(s) manquant(s).';
     }
+}
+
+function cv()
+{
+    MemberController::cv();
 }
     //END MEMBER===END MEMBER===END MEMBER===END MEMBER===END MEMBER===END MEMBER===
 
