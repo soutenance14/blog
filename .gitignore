@@ -1,6 +1,7 @@
 
 ###> config ###
 /app/config/configMailLocal.php
-/public/assets
-/public/vendor
+/public/assets/files
+/public/assets/img/1920X800
+/public/assets/img/init
 
