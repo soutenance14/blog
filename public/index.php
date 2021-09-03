@@ -19,6 +19,7 @@ $router = new AltoRouter();
 $router->map('GET', '/', 'home0');
 $router->map('GET', '/home', 'home');
 $router->map('GET', '/cv', 'cv');
+$router->map('GET', '/admin_300', 'administration');
 $router->map('GET', '/formContact', 'formContact');
 $router->map('GET', '/signUp', 'signUp');
 $router->map('GET', '/login', 'login');
@@ -295,6 +296,14 @@ function cv()
 {
     MemberController::cv();
 }
+
+function administration()
+{
+    $blogSession = new BlogSession();
+    MemberController::administration($blogSession->getUser());
+}
+
+
     //END MEMBER===END MEMBER===END MEMBER===END MEMBER===END MEMBER===END MEMBER===
 
 //END ALL CALL FUNCTIONS FOR ROUTER****************************************************

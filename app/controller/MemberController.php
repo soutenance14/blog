@@ -8,6 +8,19 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
         echo MemberView::cv();
     }
 
+    public static function administration($userSession)
+    {
+        try
+        {
+            MemberController::permission(ADMIN, $userSession);
+            echo MemberView::administration();
+        }
+        catch (AccessViolationException $e)
+        {
+            echo MemberController::ifAccessViolationExceptionView($e);
+        }
+    }
+
     public static function home($userSession)
     {
         echo MemberView::home($userSession);
