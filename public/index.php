@@ -39,8 +39,8 @@ $router->map('GET', '/disconnect', 'disconnect');
 $router->map('GET', '/formEditPassword', 'formEditPassword');
 $router->map('GET', '/comm', 'formPushCommentASupprimer');// a supprimer, utiliser que pour les tests mais cest dans post que le formulaire sera
 $router->map('GET', '/delete/comment/[i:id]/[:token]', 'deleteComment');
-$router->map('GET', '/formDeleteMember', 'formDeleteMember');
-$router->map('GET', '/formDeleteMemberBack', 'formDeleteMemberBack');
+// $router->map('GET', '/formDeleteMember', 'formDeleteMember');
+// $router->map('GET', '/formDeleteMemberBack', 'formDeleteMemberBack');
 $router->map('GET', '/published/comment/[i:id]/[i:published]/[:token]', 'setPublishedComment');//use post later is better
 
     // POST
@@ -52,7 +52,7 @@ $router->map('POST', '/deleteMember/[:token]', 'deleteMember');
     //--GET
 $router->map('GET', '/formPushPost', 'formPushPost');
 $router->map('GET', '/form/edit/post/[i:id]', 'formEditPost');
-$router->map('GET', '/formDeletePost', 'formDeletePost');
+// $router->map('GET', '/formDeletePost', 'formDeletePost');
 $router->map('GET', '/delete/post/[i:id]/[:token]', 'deletePost');
 
     //--POST
