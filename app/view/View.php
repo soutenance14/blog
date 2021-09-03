@@ -23,15 +23,25 @@ Class View
         return View::renderView('message/exception.twig', $array);
     }
 
+    // lots of view use same title
+    // factorisation with this method
     public static function renderViewMessage($message)
     {
+        $title = "Oops, petit problème";
+        return View::renderViewMessageTitle($title, $message);
+    }
+
+    public static function renderViewMessageTitle($title, $message)
+    {
         $array = array(
-            'title'=> "Oops, petit ptoblème",
+            'title'=> $title,
             'message'=> $message,
             'root'=>"//blog/",
         ); 
         return View::renderView('message/simpleMessage.twig', $array);
     }
+
+
 
     public static function renderView($pathFileTwig, $array)
     {

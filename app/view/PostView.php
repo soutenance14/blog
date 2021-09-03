@@ -77,7 +77,7 @@ Class PostView extends View
 
     public static function getNoPostExist()
     {
-        return PostView::renderViewMessage('Il n\'y a pas de post pour le moment');  
+        return PostView::renderViewMessageTitle('Pas de post trouvé', 'Il n\'y a pas de post pour le moment');  
     }
     
     public static function pushFail()
