@@ -2,6 +2,16 @@
 
 Class MemberView extends View
 {
+    public static function cv()
+    {
+        $filename = "assets/files/cv.pdf";
+        header('Content-type: application/pdf');
+        header('Content-Disposition: inline; filename="' . $filename . '"');
+        header('Content-Transfer-Encoding: binary');
+        header('Content-Length: ' . filesize($filename));
+        header('Accept-Ranges: bytes');
+        @readfile($filename);
+    }
 
     public static function home($user)
     {
