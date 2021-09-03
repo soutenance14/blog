@@ -40,7 +40,7 @@ Class MemberView extends View
             'title'=> 'Modifier Mot de passe',
             'user'=> $user,
         );
-        return MemberView::renderView('member/signUp.twig', $array); 
+        return MemberView::renderView('member/editPassword.twig', $array); 
     }
 
     public static function pushFail()
