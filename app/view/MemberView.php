@@ -31,7 +31,7 @@ Class MemberView extends View
     public static function memberExist($login)
     {
         return MemberView::renderViewMessage("Le login ".$login." est déja utilisé,
-         veuillez en changer<br>.");
+         veuillez en changer.");
     }
 
     public static function formEditPassword( $user)
