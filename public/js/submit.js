@@ -26,12 +26,14 @@ function validateForm()
     var invalid = (postForm.getElementsByClassName("invalid-feedback"))[0];
     if(! validateType(editText))
     {
+      console.log("erreur");
       $validateForm = false;
       invalid.style.display = 'block';
     }
     else
     {
       post[ editText['name']] =   editText['value'] ;
+      console.log(post);
     }
   };
   return $validateForm;
@@ -183,10 +185,10 @@ function sendData(data, url)
           }
           else
           {
-            
             errorMessage.style.display = 'block';
             errorMessage.innerHTML = XHR.responseText;
             errorMessage.className = "text-center text-danger mb-3";
+            console.log('test'+XHR.responseText+'test');
             doSomethingSpecificError();
           }
       }
