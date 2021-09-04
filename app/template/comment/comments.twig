@@ -2,13 +2,14 @@
     <div class="row gx-4 gx-lg-5 justify-content-center">
         {# <h4 class="post-title">Commentaires</h4> #}
         {% if user.getPermission is null %}
-            <p><a href="{{root}}login">S'identifier</a> ou <a href="{{root}}signUp">s'inscrire</a> pour laisser un commentaire.</p>
+            <p class="col-md-10 col-lg-8 col-xl-7"><a href="{{root}}login">S'identifier</a> ou <a href="{{root}}signUp">s'inscrire</a> pour laisser un commentaire.</p>
         {% else %}
             {% include "comment/formComment.twig" %}
         {% endif %}
         {% if listCommentsPublishedEntity|length <1 %}
             <h6>Il n'y a pas de commentaires pour le moment.</h6>
         {% else %}
+         <h1 class="col-md-10 col-lg-8 col-xl-7">Commentaires</h1>
             {% for commentEntity in listCommentsPublishedEntity %}
                 {% set classComment = 'comment' %}
                 {%  if  commentEntity.getIdMembre() == user.getId()    %}
