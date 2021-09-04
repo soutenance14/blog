@@ -13,7 +13,6 @@ Abstract Class CommentController extends Controller
             $commentEntity->setIdPost($id_post);
             $commentEntity->setContenu($contenu);
             $requestSuccess = null;
-
             if($userSession->getType() === 'admin')
             {
                 // si l'user est un admin, le commentaire est directement publié
@@ -27,11 +26,11 @@ Abstract Class CommentController extends Controller
 
             if($requestSuccess === true)
             {
-                echo 'redirection push comment success.';
+                echo 'success';
             }
             else
             {
-                echo 'redirection push comment failed.';
+                echo 'Votre commentaire n\' a pas été enregistré, veuillez réessayer.';
             }
         }
         catch (\PDOException $e)
@@ -55,20 +54,21 @@ Abstract Class CommentController extends Controller
                 $commentEntity->setId($id);
                 $commentEntity->setPublished($published);
                 $requestSuccess = CommentManager::setPublished($commentEntity);
-                if($requestSuccess === true)
-                {
+                // if($requestSuccess === true)
+                // {
                     //recuperation de l'id_post pour la redirection
                     // on aurait pu envoyé l'id dans l'url des le depart
                     // ici on s'assure que l'on récupère le bon id_post
                     $comment = CommentManager::get($id);
                     $commentEntity->hydrate($comment);
 
-                    header('Location:'.self::getRoot().'postBack/'.$commentEntity->getIdPost());
-                }
-                else
-                {
-                    echo 'redirection setPublished comment failed.';
-                }
+                    header("Location:".self::getRoot()."posts");
+                // }
+                // else
+                // {
+                //     header("Location:".self::getRoot()."posts");
+                //     // echo 'redirection setPublished comment failed.';
+                // }
             }
             catch (\PDOException $e)
             {
@@ -99,18 +99,18 @@ Abstract Class CommentController extends Controller
                 CommentController::permissionThisIdMember( $userSession, $commentEntity->getIdMembre(), $tokenSent);
                 
                 $requestSuccess = CommentManager::delete( $id);
-                if($requestSuccess === true)
-                {
-                    echo 'header:location/home.';
-                }
-                else
-                {
-                    echo CommentView::deleteFail();
-                }
+                // if($requestSuccess === true)
+                // {
+                    header("Location:".self::getRoot()."posts");
+                // }
+                // else
+                // {
+                //     echo CommentView::deleteFail($userSession);
+                // }
             }
             else
             {
-                echo CommentView::getNotExist($id);
+                echo CommentView::getNotExist($id, $userSession);
             }
         }
         catch (\PDOException $e)
