@@ -19,6 +19,12 @@
 .comment
 {
     padding:10px;
+    word-wrap: break-word;
+}
+
+.break-word
+{
+    word-wrap: break-word;
 }
 
 .comments

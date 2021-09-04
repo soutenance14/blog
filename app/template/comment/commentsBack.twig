@@ -64,7 +64,7 @@
                             {{commentEntity.setformattedCreatedAt()}}
                             le {{commentEntity.getDate()}} à {{commentEntity.getTime()}}
                         </p>
-                        <hp class="post-subtitle">{{commentEntity.getContenu()}}</hp>
+                        <hp class="post-subtitle break-word">{{commentEntity.getContenu()}}</hp>
                         
                         <h6>
                             <a href="{{root}}deleteComment/{{commentEntity.getId()}}/{{user.getToken()}}">
