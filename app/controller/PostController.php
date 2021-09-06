@@ -288,9 +288,7 @@ Abstract Class PostController extends Controller
         {
             return View::renderViewException(
                 $e, "Problème de clé dans la base de données", "databaseError-bg", 
-                "Si vous souhaiter créer un article, 
-                veuillez changer le titre il doit exister un article avec un titre (slug) similaire.
-                Pour tout autre cas, une contrainte de clé empêche la requête demandée");
+                "Champs similaire existant, faire une modification.");
         }
         else
         {
