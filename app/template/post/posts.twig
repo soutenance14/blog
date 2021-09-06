@@ -1,15 +1,7 @@
 
             {% extends "Base.twig" %}
             {% block headerImage %}posts-bg{% endblock %}
-            {# {% block nav %}
-                {% if user.getPermission() is not null %}
-                    {% include 'menu/menuAuth.twig' %}
-                {% else %}
-                {{parent()}}                    
-                {% endif %}
-            {% endblock %} #}
             {% block container %}
-            {# {{ parent() }} #}
            
             <div class="container px-4 px-lg-5">
                  {% for postEntity in listPostsEntity %}
