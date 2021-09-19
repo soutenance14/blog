@@ -101,7 +101,11 @@ Abstract Class CommentController extends Controller
                 $requestSuccess = CommentManager::delete( $id);
                 // if($requestSuccess === true)
                 // {
-                    header("Location:".self::getRoot()."posts");
+                    $post = PostManager::getFromId($commentEntity->getIdPost());
+                    $postEntity = new PostEntity();
+                    $postEntity->hydrate($post);
+
+                    header("Location:".self::getRoot()."post/back/".$postEntity->getSlug());
                 // }
                 // else
                 // {

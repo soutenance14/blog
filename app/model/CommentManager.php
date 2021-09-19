@@ -1,7 +1,7 @@
 <?php
 
 require_once dirname(__DIR__) . '../db/DatabaseConnexion.php';
-
+// require dirname(__DIR__) . '../../vendor/autoload.php';
 Class CommentManager{
     
     // i think these 2 functions are useless,, but for the moment,

@@ -1,7 +1,7 @@
 <?php
 
 require dirname(__DIR__) . '../db/DatabaseConnexion.php';
-
+// require dirname(__DIR__) . '../../vendor/autoload.php';
 Class MemberManager{
 
     public static function auth($memberEntity)

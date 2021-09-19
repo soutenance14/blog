@@ -1,5 +1,7 @@
 <?php
 
+require dirname(__DIR__) . '../../vendor/autoload.php';
+
 Class DatabaseConnexion{
     
     private static $pdo;
