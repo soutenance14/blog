@@ -9,7 +9,7 @@
         {% if listCommentsPublishedEntity|length <1 %}
             <h6>Il n'y a pas de commentaires pour le moment.</h6>
         {% else %}
-         <h1 class="col-md-10 col-lg-8 col-xl-7">Commentaires</h1>
+         <h1 class="col-md-10 col-lg-8 col-xl-7 special-color">Commentaires</h1>
             {% for commentEntity in listCommentsPublishedEntity %}
                 {% set classComment = 'comment' %}
                 {%  if  commentEntity.getIdMembre() == user.getId()    %}
@@ -18,7 +18,7 @@
                 <div class="col-md-10 col-lg-8 col-xl-7" >
                     <!-- Divider-->
                     <hr class="my-4" />
-                    <div class="post-preview {{classComment}}" >
+                    <div class="post-preview published {{classComment}}" >
                         <h4 class="post-title">{{commentEntity.getLogin()}}</h4>
                         <p class="post-meta">
                             Posté

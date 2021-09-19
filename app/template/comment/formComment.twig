@@ -1,12 +1,12 @@
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
-                <p>Laisser un commentaire</p>
+                {# <h4 class="col-md-10 col-lg-8 col-xl-7 special-color">Laisser un commentaire</h4> #}
                 <div class="my-5">
                     <div id="form" method ='post'>
                         <div class="form-floating post-form" id="contenu" >
                             <textarea class="form-control postTextarea" name="contenu" type="text" placeholder="Enter your message here..." style="height: 12rem" data-sb-validations="required"></textarea>
-                            <label for="contenu">Mon commentaire</label>
+                            <label for="contenu" class="special-color">Laisser un commentaire</label>
                             <div class="invalid-feedback" data-sb-feedback="contenu:required">Un texte de 10 caractères minimum est nécessaire.</div>
                             {# <div class="invalid-feedback specific-feedback" data-sb-feedback="newPassword:required">Le texte est inférieur à 10 caractères!</div> #}
                         </div>

@@ -27,7 +27,9 @@ Class PostManager extends Manager{
     public static function getAll()
     {
         $request = self::getPdo()->prepare(
-            "SELECT id, auteur, titre, slug, chapo, contenu, created_at from POST");
+            "SELECT id, auteur, titre, slug, chapo, contenu, created_at from POST
+            ORDER BY created_at DESC
+            ");
         $request->execute();
         $posts = $request->fetchAll(\PDO::FETCH_ASSOC);
         return $posts;
