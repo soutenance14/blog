@@ -1,15 +1,14 @@
 <?php
 
-require dirname(__DIR__) . '../db/DatabaseConnexion.php';
-// require dirname(__DIR__) . '../../vendor/autoload.php';
-Class MemberManager{
+require dirname(__DIR__) . '../../vendor/autoload.php';
+Class MemberManager extends Manager{
 
     public static function auth($memberEntity)
     {
         $login = $memberEntity->getLogin();
         $password = $memberEntity->getPassword();
 
-        $request = DatabaseConnexion::getPdo()->prepare(
+        $request = self::getPdo()->prepare(
             "SELECT id, login, password, type from MEMBER where login = :login and password = :password");
         $request->bindParam(':login', $login, \PDO::PARAM_STR);
         $request->bindParam(':password', $password, \PDO::PARAM_STR);
@@ -21,7 +20,7 @@ Class MemberManager{
     public static function loginNotExist($memberEntity)
     {
         $login = $memberEntity->getLogin();
-        $request = DatabaseConnexion::getPdo()->prepare(
+        $request = self::getPdo()->prepare(
             "SELECT login from MEMBER where login = :login");
         $request->bindParam(':login', $login, \PDO::PARAM_STR);
         $request->execute();
@@ -39,7 +38,7 @@ Class MemberManager{
         $login = $memberEntity->getLogin();
         $password = $memberEntity->getPassword();
 
-        $request = DatabaseConnexion::getPdo()->prepare(
+        $request = self::getPdo()->prepare(
             "INSERT INTO MEMBER (login, password, type) values (:login, :password, 'subscriber')");
             $request->bindParam(':login', $login, \PDO::PARAM_STR);
             $request->bindParam(':password', $password, \PDO::PARAM_STR);
@@ -53,7 +52,7 @@ Class MemberManager{
         $id = $memberEntity->getId();
         $password = $memberEntity->getPassword();
 
-        $request = DatabaseConnexion::getPdo()->prepare(
+        $request = self::getPdo()->prepare(
             "UPDATE MEMBER set password =:password where id = :id");
         $request->bindParam(':id', $id, \PDO::PARAM_STR);
         $request->bindParam(':password', $password, \PDO::PARAM_STR);
@@ -68,7 +67,7 @@ Class MemberManager{
         // veut supprimer l'utilisateur, il a donc l'obligation d'entrer son login
         $id = $memberEntity->getId();
         $login = $memberEntity->getLogin();
-        $request = DatabaseConnexion::getPdo()->prepare(
+        $request = self::getPdo()->prepare(
             "DELETE from MEMBER where id = :id and login = :login and type <> 'admin'");
             $request->bindParam(':id', $id, \PDO::PARAM_STR);
             $request->bindParam(':login', $login, \PDO::PARAM_STR);
@@ -78,7 +77,7 @@ Class MemberManager{
 
     public static function memberNotExist($id)
     {
-        $request = DatabaseConnexion::getPdo()->prepare(
+        $request = self::getPdo()->prepare(
             "SELECT id from MEMBER where id = :id ");
         $request->bindParam(':id', $id, \PDO::PARAM_STR);
         $request->execute();

@@ -1,8 +1,6 @@
 <?php
 
-// require dirname(__DIR__) . '../../vendor/autoload.php';
-
-Class DatabaseConnexion{
+Class Manager{
     
     private static $pdo;
 
@@ -22,7 +20,7 @@ Class DatabaseConnexion{
 
         try 
         {
-            DatabaseConnexion::$pdo = new \PDO($dsn, $USER, $PASS, $options);
+            Manager::$pdo = new \PDO($dsn, $USER, $PASS, $options);
             
             // echo "connexion to database successfull\n****\n\n";
         } catch (\PDOException $e) {
@@ -32,10 +30,10 @@ Class DatabaseConnexion{
 
     public static function getPdo()
     {
-        if(DatabaseConnexion::$pdo === null)
+        if(Manager::$pdo === null)
         {
-            DatabaseConnexion::createPdo();
+            Manager::createPdo();
         }
-        return DatabaseConnexion::$pdo;
+        return Manager::$pdo;
     }
 }

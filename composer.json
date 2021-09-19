@@ -7,7 +7,6 @@
                 "app/view/",
                 "app/entity/",
                 "app/exception/",
-                "app/db/",
                 "BlogSession"
             ]
         }
