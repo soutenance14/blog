@@ -1,8 +1,10 @@
 <?php
 
-Class View
+Abstract Class View
 
 {
+    private static $root = "//blog/";
+    
     // if loading template fail
     public static function renderViewFail(Exception $e)
     {
@@ -18,7 +20,7 @@ Class View
             'message_special'=> $message_special,
             'title'=> $title,
             'imageHeader'=> $imageHeader,
-            'root'=>"//blog/",
+            'root'=>View::getRoot(),
         ); 
         return View::renderView('message/exception.twig', $array);
     }
@@ -29,19 +31,6 @@ Class View
     {
         return View::renderView('message/simpleMessage.twig', $array);
     }
-
-    // public static function renderViewMessageTitle($array)
-    // {
-    //     $array = array(
-    //         'user'=> $user,
-    //         'title'=> $title,
-    //         'message'=> $message,
-    //         'root'=>"//blog/",
-    //     ); 
-    //     return View::renderView('message/simpleMessage.twig', $array);
-    // }
-
-
 
     public static function renderView($pathFileTwig, $array)
     {
@@ -61,5 +50,10 @@ Class View
         {
            return PostView::renderViewFail($e);
         }
+    }
+
+    public static function getRoot()
+    {
+        return self::$root;
     }
 }
