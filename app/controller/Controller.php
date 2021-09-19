@@ -16,7 +16,7 @@ Abstract Class Controller
             case '42S22':
                 return View::renderViewException(
                     $e, "Problème avec la base de données",
-                     "databaseError-bg", "Impossible de récupérer les données d\'une colonne 
+                     "databaseError-bg", "Impossible de récupérer les données d'une colonne 
                 dans une table de la base de données.");
                 break;    
             case '42S02':

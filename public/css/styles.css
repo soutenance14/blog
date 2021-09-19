@@ -10822,3 +10822,13 @@ header.masthead .site-heading .h1 {
 {
   clear:both;
 }
+
+.special-color
+{
+  color:#336BFF;
+}
+
+.break-word
+{
+    word-wrap: break-word;
+}

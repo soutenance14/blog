@@ -18,11 +18,13 @@ Class CommentManager extends Manager{
         $request = self::getPdo()->prepare(
             "SELECT comment.id as id, contenu, published, created_at, id_post, id_membre,
             login , member.id as memberId
-     from COMMENT
-    inner join member
-    on member.id = id_membre
-    where id_post = :id_post and published = 1");
-            $request->bindParam(':id_post', $id_post, \PDO::PARAM_STR);
+            from COMMENT
+            inner join member
+            on member.id = id_membre
+            where id_post = :id_post and published = 1
+            ORDER BY created_at DESC
+            ");
+        $request->bindParam(':id_post', $id_post, \PDO::PARAM_STR);
         $request->execute();
         $posts = $request->fetchAll(\PDO::FETCH_ASSOC);
         return $posts;
@@ -37,7 +39,9 @@ Class CommentManager extends Manager{
              from COMMENT
             inner join member
             on member.id = id_membre
-            where id_post = :id_post and published = 0");
+            where id_post = :id_post and published = 0
+            ORDER BY created_at DESC
+            ");
         $request->bindParam(':id_post', $id_post, \PDO::PARAM_STR);
         $request->execute();
         $posts = $request->fetchAll(\PDO::FETCH_ASSOC);

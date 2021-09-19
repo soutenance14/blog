@@ -11,7 +11,7 @@
             {# {{ parent() }} #}
            
             <div class="container px-4 px-lg-5">
-                <h1>Administration articles</h1>
+                <h1 class="col-md-10 col-lg-8 col-xl-7 special-color">Administration articles</h1>
                 <hr>
                  {% for postEntity in listPostsEntity %}
                     <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -19,8 +19,8 @@
                         <!-- Post preview-->
                         <div class="post-preview">
                             <a href="post/back/{{postEntity.getSlug()}}">
-                                <h2 class="post-title">{{postEntity.getTitre()}}</h2>
-                                <h3 class="post-subtitle">{{postEntity.getChapo()}}</h3>
+                                <h2 class="post-title break-word">{{postEntity.getTitre()}}</h2>
+                                <h3 class="post-subtitle break-word">{{postEntity.getChapo()}}</h3>
                             </a>
                             <p class="post-meta">
                                 Posté par
