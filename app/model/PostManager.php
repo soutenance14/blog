@@ -1,12 +1,11 @@
 <?php
+require dirname(__DIR__) . '../../vendor/autoload.php';
 
-require dirname(__DIR__) . '../db/DatabaseConnexion.php';
-
-Class PostManager{
+Class PostManager extends Manager{
     
     public static function get(String $slug)
     {
-        $request = DatabaseConnexion::getPdo()->prepare(
+        $request = self::getPdo()->prepare(
             "SELECT id, auteur, titre, slug, chapo, contenu, created_at from POST where slug = :slug");
         $request->bindParam(':slug', $slug, \PDO::PARAM_STR);
         $request->execute();
@@ -16,7 +15,7 @@ Class PostManager{
     
     public static function getFromId(String $id)
     {
-        $request = DatabaseConnexion::getPdo()->prepare(
+        $request = self::getPdo()->prepare(
             "SELECT id, auteur, titre, slug, chapo, contenu, created_at from POST where id = :id");
         $request->bindParam(':id', $id, \PDO::PARAM_STR);
         $request->execute();
@@ -27,7 +26,7 @@ Class PostManager{
 
     public static function getAll()
     {
-        $request = DatabaseConnexion::getPdo()->prepare(
+        $request = self::getPdo()->prepare(
             "SELECT id, auteur, titre, slug, chapo, contenu, created_at from POST");
         $request->execute();
         $posts = $request->fetchAll(\PDO::FETCH_ASSOC);
@@ -42,7 +41,7 @@ Class PostManager{
         $chapo = $postEntity->getChapo();
         $contenu = $postEntity->getContenu();
 
-        $request = DatabaseConnexion::getPdo()->prepare(
+        $request = self::getPdo()->prepare(
             "INSERT INTO POST (auteur, titre, slug, chapo, contenu, created_at) values (:auteur, :titre, :slug, :chapo, :contenu, current_timestamp)");
             $request->bindParam(':auteur', $auteur, \PDO::PARAM_STR);
             $request->bindParam(':titre', $titre, \PDO::PARAM_STR);
@@ -62,7 +61,7 @@ Class PostManager{
         $chapo = $postEntity->getChapo();
         $contenu = $postEntity->getContenu();
 
-        $request = DatabaseConnexion::getPdo()->prepare(
+        $request = self::getPdo()->prepare(
             "UPDATE POST set auteur = :auteur, titre = :titre, slug = :slug, chapo = :chapo, contenu = :contenu, created_at = current_timestamp where id = :id");
             $request->bindParam(':id', $id, \PDO::PARAM_STR);
             $request->bindParam(':auteur', $auteur, \PDO::PARAM_STR);
@@ -76,7 +75,7 @@ Class PostManager{
 
     public static function delete( $id)
     {
-        $request = DatabaseConnexion::getPdo()->prepare(
+        $request = self::getPdo()->prepare(
             "DELETE from POST where id = :id");
             $request->bindParam(':id', $id, \PDO::PARAM_STR);
             echo 'le ID : '.$id;
