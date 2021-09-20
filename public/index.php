@@ -1,6 +1,4 @@
 <?php
-
-
 // This is the router page
 // use package Altorouter
 // https://altorouter.com
@@ -10,7 +8,6 @@ require dirname(__DIR__) . '../app/BlogSession.php';
 
 //start AltoRouter
 $router = new AltoRouter();
-
 
 // ALL MAP ROUTES
 
@@ -25,8 +22,7 @@ $router->map('GET', '/signUp', 'signUp');
 $router->map('GET', '/login', 'login');
 $router->map('GET', '/posts', 'posts');
 $router->map('GET', '/postsBack', 'postsBack');
-// $router->map('GET', '/post/[i:id]', 'post');
-// $router->map('GET', '/post/back/[i:id]', 'postBack');
+
 $router->map('GET', '/post/[:slug]', 'post');
 $router->map('GET', '/post/back/[:slug]', 'postBack');
 
@@ -39,10 +35,7 @@ $router->map('POST', '/sendMessage', 'sendMessage');
     //--GET
 $router->map('GET', '/disconnect', 'disconnect');
 $router->map('GET', '/formEditPassword', 'formEditPassword');
-$router->map('GET', '/comm', 'formPushCommentASupprimer');// a supprimer, utiliser que pour les tests mais cest dans post que le formulaire sera
 $router->map('GET', '/delete/comment/[i:id]/[:token]', 'deleteComment');
-// $router->map('GET', '/formDeleteMember', 'formDeleteMember');
-// $router->map('GET', '/formDeleteMemberBack', 'formDeleteMemberBack');
 $router->map('GET', '/published/comment/[i:id]/[i:published]/[:token]', 'setPublishedComment');//use post later is better
 
     // POST
@@ -54,13 +47,11 @@ $router->map('POST', '/deleteMember/[:token]', 'deleteMember');
     //--GET
 $router->map('GET', '/formPushPost', 'formPushPost');
 $router->map('GET', '/form/edit/post/[i:id]', 'formEditPost');
-// $router->map('GET', '/formDeletePost', 'formDeletePost');
 $router->map('GET', '/delete/post/[i:id]/[:token]', 'deletePost');
 
     //--POST
 $router->map('POST', '/editPost', 'editPost');
 $router->map('POST', '/push/post', 'pushPost');
-// $router->map('POST', '/deletePost', 'deletePost');
 
 //END MAP ROUTES===END MAP ROUTES===END MAP ROUTES===END MAP ROUTES===END MAP ROUTES===
 
@@ -167,18 +158,6 @@ function deletePost($id, $token)
     //END POST===END POST===END POST===END POST===END POST===END POST===END POST===
 
     // FOR COMMENT
-
-    // form
-
-function formPushCommentASupprimer()
-{
-    $blogSession = new BlogSession();
-    echo "formPushComment";
-    echo "<form action ='pushComment' method ='post'><input name='id_post'><input name='contenu'><input type='submit' name ='submit' value='ok'>
-    <input name='token' value='".$blogSession->getUser()->getToken()."'>
-    </form>";
-}
-
     // for user auth
 function pushComment()
 {
@@ -201,7 +180,6 @@ function setPublishedComment($id, $published, $token)
     $blogSession = new BlogSession();
     CommentController::setPublished($id, $published, $token, $blogSession->getUser());
 }
-
 
     // FOR MEMBER
         // form
@@ -250,8 +228,6 @@ function formEditPassword()
     $blogSession = new BlogSession();
     MemberController::formEditPassword($blogSession->getUser());
 }
-
-    //controller need model
 
 function auth()
 {
@@ -302,8 +278,6 @@ function administration()
     $blogSession = new BlogSession();
     MemberController::administration($blogSession->getUser());
 }
-
-
     //END MEMBER===END MEMBER===END MEMBER===END MEMBER===END MEMBER===END MEMBER===
 
 //END ALL CALL FUNCTIONS FOR ROUTER****************************************************

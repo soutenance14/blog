@@ -2,6 +2,7 @@
 
 Abstract Class Controller
 {
+    //use your root name example: "127.0.0.1/blog"
     private static $root = "//blog/";
     
     public static function ifPDOExceptionView(\PDOException $e)
