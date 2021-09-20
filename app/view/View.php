@@ -1,10 +1,8 @@
 <?php
 
 Abstract Class View
-
 {
-    //use your root configuration example : //127.0.0.1/blog
-    private static $root = "//blog/";
+    private static $root = null;
     
     // if loading template fail
     public static function renderViewFail(Exception $e)
@@ -21,16 +19,16 @@ Abstract Class View
             'message_special'=> $message_special,
             'title'=> $title,
             'imageHeader'=> $imageHeader,
-            'root'=>View::getRoot(),
+            'root'=>self::getRoot(),
         ); 
-        return View::renderView('message/exception.twig', $array);
+        return self::renderView('message/exception.twig', $array);
     }
 
     // lots of view use same title
     // factorisation with this method
     public static function renderViewMessage($array)
     {
-        return View::renderView('message/simpleMessage.twig', $array);
+        return self::renderView('message/simpleMessage.twig', $array);
     }
 
     public static function renderView($pathFileTwig, $array)
@@ -49,12 +47,17 @@ Abstract Class View
             return $template->render($array); 
         }catch (Exception $e) 
         {
-           return PostView::renderViewFail($e);
+           return self::renderViewFail($e);
         }
     }
 
     public static function getRoot()
     {
+        if(self::$root === null)
+        {
+            require dirname(__DIR__) . "../config/configRoot.php";
+            self::$root = $root;
+        }
         return self::$root;
     }
 }

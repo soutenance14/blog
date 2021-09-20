@@ -2,8 +2,7 @@
 
 Abstract Class Controller
 {
-    //use your root configuration example : //127.0.0.1/blog
-    private static $root = "//blog/";
+    private static $root = null;
     
     public static function ifPDOExceptionView(\PDOException $e)
     {
@@ -103,7 +102,11 @@ Abstract Class Controller
 
     public static function getRoot()
     {
+        if(self::$root === null)
+        {
+            require dirname(__DIR__) . "../config/configRoot.php";
+            self::$root = $root;
+        }
         return self::$root;
     }
-
 }

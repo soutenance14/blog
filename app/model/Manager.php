@@ -1,7 +1,7 @@
 <?php
 
-Class Manager{
-    
+abstract Class Manager
+{    
     private static $pdo;
 
     public static function createPdo()
