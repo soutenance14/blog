@@ -1,5 +1,6 @@
 {% extends "Base.twig" %}
 {% block css %}<link href="{{root}}css/post.css" rel="stylesheet" />{% endblock %}
+{% block css %}<link href="{{root}}css/submitMessage.css" rel="stylesheet" />{% endblock %}
 {% block headerImage %}editPost-bg{% endblock %}
 {% block nav %}
     {% if user.getPermission() is not null %}
