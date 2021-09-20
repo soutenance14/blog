@@ -4,12 +4,9 @@ define('USER_NOT_AUTHENTIFIED', null);
 define('USER_AUTHENTIFIED', 1);
 define('ADMIN', 2);
 
-// require "entity/MemberEntity.php";
-// define('USER_NO_AUTHENTIFIED_SESSION', null);
 session_start();
 Class BlogSession
 {
-    private $user;
 
     public function getUser()
     {
