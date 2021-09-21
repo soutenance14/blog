@@ -99,7 +99,7 @@ Class PostView extends View
         $array = array(
             'user'=> $user,
             'title'=> 'Oops petit problème',
-            'message'=> 'Le push a échoué',
+            'message'=> 'Erreur lors de l\'enregistrement en base de données, l\'article n\'a pas été crée.',
             'root'=>self::getRoot(),
         ); 
         return PostView::renderViewMessage($array);  
@@ -110,7 +110,7 @@ Class PostView extends View
         $array = array(
             'user'=> $user,
             'title'=> 'Oops petit problème',
-            'message'=> 'L\'edition  a échoué',
+            'message'=> 'Erreur lors de la requête, les modifications, n\'ont pas été enregistrés.',
             'root'=>self::getRoot(),
         ); 
         return PostView::renderViewMessage($array);  

@@ -202,7 +202,7 @@ Abstract Class PostController extends Controller
             }
             else
             {
-                echo 'Erreur lors de l\'enregistrement en base de données, l\'article n\'a pas été crée.';
+                echo PostView::pushFail($userSession);
             }
         }
         catch (\PDOException $e)
@@ -240,7 +240,7 @@ Abstract Class PostController extends Controller
             }
             else
             {
-                echo 'Erreur lors de la requête, les modifications, n\'ont pas été enregistrés.';
+                echo PostView::editFail($userSession);
             }
         }
         catch (\PDOException $e)
