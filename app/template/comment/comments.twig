@@ -1,6 +1,5 @@
 <div class="container px-4 px-lg-5 comments">
     <div class="row gx-4 gx-lg-5 justify-content-center">
-        {# <h4 class="post-title">Commentaires</h4> #}
         {% if user.getPermission is null %}
             <p class="col-md-10 col-lg-8 col-xl-7"><a href="{{root}}login">S'identifier</a> ou <a href="{{root}}signUp">s'inscrire</a> pour laisser un commentaire.</p>
         {% else %}
@@ -16,7 +15,6 @@
                     {% set classComment = 'my' %}
                 {% endif %}
                 <div class="col-md-10 col-lg-8 col-xl-7" >
-                    <!-- Divider-->
                     <hr class="my-4" />
                     <div class="post-preview published {{classComment}}" >
                         <h4 class="post-title">{{commentEntity.getLogin()}}</h4>
@@ -36,8 +34,6 @@
                             </h6>
                         {% endif %}
                     </div>
-                    {# <!-- Divider-->
-                    <hr class="my-4" /> #}
                 </div>
             {% endfor %}
         {% endif %}

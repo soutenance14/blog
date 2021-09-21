@@ -163,15 +163,6 @@ function deletePost($id, $token)
 
     // form
 
-function formPushCommentASupprimer()
-{
-    $blogSession = new BlogSession();
-    echo "formPushComment";
-    echo "<form action ='pushComment' method ='post'><input name='id_post'><input name='contenu'><input type='submit' name ='submit' value='ok'>
-    <input name='token' value='".$blogSession->getUser()->getToken()."'>
-    </form>";
-}
-
     // for user auth
 function pushComment()
 {
@@ -206,28 +197,6 @@ function login()
 function signUp()
 {
     MemberController::signUp();
-}
-
-function formDeleteMember()
-{
-    $blogSession = new BlogSession();   
-    MemberController::formDelete($blogSession->getUser());
-}
-
-function formDeleteMemberBack()
-{   
-    $blogSession = new BlogSession();   
-    MemberController::formDeleteBack($blogSession->getUser());
-}
-
-function deleteMember($token)
-{
-    if(isset($_POST['login'])   &&  isset($_POST['id'])    )
-    {
-        $blogSession = new BlogSession();
-        MemberController::delete($_POST['login'], $_POST['id'] , $token, $blogSession);
-    }
-    
 }
 
 function pushMember()

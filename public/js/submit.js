@@ -188,7 +188,6 @@ function sendData(data, url)
             errorMessage.style.display = 'block';
             errorMessage.innerHTML = XHR.responseText;
             errorMessage.className = "text-center text-danger mb-3";
-            console.log('test'+XHR.responseText+'test');
             doSomethingSpecificError();
           }
       }
@@ -197,17 +196,4 @@ function sendData(data, url)
       // }
   }
   XHR.send(urlEncodedData);
-}
-
-//another method
-function sendData2(data)
-{
-  data = {nom: "barium", mail: "barium", contenu: "barium" };
-  fetch("http://blog/sendMessage", {
-      method: "POST", 
-      body: JSON.stringify(data)
-    }).then(res => {
-      console.log("Request complete! response:", res);
-      alert( res.responseText);
-    });
 }
