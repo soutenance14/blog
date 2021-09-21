@@ -8,8 +8,8 @@ Class PostView extends View
     {
         $array = array(
             'title'=>'Créer article',
-            'root'=>"//blog/",
             'user'=> $user,
+            'root'=>self::getRoot(),
         );
         return PostView::renderView('post/postPushForm.twig', $array);
     }
@@ -17,10 +17,10 @@ Class PostView extends View
     public static function formEditPost($postEntity, $user)
     { 
         $array = array(
-            'root'=>"//blog/",
             'title'=>'Modifier : '.$postEntity->getTitre(),
             'user'=> $user,
             'postEntity'=> $postEntity,
+            'root'=>self::getRoot(),
         );
         return PostView::renderView('post/postEditForm.twig', $array);
     }
@@ -28,11 +28,11 @@ Class PostView extends View
     public static function get($postEntity, $listCommentsPublishedEntity, $user)
     {
         $array = array(         
-            'root'=>"//blog/",
             'title'=>$postEntity->getTitre(),
             'postEntity'=> $postEntity,
             'listCommentsPublishedEntity'=> $listCommentsPublishedEntity,
             'user'=> $user,
+            'root'=>self::getRoot(),
         );
         return PostView::renderView('post/post.twig', $array);
     }
@@ -40,13 +40,13 @@ Class PostView extends View
     public static function getBack($postEntity, $listCommentsPublishedEntity, $listCommentsNotPublishedEntity, $user, $id_post)
     {
         $array = array(
-            'root'=>"//blog/",
             'title'=>$postEntity->getTitre(),
             'postEntity'=> $postEntity,
             'listCommentsPublishedEntity'=> $listCommentsPublishedEntity,
             'listCommentsNotPublishedEntity'=> $listCommentsNotPublishedEntity,
             'user'=> $user,
             'id_post'=> $id_post,
+            'root'=>self::getRoot(),
         );
         return PostView::renderView('post/postBack.twig', $array); 
     }
@@ -57,7 +57,7 @@ Class PostView extends View
             'user'=> $user,
             'title'=> 'Oops petit problème',
             'message'=> 'Le post "'.$id.'" n\'existe pas.',
-            'root'=>"//blog/",
+            'root'=>self::getRoot(),
         ); 
         return PostView::renderViewMessage($array);
     }
@@ -68,6 +68,7 @@ Class PostView extends View
             'title'=> 'Liste des articles',
             'listPostsEntity'=> $listPostsEntity,
             'user'=> $user,
+            'root'=>self::getRoot(),
         );
         return PostView::renderView('post/posts.twig', $array); 
     }
@@ -77,6 +78,7 @@ Class PostView extends View
         $array = array(
             'listPostsEntity'=> $listPostsEntity,
             'user'=> $user,
+            'root'=>self::getRoot(),
         );
         return PostView::renderView('post/postsBack.twig', $array); 
     }
@@ -87,7 +89,7 @@ Class PostView extends View
             'user'=> $user,
             'title'=> 'Pas de post trouvé',
             'message'=> 'Il n\'y a pas de post pour le moment',
-            'root'=>"//blog/",
+            'root'=>self::getRoot(),
         ); 
         return PostView::renderViewMessage($array);  
     }
@@ -98,7 +100,7 @@ Class PostView extends View
             'user'=> $user,
             'title'=> 'Oops petit problème',
             'message'=> 'Le push a échoué',
-            'root'=>"//blog/",
+            'root'=>self::getRoot(),
         ); 
         return PostView::renderViewMessage($array);  
     }
@@ -109,7 +111,7 @@ Class PostView extends View
             'user'=> $user,
             'title'=> 'Oops petit problème',
             'message'=> 'L\'edition  a échoué',
-            'root'=>"//blog/",
+            'root'=>self::getRoot(),
         ); 
         return PostView::renderViewMessage($array);  
     }
@@ -120,7 +122,7 @@ Class PostView extends View
             'user'=> $user,
             'title'=> 'Oops petit problème',
             'message'=> 'La suppression a échoué',
-            'root'=>"//blog/",
+            'root'=>self::getRoot(),
         ); 
         return PostView::renderViewMessage($array);  
     }

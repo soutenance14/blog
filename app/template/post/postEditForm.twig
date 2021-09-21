@@ -1,6 +1,8 @@
 {% extends "Base.twig" %}
-{% block css %}<link href="{{root}}css/post.css" rel="stylesheet" />{% endblock %}
-{% block css %}<link href="{{root}}css/submitMessage.css" rel="stylesheet" />{% endblock %}
+{% block css %}
+    <link href="{{root}}css/post.css" rel="stylesheet" />
+    <link href="{{root}}css/submitMessage.css" rel="stylesheet" />
+{% endblock %}
 {% block headerImage %}editPost-bg{% endblock %}
 {% block nav %}
     {% if user.getPermission() is not null %}
@@ -85,7 +87,7 @@
         var invalidSpecificContenu = (document.getElementById("contenu").getElementsByClassName("specific-feedback"))[0];
 
         // specific element will be verified
-        var url = '{{root}}editPost';
+        var url = '{{root}}edit/post';
 
         function displaySomethingSpecific()
         {

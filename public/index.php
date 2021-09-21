@@ -24,9 +24,7 @@ $router->map('GET', '/formContact', 'formContact');
 $router->map('GET', '/signUp', 'signUp');
 $router->map('GET', '/login', 'login');
 $router->map('GET', '/posts', 'posts');
-$router->map('GET', '/postsBack', 'postsBack');
-// $router->map('GET', '/post/[i:id]', 'post');
-// $router->map('GET', '/post/back/[i:id]', 'postBack');
+$router->map('GET', '/posts/back', 'postsBack');
 $router->map('GET', '/post/[:slug]', 'post');
 $router->map('GET', '/post/back/[:slug]', 'postBack');
 
@@ -38,11 +36,8 @@ $router->map('POST', '/sendMessage', 'sendMessage');
 // for user auth
     //--GET
 $router->map('GET', '/disconnect', 'disconnect');
-$router->map('GET', '/formEditPassword', 'formEditPassword');
-$router->map('GET', '/comm', 'formPushCommentASupprimer');// a supprimer, utiliser que pour les tests mais cest dans post que le formulaire sera
+$router->map('GET', '/edit/password', 'formEditPassword');
 $router->map('GET', '/delete/comment/[i:id]/[:token]', 'deleteComment');
-// $router->map('GET', '/formDeleteMember', 'formDeleteMember');
-// $router->map('GET', '/formDeleteMemberBack', 'formDeleteMemberBack');
 $router->map('GET', '/published/comment/[i:id]/[i:published]/[:token]', 'setPublishedComment');//use post later is better
 
     // POST
@@ -52,15 +47,13 @@ $router->map('POST', '/deleteMember/[:token]', 'deleteMember');
 
 // for user admin
     //--GET
-$router->map('GET', '/formPushPost', 'formPushPost');
-$router->map('GET', '/form/edit/post/[i:id]', 'formEditPost');
-// $router->map('GET', '/formDeletePost', 'formDeletePost');
+$router->map('GET', '/push/post', 'formPushPost');
+$router->map('GET', '/edit/post/[i:id]', 'formEditPost');
 $router->map('GET', '/delete/post/[i:id]/[:token]', 'deletePost');
 
     //--POST
-$router->map('POST', '/editPost', 'editPost');
+$router->map('POST', '/edit/post', 'editPost');
 $router->map('POST', '/push/post', 'pushPost');
-// $router->map('POST', '/deletePost', 'deletePost');
 
 //END MAP ROUTES===END MAP ROUTES===END MAP ROUTES===END MAP ROUTES===END MAP ROUTES===
 

@@ -10,7 +10,7 @@ Abstract Class RedirectionController
         $array = array(
             'user'=> $userSession,
             'title'=> "Erreur 404, page non trouvé",
-            'root'=>self::$root,
+            'root'=>self::getRoot(),
         ); 
         echo View::renderView("message/404.twig" ,$array);
     }
