@@ -1,7 +1,7 @@
 <div class="container px-4 px-lg-5 comments">
     <div class="row gx-4 gx-lg-5 justify-content-center">
         {# <h2 class="post-title">Commentaires</h2> #}
-        {% include "comment/formComment.twig" %}
+        {% include "comment/commentPush.twig" %}
         <h4 class="post-title special-color">Commentaires Publiés</h4>
         {% if listCommentsPublishedEntity|length <1 %}
             <h6>Il n'y a pas de commentaires publiés pour le moment.</h6>

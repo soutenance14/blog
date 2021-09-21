@@ -13,7 +13,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
         try
         {
             MemberController::permission(ADMIN, $userSession);
-            echo MemberView::administration();
+            echo MemberView::administration($userSession);
         }
         catch (AccessViolationException $e)
         {

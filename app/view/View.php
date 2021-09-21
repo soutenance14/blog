@@ -12,8 +12,6 @@ Abstract Class View
 
     public static function renderViewException(Exception $e, $title, $imageHeader,$message_special)
     {
-        // the array is created here because for display code, is better to use parameters in function
-        // in the calling renderViewException (class Controller) long switch is used
         $array = array(
             'e' => $e,
             'message_special'=> $message_special,

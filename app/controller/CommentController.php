@@ -15,12 +15,11 @@ Abstract Class CommentController extends Controller
             $requestSuccess = null;
             if($userSession->getType() === 'admin')
             {
-                // si l'user est un admin, le commentaire est directement publié
+            //    if user is admin, comment is published
                 $requestSuccess = CommentManager::pushPublished( $commentEntity);
             }
             else
             {
-                // si l'user n'est pas un admin, le commentaire n'est pas publié
                 $requestSuccess = CommentManager::pushNotPublished( $commentEntity);
             }
 
@@ -30,7 +29,8 @@ Abstract Class CommentController extends Controller
             }
             else
             {
-                echo 'Votre commentaire n\' a pas été enregistré, veuillez réessayer.';
+                echo CommentView::errorMessage($userSession, 'Votre commentaire n\a pas été enregistré,
+                 veuillez réessayer.');
             }
         }
         catch (\PDOException $e)
@@ -54,8 +54,8 @@ Abstract Class CommentController extends Controller
                 $commentEntity->setId($id);
                 $commentEntity->setPublished($published);
                 $requestSuccess = CommentManager::setPublished($commentEntity);
-                // if($requestSuccess === true)
-                // {
+                if($requestSuccess === true)
+                {
                     //recuperation de l'id_post pour la redirection
                     // on aurait pu envoyé l'id dans l'url des le depart
                     // ici on s'assure que l'on récupère le bon id_post
@@ -68,12 +68,11 @@ Abstract Class CommentController extends Controller
 
                     header("Location:".self::getRoot()."post/back/".$postEntity->getSlug());
                 
-                // }
-                // else
-                // {
-                //     header("Location:".self::getRoot()."posts");
-                //     // echo 'redirection setPublished comment failed.';
-                // }
+                }
+                else
+                {
+                    echo CommentView::errorMessage($userSession, 'Erreur, la modification n\'a pas été faite.');
+                }
             }
             catch (\PDOException $e)
             {
@@ -86,7 +85,8 @@ Abstract Class CommentController extends Controller
         }
         else
         {
-            echo 'mauvaise valeur donnée.';
+            echo CommentView::errorMessage($userSession, 'Mauvaise valeur donné : 
+            0 pour supprimer, 1 pour valider uniquement.');
         }
     }
 
@@ -99,27 +99,25 @@ Abstract Class CommentController extends Controller
             {
                 $commentEntity = new CommentEntity();
                 $commentEntity->hydrate($comment);
-                //TODO A MOODIFIER ICI
-                // var_dump($commentEntity);
                 CommentController::permissionThisIdMember( $userSession, $commentEntity->getIdMembre(), $tokenSent);
                 
                 $requestSuccess = CommentManager::delete( $id);
-                // if($requestSuccess === true)
-                // {
+                if($requestSuccess === true)
+                {
                     $post = PostManager::getFromId($commentEntity->getIdPost());
                     $postEntity = new PostEntity();
                     $postEntity->hydrate($post);
 
                     header("Location:".self::getRoot()."post/back/".$postEntity->getSlug());
-                // }
-                // else
-                // {
-                //     echo CommentView::deleteFail($userSession);
-                // }
+                }
+                else
+                {
+                    echo CommentView::errorMessage($userSession, 'La suppression a échoué');
+                }
             }
             else
             {
-                echo CommentView::getNotExist($id, $userSession);
+                echo CommentView::errorMessage($userSession, 'Le commentaire à supprimer n\'existe pas ou plus.');
             }
         }
         catch (\PDOException $e)
