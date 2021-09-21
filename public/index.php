@@ -19,7 +19,7 @@ $router = new AltoRouter();
 $router->map('GET', '/', 'home0');
 $router->map('GET', '/home', 'home');
 $router->map('GET', '/cv', 'cv');
-$router->map('GET', '/admin_300', 'administration');
+$router->map('GET', '/admin/2d2823792eb6e1996c9a82cf3396546f', 'administration');
 $router->map('GET', '/contact', 'formContact');
 $router->map('GET', '/signUp', 'signUp');
 $router->map('GET', '/login', 'login');

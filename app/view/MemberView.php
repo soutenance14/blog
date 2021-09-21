@@ -32,11 +32,12 @@ Class MemberView extends View
         return MemberView::renderView('member/login.twig', $array); 
     }
     
-    public static function administration()
+    public static function administration($user)
     {
         $array = array(
             'title'=> 'Administration',
             'root'=> self::getRoot(),
+            'user'=> $user,
         );
         return MemberView::renderView('member/administration.twig', $array); 
     }
@@ -68,7 +69,7 @@ Class MemberView extends View
 
     public static function pushFail()
     {
-        return MemberView::renderViewMessage('Le push a échoué');  
+        return MemberView::renderViewMessage('La création du membre à echoué.');  
     }
 
     public static function deleteFail($login, $id)
@@ -84,7 +85,7 @@ Class MemberView extends View
 
     public static function editPasswordFail()
     {
-        return MemberView::renderViewMessage('L\'edition  a échoué');  
+        return MemberView::renderViewMessage('L\'edition du mmot de passe a échoué');  
     }
     
 }

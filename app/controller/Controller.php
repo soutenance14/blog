@@ -47,7 +47,7 @@ Abstract Class Controller
     {
         if($user->getToken() != $tokenSent)
         {
-            throw new AccessViolationException('Wrong token sent.', 96);
+            throw new AccessViolationException('Mauvais token reçu.', 96);
         }
         Controller::permission($permissionRequested, $user);
     } 
@@ -59,7 +59,7 @@ Abstract Class Controller
             case USER_AUTHENTIFIED:
                 if($user->getPermission() === USER_NOT_AUTHENTIFIED)
                 {
-                    throw new AccessViolationException('User not authentified.', 97);
+                    throw new AccessViolationException('Une authentification est requise pour cette requête.', 97);
                 }
                 break;
                 
@@ -70,16 +70,17 @@ Abstract Class Controller
                 {
                     if( $user->getPermission() != ADMIN)
                     {
-                        throw new AccessViolationException('User is not admin.', 98);
+                        throw new AccessViolationException('Un compte administrateur est requis 
+                        pour cette requête', 98);
                     }
                 }
                 else
                 {
-                    throw new AccessViolationException('User not authentified.', 97);
+                    throw new AccessViolationException('Une authentification est requise pour cette requête.', 97);
                 }
                 break;
             default:
-                throw new AccessViolationException('Unknown permission requested.', 100);
+                throw new AccessViolationException('Problème de permission.', 100);
                 break;
         }
     }
@@ -91,16 +92,17 @@ Abstract Class Controller
         {
             if( ($user->getId() != $id_member_permission) && ($user->getPermission() != ADMIN)    )
             {
-                throw new AccessViolationException('User is not the owner and not admin.', 101);
+                throw new AccessViolationException('L\'utilisateur doit être le créateur 
+                de l\'objet ou un administrateur', 101);
             }
         }
         elseif($user->getPermission() != USER_NOT_AUTHENTIFIED && $user->getToken() !== $tokenSent)
         {
-            throw new AccessViolationException('Wrong token sent.', 96);
+            throw new AccessViolationException('Mauvais token reçu.', 96);
         }
         else
         {
-            throw new AccessViolationException('User is not authentified.', 97);
+            throw new AccessViolationException('Une authentification est requise pour cette requête.', 97);
         }
     }
 

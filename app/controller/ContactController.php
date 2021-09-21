@@ -13,9 +13,9 @@ use \Mailjet\Resources;
     public static function sendMessage($nom, $mail, $contenu)
     {
         require dirname(__DIR__) . '../../app/config/configMailLocal.php';
+        // for getting all config email variables
         try
         {
-
             $day = date('d');
             $month = date('m');
             $year = date('Y');
@@ -54,7 +54,7 @@ use \Mailjet\Resources;
             ;
             
             // Send the message
-            $result = $mailer->send($message);
+            $mailer->send($message);
             echo 'success';
         }
         catch (Exception $e)
