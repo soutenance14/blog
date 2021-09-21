@@ -75,7 +75,7 @@ Abstract Class Controller
                 }
                 else
                 {
-                    throw new AccessViolationException('User not authenfied.', 97);
+                    throw new AccessViolationException('User not authentified.', 97);
                 }
                 break;
             default:
@@ -91,12 +91,16 @@ Abstract Class Controller
         {
             if( ($user->getId() != $id_member_permission) && ($user->getPermission() != ADMIN)    )
             {
-                throw new AccessViolationException('user is not the owner and not admin.', 101);
+                throw new AccessViolationException('User is not the owner and not admin.', 101);
             }
+        }
+        elseif($user->getPermission() != USER_NOT_AUTHENTIFIED && $user->getToken() !== $tokenSent)
+        {
+            throw new AccessViolationException('Wrong token sent.', 96);
         }
         else
         {
-            throw new AccessViolationException('User not authenfied.', 97);
+            throw new AccessViolationException('User is not authentified.', 97);
         }
     }
 
