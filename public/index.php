@@ -20,7 +20,7 @@ $router->map('GET', '/', 'home0');
 $router->map('GET', '/home', 'home');
 $router->map('GET', '/cv', 'cv');
 $router->map('GET', '/admin_300', 'administration');
-$router->map('GET', '/formContact', 'formContact');
+$router->map('GET', '/contact', 'formContact');
 $router->map('GET', '/signUp', 'signUp');
 $router->map('GET', '/login', 'login');
 $router->map('GET', '/posts', 'posts');
