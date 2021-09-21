@@ -9,5 +9,6 @@
     $PASS = "PASS_EXAMPLE_4545544";
     $PORT = "387";
     $EMAIL = "email@example.com";
+    // for the name you can use anything
     $NAME_EMAIL = "ADMIN";
 ?>

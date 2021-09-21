@@ -18,6 +18,7 @@ Class MemberView extends View
         $array = array(
             'title'=> 'Accueil',
             'user'=> $user,
+            'root'=> self::getRoot(),
         );
         return MemberView::renderView('member/home.twig', $array); 
     }
@@ -26,6 +27,7 @@ Class MemberView extends View
     {
         $array = array(
             'title'=> 'S\'identifier',
+            'root'=> self::getRoot(),
         );
         return MemberView::renderView('member/login.twig', $array); 
     }
@@ -34,6 +36,7 @@ Class MemberView extends View
     {
         $array = array(
             'title'=> 'Administration',
+            'root'=> self::getRoot(),
         );
         return MemberView::renderView('member/administration.twig', $array); 
     }
@@ -42,6 +45,7 @@ Class MemberView extends View
     {
         $array = array(
             'title'=> 'Devenir membre',
+            'root'=> self::getRoot(),
         );
         return MemberView::renderView('member/signUp.twig', $array); 
     }
@@ -56,6 +60,7 @@ Class MemberView extends View
     {
         $array = array(
             'title'=> 'Modifier Mot de passe',
+            'root'=> self::getRoot(),
             'user'=> $user,
         );
         return MemberView::renderView('member/editPassword.twig', $array); 
