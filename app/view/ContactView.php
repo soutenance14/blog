@@ -7,6 +7,7 @@ Class ContactView extends View
         $array = array(
             'title'=> 'Contact',
             'user'=> $user,
+            'root'=> self::getRoot(),
         );
 
         return ContactView::renderView('contact/contact.twig', $array); 

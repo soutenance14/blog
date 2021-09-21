@@ -52,7 +52,6 @@ Abstract Class PostController extends Controller
             {
                 $postEntity = new PostEntity($post);
                 $postEntity->hydrate($post);
-                // require dirname(__DIR__) . "../model/CommentManager.php";
                 $listCommentsPublished = CommentManager::getAllPublished($postEntity->getId());
                 $listCommentsPublishedEntity = [];
                 foreach($listCommentsPublished as $commentPublished)
@@ -61,7 +60,6 @@ Abstract Class PostController extends Controller
                     $commentPublishedEntity->hydrate($commentPublished);
                     array_push( $listCommentsPublishedEntity , $commentPublishedEntity);
                 }
-                // $commentViewPublished = CommentView::getAll($listCommentsPublishedEntity, "Commentaires", $userSession);
                 echo PostView::get($postEntity, $listCommentsPublishedEntity, $userSession);
             }
             else
@@ -87,7 +85,6 @@ Abstract Class PostController extends Controller
             {
                 $postEntity = new PostEntity($post);
                 $postEntity->hydrate($post);
-                // require dirname(__DIR__) . "../model/CommentManager.php";
                 $listCommentsPublished = CommentManager::getAllPublished($postEntity->getId());
                 $listCommentsPublishedEntity = [];
                 foreach($listCommentsPublished as $commentPublished)

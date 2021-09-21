@@ -36,46 +36,6 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
     {
         echo MemberView::signUp();
     }
-    
-    public static function formDelete($userSession)
-    {
-        try
-        {
-            MemberController::permission(USER_AUTHENTIFIED, $userSession);
-            // echo MemberView::formDelete($userSession);
-        }
-        catch (AccessViolationException $e)
-        {
-            echo MemberController::ifAccessViolationExceptionView($e);
-        }
-    }
-
-    public static function formDeleteBack($userSession)
-    {
-        try
-        {
-            MemberController::permission(ADMIN, $userSession);
-            $listSubscribersEntity = [];
-            // $listSubscribers = MemberManager::getAllSubscribers();
-            
-            // foreach($listSubscribers as $subscriber)
-            // {
-            //     $memberEntity = new MemberEntity();
-            //     $memberEntity->hydrate($subscriber);
-            //     array_push($listSubscribersEntity, $memberEntity);
-            // }
-
-            // echo MemberView::formDeleteBack($userSession, $listSubscribersEntity);
-        }
-        catch (\PDOException $e)
-        {
-            echo MemberController::ifPDOExceptionView($e);
-        }
-        catch (AccessViolationException $e)
-        {
-            echo MemberController::ifAccessViolationExceptionView($e);
-        }
-    }
 
     public static function formEditPassword($userSession)
     {
@@ -107,8 +67,6 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
             {
                 $memberEntity->hydrate($member);
                 $blogSession->setUser($memberEntity);
-                // echo'member model' , var_dump($memberEntity);
-                // echo '<br> session user' , var_dump($blogSession->getUser());
                 echo 'success';
             }
             else
@@ -228,7 +186,6 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
     public static function disconnect($blogSession)
     {
         $blogSession->disconnect();
-        header('Location:home');
+        header('Location:'.self::getRoot());
     }
-
 }
