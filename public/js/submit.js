@@ -1,4 +1,4 @@
-var submitButton = document.getElementById('submitButton');
+var submitButton = document.getElementById("submitButton");
 var successMessage = document.getElementById("submitSuccessMessage");
 var errorMessage = document.getElementById("submitErrorMessage");
 
@@ -9,8 +9,8 @@ var form = document.forms["form"];
 
 var post = [];
 
-successMessage.style.display = 'none';
-errorMessage.style.display = 'none';
+successMessage.style.display = "none";
+errorMessage.style.display = "none";
 
 // specific element will be verified
 //the caller page give the specific var anfd specific function thing
@@ -26,14 +26,12 @@ function validateForm()
     var invalid = (postForm.getElementsByClassName("invalid-feedback"))[0];
     if(! validateType(editText))
     {
-      console.log("erreur");
       $validateForm = false;
-      invalid.style.display = 'block';
+      invalid.style.display = "block";
     }
     else
     {
-      post[ editText['name']] =   editText['value'] ;
-      console.log(post);
+      post[ editText["name"]] =   editText["value"] ;
     }
   };
   return $validateForm;
@@ -42,11 +40,11 @@ function validateForm()
 function validateType(editText)
 {
   $validateType = true;
-  $value = editText['value'];
-  $type = editText['type'];
+  $value = editText["value"];
+  $type = editText["type"];
   
   //textare part
-  if(editText.tagName === 'TEXTAREA')
+  if(editText.tagName === "TEXTAREA")
   {
     if($value.length < 10)
       {
@@ -55,23 +53,23 @@ function validateType(editText)
   }
   
   //input part
-  if(editText.tagName === 'INPUT')
+  if(editText.tagName === "INPUT")
   {
     switch($type)
     {
-      case 'text':
-        if($value === '')
+      case "text":
+        if($value === "")
         {
           $validateType = false;
         }
         break;  
-        case 'password':
+        case "password":
           if($value.length < 6)
           {
             $validateType = false;
           }
           break;
-          case 'email':
+          case "email":
             $validateType = false;
             if($value.length >= 6 )
             {
@@ -101,28 +99,28 @@ function validateType(editText)
 
 function hideAllErrorAndSuccessMessage()
 {
-  errorMessage.style.display = 'none';
-  successMessage.style.display = 'none';
+  errorMessage.style.display = "none";
+  successMessage.style.display = "none";
   for(floatingForm of floatingForms)
     {
       //hide specific errorif exists
       var specificFeedback = floatingForm.getElementsByClassName("specific-feedback")[0];
-      if(typeof specificFeedback !== 'undefined'  )
+      if(typeof specificFeedback !== "undefined"  )
       {
-        specificFeedback.style.display = 'none';
+        specificFeedback.style.display = "none";
       }
       //hide rest error 
       var invalid = (floatingForm.getElementsByClassName("invalid-feedback"))[0];
-      invalid.style.display = 'none';
+      invalid.style.display = "none";
     };
 }
 function sendDataOnClick(post, url)
 {
-  // submitButton.addEventListener('click', event => {
+  // submitButton.addEventListener("click", event => {
   //     // contactForm.submit();
   //     sendData(post, url);
   //   });
-  submitButton.addEventListener('click', event => {
+  submitButton.addEventListener("click", event => {
     hideAllErrorAndSuccessMessage();
     if(validateForm() && validFormSpecificPage())
       {
@@ -131,7 +129,7 @@ function sendDataOnClick(post, url)
       }
       // else
       // {
-      //   alert('Un promème innatendue est survenue, la requete n\'a pas été effectué.');
+      //   alert("Un promème innatendue est survenue, la requete n\"a pas été effectué.");
       // }
     });
 }
@@ -143,33 +141,33 @@ function sendData(data, url)
   var urlEncodedDataPairs = [];
   var name;
 
-  // Transformez l'objet data en un tableau de paires clé/valeur codées URL.
+  // Transformez l"objet data en un tableau de paires clé/valeur codées URL.
   for(name in data) {
-    urlEncodedDataPairs.push(encodeURIComponent(name) + '=' + encodeURIComponent(data[name]));
+    urlEncodedDataPairs.push(encodeURIComponent(name) + "=" + encodeURIComponent(data[name]));
   }
 
   // Combinez les paires en une seule chaîne de caractères et remplacez tous
-  // les espaces codés en % par le caractère'+' ; cela correspond au comportement
+  // les espaces codés en % par le caractère"+" ; cela correspond au comportement
   // des soumissions de formulaires de navigateur.
-  urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
+  urlEncodedData = urlEncodedDataPairs.join("&").replace(/%20/g, "+");
 
   // Définissez ce qui se passe en cas de succès de soumission de données
-  // XHR.addEventListener('load', function(event) {
-  //   alert('Ouais ! Données envoyées et réponse chargée.');
+  // XHR.addEventListener("load", function(event) {
+  //   alert("Ouais ! Données envoyées et réponse chargée.");
   // });
 
-  // Définissez ce qui arrive en cas d'erreur
-  XHR.addEventListener('error', function(event) {
-    alert('Oups! Une erreur s\' produite,  avec l\'object XMLHttpRequest permettant l\'interraction entre serveurs.');
+  // Définissez ce qui arrive en cas d"erreur
+  XHR.addEventListener("error", function(event) {
+    alert("Oups! Une erreur s\" produite,  avec l\"object XMLHttpRequest permettant l\"interraction entre serveurs.");
   });
 
   // Configurez la requête
-  // XHR.open('POST', 'https://example.com/cors.php');
-  XHR.open('POST', url);
-  // XHR.open('POST', 'sendMessage');
+  // XHR.open("POST", "https://example.com/cors.php");
+  XHR.open("POST", url);
+  // XHR.open("POST", "sendMessage");
   
-  // Ajoutez l'en-tête HTTP requise pour requêtes POST de données de formulaire
-  XHR.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  // Ajoutez l"en-tête HTTP requise pour requêtes POST de données de formulaire
+  XHR.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
   // Finalement, envoyez les données.
   // XHR.onreadystatechange = function() 
@@ -178,26 +176,26 @@ function sendData(data, url)
       hideSomethingSpecific();
       if(XHR.readyState == 4 && XHR.status == 200) {
           console.log(XHR.responseText);
-          if(XHR.responseText === 'success')
+          if(XHR.responseText === "success")
           {
-              successMessage.style.display = 'block';
+              successMessage.style.display = "block";
               doSomethingSpecificSuccess();
           }
-          else if(XHR.responseText === 'error')
+          else if(XHR.responseText === "error")
           {
-            errorMessage.style.display = 'block';
+            errorMessage.style.display = "block";
             doSomethingSpecificError();
           }
           else
           {
-            errorMessage.style.display = 'block';
+            errorMessage.style.display = "block";
             errorMessage.innerHTML = XHR.responseText;
             errorMessage.className = "text-center text-danger mb-3";
             doSomethingSpecificError();
           }
       }
       // else{
-      //     alert('pas de reponse');
+      //     alert("pas de reponse");
       // }
   }
   XHR.send(urlEncodedData);

@@ -68,7 +68,7 @@
         var invalidSpecificPassword = (document.getElementById("password").getElementsByClassName("specific-feedback"))[0];
         var invalidSpecificConfirmPassword = (document.getElementById("confirmPassword").getElementsByClassName("specific-feedback"))[0];
 
-        var url = 'pushMember';
+        var url = "{{root}}pushMember";
 
         //specific calling after click
         function displaySomethingSpecific()
@@ -100,11 +100,10 @@
         {
             var $validFormSpecificPage = true;
 
-            if(password['value'] != confirmPassword['value'])
+            if(password["value"] != confirmPassword["value"])
             { 
                 $validFormSpecificPage = false;
-                invalidSpecificPassword.style.display = 'block';
-                invalidSpecificConfirmPassword.style.display = 'block';
+                invalidSpecificPassword.style.display = "block";
             }
             return $validFormSpecificPage;
         }

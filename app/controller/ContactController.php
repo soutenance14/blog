@@ -6,7 +6,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
     //FORM
     public static function formContact($userSession)
     {
-        echo ContactView::formContact($userSession);
+        echo(ContactView::formContact($userSession));
     }
     
     public static function sendMessage($nom, $mail, $contenu)
@@ -54,7 +54,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
             
             // Send the message
             $mailer->send($message);
-            echo ContactView::success();
+            print_r(ContactView::success());
         }
         catch (Exception $e)
         {

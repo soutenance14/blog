@@ -53,7 +53,7 @@
         var invalidSpecificContenu = (document.getElementById("contenu").getElementsByClassName("specific-feedback"))[0];
 
         // specific element will be verified
-        var url = '{{ root }}push/comment';
+        var url = "{{ root }}push/comment";
 
         function displaySomethingSpecific()
         {
@@ -75,7 +75,7 @@
         
         function doSomethingSpecificError()
         {
-            errorMessage.style.display='block';
+            errorMessage.style.display="block";
             //progress_bar.style.display = 'none';
         }
 
@@ -83,11 +83,10 @@
         {
             var $validFormSpecificPage = true;
 
-            if(contenu['value'].length < 3)
+            if(contenu["value"].length < 3)
             { 
                 $validFormSpecificPage = false;
-                invalidSpecificContenu.style.display = 'block';
-                invalidSpecificContenu.style.display = 'block';
+                invalidSpecificContenu.style.display = "block";
             }
             return $validFormSpecificPage;
         }
