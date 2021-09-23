@@ -81,7 +81,7 @@
         var invalidSpecificContenu = (document.getElementById("contenu").getElementsByClassName("specific-feedback"))[0];
 
         // specific element will be verified
-        var url = '{{root}}push/post';
+        var url = "{{root}}push/post";
 
         function displaySomethingSpecific()
         {
@@ -112,11 +112,10 @@
         {
             var $validFormSpecificPage = true;
 
-            if(contenu['value'].length < 150)
+            if(contenu["value"].length < 150)
             { 
                 $validFormSpecificPage = false;
-                invalidSpecificContenu.style.display = 'block';
-                invalidSpecificContenu.style.display = 'block';
+                invalidSpecificContenu.style.display = "block";
             }
             return $validFormSpecificPage;
         }
