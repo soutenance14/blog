@@ -38,7 +38,7 @@ Dans le dossier Config, copier le fichier __configMailExample.php__, le renommé
 
 ## Database
 Créer une base de données sur votre serveur (dans PhpMyAdmin).
-Dans le dossier Config, copier le fichier __configDBExample.php__, le renommé en ___configDBLocal.php__, y renseigner les identifiants de votre base de données.
+Dans le dossier Config, copier le fichier __configDBExample.php__, le renommé en __configDBLocal.php__, y renseigner les identifiants de votre base de données.
 *Suivre l'exemple dans le fichier*
 
 * Créer la base de données
