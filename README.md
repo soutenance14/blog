@@ -10,9 +10,9 @@ Application PHP en architecture MVC sans framework, utilisant des packages.
 * Twig
 
 Ces packages dépendent des packages suivants, qui seront automatiquement téléchargés.
-*Doctrine
-*Elogus
-*Symfony
+* Doctrine
+* Elogus
+* Symfony
 
 # Requis pour lancer le projet
 
@@ -43,7 +43,7 @@ Dans le dossier Config, copier le fichier __configDBExample.php__, le renommé e
 *Suivre l'exemple dans le fichier*
 
 * Créer la base de données
-*Copier le fichier __blog.sql__, executer le code sql dans votre base de données dans PhpMyAdmin afin d'y créer les données.
+* Copier le fichier __blog.sql__, executer le code sql dans votre base de données dans PhpMyAdmin afin d'y créer les données.
 
 ## Racine (root)
 Dans le fichier configRoot, renseigner l'url de la racine de votre projet, exemple: 127.0.0.1/blog/.
