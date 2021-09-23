@@ -2,12 +2,13 @@
 
 Class CommentView extends View
 {
-    public static function errorMessage($user, $message)
+    public static function wrongValueEditComment($user)
     {
         $array = array(
             'user'=> $user,
             'title'=> 'Oops petit problème',
-            'message'=> $message,
+            'message'=> 'Mauvaise valeur donné : 
+            0 pour supprimer, 1 pour valider uniquement.',
             'root'=>self::getRoot(),
         ); 
         return CommentView::renderViewMessage($array);  

@@ -1,6 +1,5 @@
 <?php
 require dirname(__DIR__) . '../../vendor/autoload.php';
-use \Mailjet\Resources;
 
  Class ContactController
 {
@@ -60,7 +59,9 @@ use \Mailjet\Resources;
         catch (Exception $e)
         {
             //message asynchrone
-            echo 'Echec lors de l\'envoie, le message n\a pas été envoyé.';
+            echo ContactView::renderViewException(
+                $e, "Oops une erreur est arrivé", "mailError-bg",
+                'Echec lors de l\'envoie, le message n\a pas été envoyé. '.$e->getMessage());
         }
     }
 }

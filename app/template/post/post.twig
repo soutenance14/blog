@@ -9,7 +9,10 @@
             {% endif %}
         {% endblock %}
         
-        {% block css %}<link href="{{root}}css/comment.css" rel="stylesheet" />{% endblock %}
+        {% block css %}
+            <link href="{{root}}css/comment.css" rel="stylesheet" />
+            <link href="{{root}}css/submitMessage.css" rel="stylesheet" />
+        {% endblock %}
         {% block header %}
         <header class="masthead" style="background-image: url('{{root}}assets/img/post-bg.jpg')">
             <div class="container position-relative px-4 px-lg-5">

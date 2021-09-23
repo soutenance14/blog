@@ -29,8 +29,7 @@ Abstract Class CommentController extends Controller
             }
             else
             {
-                echo CommentView::errorMessage($userSession, 'Votre commentaire n\a pas été enregistré,
-                 veuillez réessayer.');
+                echo CommentView::error();
             }
         }
         catch (\PDOException $e)
@@ -71,7 +70,7 @@ Abstract Class CommentController extends Controller
                 }
                 else
                 {
-                    echo CommentView::errorMessage($userSession, 'Erreur, la modification n\'a pas été faite.');
+                    echo CommentView::error();
                 }
             }
             catch (\PDOException $e)
@@ -85,8 +84,8 @@ Abstract Class CommentController extends Controller
         }
         else
         {
-            echo CommentView::errorMessage($userSession, 'Mauvaise valeur donné : 
-            0 pour supprimer, 1 pour valider uniquement.');
+            //no ajax
+            echo CommentView::wrongValueEditComment($userSession);
         }
     }
 
@@ -112,12 +111,12 @@ Abstract Class CommentController extends Controller
                 }
                 else
                 {
-                    echo CommentView::errorMessage($userSession, 'La suppression a échoué');
+                    echo CommentView::error();
                 }
             }
             else
             {
-                echo CommentView::errorMessage($userSession, 'Le commentaire à supprimer n\'existe pas ou plus.');
+                echo CommentView::error();
             }
         }
         catch (\PDOException $e)

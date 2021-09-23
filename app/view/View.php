@@ -12,6 +12,7 @@ Abstract Class View
 
     public static function renderViewException(Exception $e, $title, $imageHeader,$message_special)
     {
+        // array because for is better for display code
         $array = array(
             'e' => $e,
             'message_special'=> $message_special,

@@ -110,7 +110,6 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
             else
             {
                 echo MemberView::memberExist($login);
-                // echo MemberView::error();
             }
         }
         catch (\PDOException $e)
@@ -172,7 +171,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
             }
             else
             {
-                echo 'L\'ancien mot de passe est érroné.'.$oldPassord;
+                echo MemberView::error();
             }
         }
         catch (\PDOException $e)
