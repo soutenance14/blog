@@ -1,0 +1,2 @@
+# blog
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/05c86722f8dd457c8f9578d848d098a6)](https://app.codacy.com/gh/soutenance14/blog?utm_source=github.com&utm_medium=referral&utm_content=soutenance14/blog&utm_campaign=Badge_Grade_Settings)
