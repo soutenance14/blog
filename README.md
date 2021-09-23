@@ -27,8 +27,9 @@ Cloner le repository:
 git clone https://github.com/soutenance14/blog.git
 
 ## Installer les packages
-Dans un terminal lancer la commande
-composer install
+Dans un terminal lancer la commande:
+
+"composer install"
 
 # Configuration
 
