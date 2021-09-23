@@ -51,10 +51,27 @@ Class MemberView extends View
         return MemberView::renderView('member/signUp.twig', $array); 
     }
     
+    public static function authFail($login)
+    {
+        $array = array(
+            
+            'title'=> 'Echec lors de l\'authentification.',
+            'message'=> "L'utilisateur ".$login." n'a pas été trouvé.",
+            'root'=>self::getRoot(),
+        ); 
+        return MemberView::renderViewMessage($array);
+    }
+
     public static function memberExist($login)
     {
-        return MemberView::renderViewMessage("Le login ".$login." est déja utilisé,
-         veuillez en changer.");
+        $array = array(
+            
+            'title'=> 'Echec de l\'inscription.',
+            'message'=> "Le login ".$login." est déja utilisé,
+            veuillez en changer.",
+            'root'=>self::getRoot(),
+        ); 
+        return MemberView::renderViewMessage($array);
     }
 
     public static function formEditPassword( $user)
@@ -66,26 +83,50 @@ Class MemberView extends View
         );
         return MemberView::renderView('member/editPassword.twig', $array); 
     }
-
+    
     public static function pushFail()
     {
-        return MemberView::renderViewMessage('La création du membre à echoué.');  
+        $array = array(
+            
+            'title'=> 'Echec de l\'inscription.',
+            'message'=> 'Une erreur s\'est produit lors de l\'enregistrement en bade de donnée, veuillez réessayer.',
+            'root'=>self::getRoot(),
+        ); 
+        return MemberView::renderViewMessage($array);
     }
 
     public static function deleteFail($login, $id)
     {
-        return MemberView::renderViewMessage('La suppression du compte de '.$login.',
-         id: ".$id." a échoué');  
+         $array = array(
+            
+            'title'=> 'Echec de la suppression.',
+            'message'=> 'La suppression du compte de '.$login.',
+            id: '.$id.' a échoué',
+            'root'=>self::getRoot(),
+        ); 
+        return MemberView::renderViewMessage($array);
     }
     
     public static function wrongLoginForUser($login, $id)
     {
-        return MemberView::renderViewMessage('Le login et l\'id ne correspondent pas.');  
+        $array = array(
+            
+            'title'=> 'Erreur de login.',
+            'message'=> 'Le login et l\'id ne correspondent pas.',
+            'root'=>self::getRoot(),
+        ); 
+        return MemberView::renderViewMessage($array); 
     }
 
     public static function editPasswordFail()
     {
-        return MemberView::renderViewMessage('L\'edition du mmot de passe a échoué');  
+        $array = array(
+            
+            'title'=> 'Erreur lors de la modification',
+            'message'=> 'La modification du mot de passe a échoué',
+            'root'=>self::getRoot(),
+        ); 
+        return MemberView::renderViewMessage($array); 
     }
     
 }

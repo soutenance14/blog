@@ -183,6 +183,11 @@ function sendData(data, url)
               successMessage.style.display = 'block';
               doSomethingSpecificSuccess();
           }
+          else if(XHR.responseText === 'error')
+          {
+            errorMessage.style.display = 'block';
+            doSomethingSpecificError();
+          }
           else
           {
             errorMessage.style.display = 'block';

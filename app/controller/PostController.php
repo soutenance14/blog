@@ -198,7 +198,7 @@ Abstract Class PostController extends Controller
             $requestSuccess = PostManager::push( $postEntity);
             if($requestSuccess != null)
             {
-                echo 'success';
+                echo PostView::success();
             }
             else
             {
@@ -236,7 +236,7 @@ Abstract Class PostController extends Controller
             $requestSuccess = PostManager::edit($postEntity);
             if($requestSuccess != null)
             {
-                echo 'success';
+                echo PostView::success();
             }
             else
             {

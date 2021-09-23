@@ -25,7 +25,7 @@ Abstract Class CommentController extends Controller
 
             if($requestSuccess === true)
             {
-                echo 'success';
+                echo CommentView::success();
             }
             else
             {

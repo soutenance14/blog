@@ -58,4 +58,18 @@ Abstract Class View
         }
         return self::$root;
     }
+
+    public static function success()
+    {
+        // return simple text wihout render
+        // for ajax request
+        return "success";
+    }
+    
+    public static function error()
+    {
+        // return simple text wihout render
+        // for ajax request
+        return "error";
+    }
 }

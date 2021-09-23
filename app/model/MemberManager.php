@@ -24,7 +24,7 @@ Class MemberManager extends Manager{
             "SELECT login from MEMBER where login = :login");
         $request->bindParam(':login', $login, \PDO::PARAM_STR);
         $request->execute();
-        $login = $request->fetch(\PDO::FETCH_ASSOC)['login'];
+        $login = $request->fetch(\PDO::FETCH_ASSOC);
         $loginNotExist = false;
         if( $login === null )
         {

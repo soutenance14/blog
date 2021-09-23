@@ -67,11 +67,11 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
             {
                 $memberEntity->hydrate($member);
                 $blogSession->setUser($memberEntity);
-                echo 'success';
+                echo MemberView::success();
             }
             else
             {
-                echo 'Erreur, l\'utilisateur n\'a pas été trouvé, veuillez réessayer.';
+                echo MemberView::authFail($login);
             }
         }
         catch (\PDOException $e)
@@ -99,7 +99,8 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
                     //rehydrate memberEntity with model data
                     $memberEntity->hydrate($member);
                     $blogSession->setUser($memberEntity);
-                    echo 'header:location/home';
+                    echo MemberView::success();
+                    header('Location:'.self::getRoot());
                 }
                 else
                 {
@@ -109,6 +110,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
             else
             {
                 echo MemberView::memberExist($login);
+                // echo MemberView::error();
             }
         }
         catch (\PDOException $e)
@@ -166,7 +168,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
                 //update SESSION USER
                 $blogSession->setUser($userSession);
                 MemberManager::editPassword($userSession);
-                echo 'success';
+                echo MemberView::success();
             }
             else
             {

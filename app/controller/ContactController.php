@@ -55,7 +55,7 @@ use \Mailjet\Resources;
             
             // Send the message
             $mailer->send($message);
-            echo 'success';
+            echo ContactView::success();
         }
         catch (Exception $e)
         {
