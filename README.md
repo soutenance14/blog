@@ -54,4 +54,4 @@ Dans le fichier configRoot, renseigner l'url de la racine de votre projet, exemp
 Voir diagrammes dans le dossier UML.
 
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/55fd22df406a48f4b45079bc65b18317)](https://www.codacy.com/gh/soutenance14/blog/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=soutenance14/blog&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/69845bd948b64ac18695dc723c929ca4)](https://www.codacy.com/gh/soutenance14/blog/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=soutenance14/blog&amp;utm_campaign=Badge_Grade)
