@@ -68,7 +68,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
         catch (Exception $e)
         {
             //message asynchrone
-            echo ContactView::renderViewException(
+            print ContactView::renderViewException(
                 $e, "Oops une erreur est arrivé", "mailError-bg",
                 'Echec lors de l\'envoie, le message n\a pas été envoyé. '.$e->getMessage());
         }
