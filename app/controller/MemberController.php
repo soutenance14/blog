@@ -14,7 +14,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
 {
     public static function cv()
     {
-        print MemberView::cv();
+        echo MemberView::cv();
     }
 
     public static function administration($userSession)
@@ -22,28 +22,28 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
         try
         {
             MemberController::permission(ADMIN, $userSession);
-            print MemberView::administration($userSession);
+            echo MemberView::administration($userSession);
         }
         catch (AccessViolationException $e)
         {
-            print MemberController::ifAccessViolationExceptionView($e);
+            echo MemberController::ifAccessViolationExceptionView($e);
         }
     }
 
     public static function home($userSession)
     {
-        print MemberView::home($userSession);
+        echo MemberView::home($userSession);
     }
 
     //FORM
     public static function login()
     {
-        print MemberView::login();
+        echo MemberView::login();
     }
     
     public static function signUp()
     {
-        print MemberView::signUp();
+        echo MemberView::signUp();
     }
 
     public static function formEditPassword($userSession)
@@ -51,11 +51,11 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
         try
         {
             MemberController::permission(USER_AUTHENTIFIED, $userSession);
-            print MemberView::formEditPassword($userSession);
+            echo MemberView::formEditPassword($userSession);
         }
         catch (AccessViolationException $e)
         {
-            print MemberController::ifAccessViolationExceptionView($e);
+            echo MemberController::ifAccessViolationExceptionView($e);
         }
     }
 
@@ -76,16 +76,16 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
             {
                 $memberEntity->hydrate($member);
                 $blogSession->setUser($memberEntity);
-                print MemberView::success();
+                echo MemberView::success();
             }
             else
             {
-                print MemberView::authFail($login);
+                echo MemberView::authFail($login);
             }
         }
         catch (\PDOException $e)
         {
-            print MemberController::ifPDOExceptionView($e);
+            echo MemberController::ifPDOExceptionView($e);
         }
     }
 
@@ -108,22 +108,22 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
                     //rehydrate memberEntity with model data
                     $memberEntity->hydrate($member);
                     $blogSession->setUser($memberEntity);
-                    print MemberView::success();
+                    echo MemberView::success();
                     header('Location:'.self::getRoot());
                 }
                 else
                 {
-                    print MemberView::pushFail();
+                    echo MemberView::pushFail();
                 }
             }
             else
             {
-                print MemberView::memberExist($login);
+                echo MemberView::memberExist($login);
             }
         }
         catch (\PDOException $e)
         {
-            print MemberController::ifPDOExceptionView($e);
+            echo MemberController::ifPDOExceptionView($e);
         }
     }
     
@@ -144,21 +144,21 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
                 }
                 else
                 {
-                    print MemberView::wrongLoginForUser($login, $id_member_to_delete);
+                    echo MemberView::wrongLoginForUser($login, $id_member_to_delete);
                 }
             }
             else
             {
-                print MemberView::deleteFail($login, $id_member_to_delete);
+                echo MemberView::deleteFail($login, $id_member_to_delete);
             }
         }
         catch (\PDOException $e)
         {
-            print MemberController::ifPDOExceptionView($e);
+            echo MemberController::ifPDOExceptionView($e);
         }
         catch (AccessViolationException $e)
         {
-            print MemberController::ifAccessViolationExceptionView($e);
+            echo MemberController::ifAccessViolationExceptionView($e);
         }
     }
 
@@ -176,20 +176,20 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
                 //update SESSION USER
                 $blogSession->setUser($userSession);
                 MemberManager::editPassword($userSession);
-                print MemberView::success();
+                echo MemberView::success();
             }
             else
             {
-                print MemberView::error();
+                echo MemberView::error();
             }
         }
         catch (\PDOException $e)
         {
-            print MemberController::ifPDOExceptionView($e);
+            echo MemberController::ifPDOExceptionView($e);
         }
         catch (AccessViolationException $e)
         {
-            print MemberController::ifAccessViolationExceptionView($e);
+            echo MemberController::ifAccessViolationExceptionView($e);
         }
     }
 

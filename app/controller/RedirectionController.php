@@ -16,7 +16,7 @@ Abstract Class RedirectionController
             'title'=> "Erreur 404, page non trouvé",
             'root'=>self::getRoot(),
         ); 
-        print View::renderView("message/404.twig" ,$array);
+        echo View::renderView("message/404.twig" ,$array);
     }
 
     public static function getRoot()
