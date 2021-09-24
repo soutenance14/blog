@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Entity;
+
 Abstract Class Entity
 {
     // functions

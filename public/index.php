@@ -5,8 +5,16 @@
 // use package Altorouter
 // https://altorouter.com
 
+use App\Controller\CommentController;
+use App\Controller\ContactController;
+use App\Controller\MemberController;
+use App\Controller\PostController;
+use App\Controller\RedirectionController;
+use App\Session\BlogSession;
+
+// use App\Session\BlogSession;
+
 require dirname(__DIR__) . '../vendor/autoload.php';
-require dirname(__DIR__) . '../app/BlogSession.php';
 
 //start AltoRouter
 $router = new AltoRouter();

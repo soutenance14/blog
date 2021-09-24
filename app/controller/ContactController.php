@@ -1,4 +1,13 @@
 <?php
+
+namespace App\Controller;
+
+use App\View\ContactView;
+use Exception;
+use Swift_Mailer;
+use Swift_Message;
+use Swift_SmtpTransport;
+
 require dirname(__DIR__) . '../../vendor/autoload.php';
 
  Class ContactController

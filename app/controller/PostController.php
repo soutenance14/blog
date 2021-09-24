@@ -1,5 +1,16 @@
 <?php
+
+namespace App\Controller;
+
 require dirname(__DIR__) . '../../vendor/autoload.php';
+
+use App\Entity\CommentEntity;
+use App\Entity\PostEntity;
+use App\Exception\AccessViolationException;
+use App\Model\CommentManager;
+use App\Model\PostManager;
+use App\View\PostView;
+use App\View\View;
 use \Cocur\Slugify\Slugify;
 
 Abstract Class PostController extends Controller
