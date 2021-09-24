@@ -1,4 +1,5 @@
 <?php
+namespace App\View;
 
 Class MemberView extends View
 {

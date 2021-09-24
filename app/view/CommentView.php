@@ -1,4 +1,5 @@
 <?php
+namespace App\View;
 
 Class CommentView extends View
 {

@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Entity;
+
 require dirname(__DIR__) . '../../vendor/autoload.php';
 Class MemberEntity extends Entity
 {

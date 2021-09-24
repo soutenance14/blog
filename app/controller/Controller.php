@@ -1,5 +1,10 @@
 <?php
 
+namespace App\Controller;
+
+use App\Exception\AccessViolationException;
+use App\View\View;
+
 Abstract Class Controller
 {
     private static $root = null;

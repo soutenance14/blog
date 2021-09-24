@@ -1,4 +1,7 @@
 <?php
+namespace App\Session;
+
+use App\Entity\MemberEntity;
 
 define('USER_NOT_AUTHENTIFIED', null);
 define('USER_AUTHENTIFIED', 1);

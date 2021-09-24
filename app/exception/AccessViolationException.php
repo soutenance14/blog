@@ -1,4 +1,7 @@
 <?php
+namespace App\Exception;
+
+use Throwable;
 
 Class AccessViolationException extends \Exception
 {

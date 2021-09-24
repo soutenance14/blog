@@ -1,5 +1,14 @@
 <?php
+
+namespace App\Controller;
+
+use App\Entity\MemberEntity;
+use App\Exception\AccessViolationException;
+use App\Model\MemberManager;
+use App\View\MemberView;
+
 require dirname(__DIR__) . '../../vendor/autoload.php';
+
 
  Class MemberController extends Controller
 {

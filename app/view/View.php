@@ -1,5 +1,11 @@
 <?php
 
+namespace App\View;
+
+use Exception;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+
 Abstract Class View
 {
     private static $root = null;
@@ -35,10 +41,11 @@ Abstract Class View
         try
         {
             // le dossier ou on trouve les templates
-            $loader = new Twig\Loader\FilesystemLoader('../app/template');
+           
+            $loader = new FilesystemLoader('../app/template');
             
             // initialiser l'environement Twig
-            $twig = new Twig\Environment($loader);
+            $twig = new Environment($loader);
         
             // load template
             $template = $twig->load($pathFileTwig);
