@@ -140,7 +140,7 @@ function pushPost()
     else
     {
         // this call is not possible in theory
-        echo 'problème, post(s) manquant(s).';
+        print 'problème, post(s) manquant(s).';
     }
 }
 
@@ -155,7 +155,7 @@ function editPost()
     else
     {
         // this call is not possible in theory
-        echo 'problème, post(s) manquant(s).';
+        print 'problème, post(s) manquant(s).';
     }
 }
 
@@ -233,7 +233,7 @@ function auth()
     else
     {
         // this call is not possible in theory
-        echo 'problème, post(s) manquant(s).';
+        print 'problème, post(s) manquant(s).';
     }
 }
 
@@ -256,9 +256,9 @@ function editPassword()
         {
             var_dump($_POST);
         }
-        else{echo 'non';}
+        else{print 'non';}
         // this call is not possible in theory
-        echo 'problème, post(s) manquant(s).';
+        print 'problème, post(s) manquant(s).';
     }
 }
 
@@ -292,11 +292,11 @@ if( is_array($match))
     }
      else 
      {
-         echo "redirection pas de fonction de routage existante.";
+         print "redirection pas de fonction de routage existante.";
      }
 }
 else
 {
     $blogSession = new BlogSession();
-    echo RedirectionController::getPage404($blogSession->getUser());
+    print RedirectionController::getPage404($blogSession->getUser());
 }

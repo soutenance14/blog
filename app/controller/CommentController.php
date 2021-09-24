@@ -35,20 +35,20 @@ Abstract Class CommentController extends Controller
 
             if($requestSuccess === true)
             {
-                echo CommentView::success();
+                print CommentView::success();
             }
             else
             {
-                echo CommentView::error();
+                print CommentView::error();
             }
         }
         catch (\PDOException $e)
         {
-            echo CommentController::ifPDOExceptionView($e);
+            print CommentController::ifPDOExceptionView($e);
         }
         catch (AccessViolationException $e)
         {
-            echo CommentController::ifAccessViolationExceptionView($e);
+            print CommentController::ifAccessViolationExceptionView($e);
         }
     }
 
@@ -80,22 +80,22 @@ Abstract Class CommentController extends Controller
                 }
                 else
                 {
-                    echo CommentView::error();
+                    print CommentView::error();
                 }
             }
             catch (\PDOException $e)
             {
-                echo CommentController::ifPDOExceptionView($e);
+                print CommentController::ifPDOExceptionView($e);
             }
             catch (AccessViolationException $e)
             {
-                echo CommentController::ifAccessViolationExceptionView($e);
+                print CommentController::ifAccessViolationExceptionView($e);
             }
         }
         else
         {
             //no ajax
-            echo CommentView::wrongValueEditComment($userSession);
+            print CommentView::wrongValueEditComment($userSession);
         }
     }
 
@@ -128,21 +128,21 @@ Abstract Class CommentController extends Controller
                 }
                 else
                 {
-                    echo CommentView::error();
+                    print CommentView::error();
                 }
             }
             else
             {
-                echo CommentView::error();
+                print CommentView::error();
             }
         }
         catch (\PDOException $e)
         {
-            echo CommentController::ifPDOExceptionView($e);
+            print CommentController::ifPDOExceptionView($e);
         }
         catch (AccessViolationException $e)
         {
-            echo CommentController::ifAccessViolationExceptionView($e);
+            print CommentController::ifAccessViolationExceptionView($e);
         }
     }
 
