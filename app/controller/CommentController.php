@@ -106,8 +106,15 @@ Abstract Class CommentController extends Controller
                     $post = PostManager::getFromId($commentEntity->getIdPost());
                     $postEntity = new PostEntity();
                     $postEntity->hydrate($post);
-
-                    header("Location:".self::getRoot()."post/back/".$postEntity->getSlug());
+                    $type = $userSession->getType();
+                    if($type === "admin")
+                    {
+                        header("Location:".self::getRoot()."post/back/".$postEntity->getSlug());
+                    }
+                    else
+                    {
+                        header("Location:".self::getRoot()."post/".$postEntity->getSlug());
+                    }
                 }
                 else
                 {
