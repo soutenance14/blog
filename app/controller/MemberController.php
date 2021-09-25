@@ -7,14 +7,11 @@ use App\Exception\AccessViolationException;
 use App\Model\MemberManager;
 use App\View\MemberView;
 
-require dirname(__DIR__) . '../../vendor/autoload.php';
-
-
  Class MemberController extends Controller
 {
-    public static function cv()
+    public static function getCV()
     {
-        return(MemberView::cv());
+        return(MemberView::getCV());
     }
 
     public static function administration($userSession)

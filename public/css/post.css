@@ -1,22 +1,22 @@
-.postTextarea{
+.postTextarea {
   resize: none;
 }
 
-.editArticleButton{
+.editArticleButton {
   float: left;
 }
 
-.deleteArticleButton{
+.deleteArticleButton {
   float: right;
 }
 
-.editArticleButton a, .deleteArticleButton a{
+.editArticleButton a, .deleteArticleButton a {
   color:#fff;
   border: 1px solid #fff;
   border-radius: 5px;
   padding: 5px;
 }
 
-.editArticleButton a:hover, .deleteArticleButton a:hover{
+.editArticleButton a:hover, .deleteArticleButton a:hover {
   color: bisque;
 }
