@@ -93,37 +93,41 @@ Class PostView extends View
         ); 
         return PostView::renderViewMessage($array);  
     }
-    
-    public static function pushFail($user)
+
+    public static function errorMessage($error)
     {
-        $array = array(
-            'user'=> $user,
-            'title'=> 'Oops petit problème',
-            'message'=> 'Erreur lors de l\'enregistrement en base de données, l\'article n\'a pas été crée.',
-            'root'=>self::getRoot(),
-        ); 
-        return PostView::renderViewMessage($array);  
-    }
-    
-    public static function editFail($user)
-    {
-        $array = array(
-            'user'=> $user,
-            'title'=> 'Oops petit problème',
-            'message'=> 'Erreur lors de la requête, les modifications, n\'ont pas été enregistrés.',
-            'root'=>self::getRoot(),
-        ); 
-        return PostView::renderViewMessage($array);  
-    }
-    
-    public static function deleteFail($user)
-    {
-        $array = array(
-            'user'=> $user,
-            'title'=> 'Oops petit problème',
-            'message'=> 'La suppression a échoué',
-            'root'=>self::getRoot(),
-        ); 
-        return PostView::renderViewMessage($array);  
+        $message = "error";
+       
+        switch($error)
+        {
+            case "editFail":
+                    $message = 'Erreur lors de la requête, les modifications,
+                     n\'ont pas été enregistrés.';
+                break;
+            case "memberExists":
+                if(isset($array["login"]))
+                {
+                    $message = "Le login ".$array["login"]." est déja utilisé,
+                    veuillez en changer.";
+                }
+                break;    
+            case "deleteFail":
+                $message = 'La suppression a échoué';
+                break;
+                
+            case "pushFail":
+                    $message = 'Erreur lors de l\'enregistrement en base de données,
+                    l\'article n\'a pas été crée.';
+                break;
+            case "wrongLoginForUser":
+                    $message = 'Le login et l\'id ne correspondent pas.';
+                break;
+            
+            case "editPasswordFail":
+                    $message = 'La modification du mot de passe a échoué';
+                break;
+            
+        }
+        return $message;
     }
 }

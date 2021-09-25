@@ -211,7 +211,7 @@ Abstract Class PostController extends Controller
             }
             else
             {
-                return(PostView::pushFail($userSession));
+                return(PostView::errorMessage("pushFail"));
             }
         }
         catch (\PDOException $e)
@@ -249,7 +249,8 @@ Abstract Class PostController extends Controller
             }
             else
             {
-                return(PostView::editFail($userSession));
+                return(PostView::errorMessage("editFail"));
+                // return(PostView::editFail($userSession));
             }
         }
         catch (\PDOException $e)
@@ -275,7 +276,8 @@ Abstract Class PostController extends Controller
             }
             else
             {
-                return(PostView::deleteFail($userSession));
+                return(PostView::errorMessage("deleteFail"));
+                // return(PostView::deleteFail($userSession));
             } 
         }
         catch (\PDOException $e)
