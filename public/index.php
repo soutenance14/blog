@@ -161,12 +161,12 @@ function deletePost($id, $token)
     // for user auth
 function pushComment()
 {
-    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    if(isset($post['id_post']) && isset($post['contenu']) && isset($post['token']))
-    {
-        $blogSession = new BlogSession();
-        print_r(CommentController::push($post['id_post'], $post['contenu'], $post['token'] ,$blogSession->getUser()));
-    }
+    // $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    $request = new Request($_POST);
+    $blogSession = new BlogSession();
+    // echo (CommentController::push($post['id_post'], $post['contenu'], $post['token'] ,$blogSession->getUser()));
+    echo (CommentController::push($request ,$blogSession->getUser()));
+    
 }
 
 function deleteComment($id, $token)
