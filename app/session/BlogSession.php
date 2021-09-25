@@ -10,7 +10,6 @@ define('ADMIN', 2);
 session_start();
 Class BlogSession
 {
-   
     public function getUser()
     {
         if(null === Session::get("user") )
