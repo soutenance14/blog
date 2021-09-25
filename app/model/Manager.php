@@ -22,8 +22,6 @@ abstract Class Manager
         try 
         {
             Manager::$pdo = new \PDO($dsn, $USER, $PASS, $options);
-            
-            // echo "connexion to database successfull\n****\n\n";
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }

@@ -82,7 +82,6 @@ Class PostManager extends Manager{
         $request = self::getPdo()->prepare(
             "DELETE from POST where id = :id");
             $request->bindParam(':id', $id, \PDO::PARAM_STR);
-            echo 'le ID : '.$id;
             $requestSuccess = $request->execute();
         return $requestSuccess;
     }
