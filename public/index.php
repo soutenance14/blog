@@ -87,7 +87,7 @@ function formContact()
 function sendMessage()
 {
     // $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    $request = new Request($_POST);
+    $request = Request::createFromGlobals();;
     echo ContactController::sendMessage($request);
 }
 
@@ -132,7 +132,7 @@ function postsBack()
 function pushPost()
 {
     // $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    $request = new Request($_POST);
+    $request = Request::createFromGlobals();;
     $blogSession = new BlogSession();
     echo PostController::push($request, $blogSession->getUser());
    
@@ -141,7 +141,7 @@ function pushPost()
 function editPost()
 {
     // $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    $request = new Request($_POST);
+    $request = Request::createFromGlobals();;
     $blogSession = new BlogSession();
     echo PostController::edit($request, $blogSession->getUser());
 }
@@ -162,7 +162,7 @@ function deletePost($id, $token)
 function pushComment()
 {
     // $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    $request = new Request($_POST);
+    $request = Request::createFromGlobals();;
     $blogSession = new BlogSession();
     // echo (CommentController::push($post['id_post'], $post['contenu'], $post['token'] ,$blogSession->getUser()));
     echo (CommentController::push($request ,$blogSession->getUser()));
@@ -199,7 +199,7 @@ function pushMember()
 {
     // $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
     
-        $request = new Request($_POST);
+        $request = Request::createFromGlobals();;
         $blogSession = new BlogSession();
         echo MemberController::push($request, $blogSession);
     
@@ -216,7 +216,7 @@ function formEditPassword()
 function auth()
 {
     // $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    $request = new Request($_POST);
+    $request = Request::createFromGlobals();;
     $blogSession = new BlogSession();
     echo MemberController::auth($request, $blogSession);
 }
