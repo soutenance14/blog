@@ -21,7 +21,7 @@ abstract Class Manager
 
         try 
         {
-            Manager::$pdo = new \PDO($dsn, USER, PASS, $options);
+            self::$pdo = new \PDO($dsn, USER, PASS, $options);
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }
@@ -29,10 +29,10 @@ abstract Class Manager
 
     public static function getPdo()
     {
-        if(Manager::$pdo === null)
+        if(self::$pdo === null)
         {
-            Manager::createPdo();
+            self::createPdo();
         }
-        return Manager::$pdo;
+        return self::$pdo;
     }
 }
