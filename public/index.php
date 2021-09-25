@@ -85,7 +85,7 @@ function formContact()
 
 function sendMessage()
 {
-    $post = $_POST;
+    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
     if(isset($post['nom']) && isset( $post['mail']) &&  isset($post['contenu'] ))
     {
         ContactController::sendMessage($post['nom'], $post['mail'], $post['contenu']);
@@ -132,7 +132,7 @@ function postsBack()
 
 function pushPost()
 {
-    $post = $_POST;
+    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
     if( isset($post['auteur']) && isset($post['titre']) && isset($post['chapo']) && isset($post['contenu']) && isset($post['token']))
     {
         $blogSession = new BlogSession();
@@ -148,7 +148,7 @@ function pushPost()
 
 function editPost()
 {
-    $post = $_POST;
+    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
     if( isset($post['id']) && isset($post['auteur']) && isset($post['titre']) && isset($post['chapo']) && isset($post['contenu']) && isset($post['token']))
     {
         $blogSession = new BlogSession();
@@ -177,7 +177,7 @@ function deletePost($id, $token)
     // for user auth
 function pushComment()
 {
-    $post = $_POST;
+    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
     if(isset($post['id_post']) && isset($post['contenu']) && isset($post['token']))
     {
         $blogSession = new BlogSession();
@@ -213,7 +213,7 @@ function signUp()
 
 function pushMember()
 {
-    $post = $_POST;
+    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
     if(isset($post['login'], $post['password'] )){
         $blogSession = new BlogSession();
         MemberController::push($post['login'], $post['password'], $blogSession);
@@ -230,7 +230,7 @@ function formEditPassword()
 
 function auth()
 {
-    $post = $_POST;
+    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
     if( isset($post['login'])  && isset($post['password']) )
     {
         $blogSession = new BlogSession();
@@ -251,7 +251,7 @@ function disconnect()
 
 function editPassword()
 {
-    $post = $_POST;
+    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
     if( isset($post['oldPassword'])  && isset($post['newPassword']) && isset($post['token']) )
     {
         $blogSession = new BlogSession();

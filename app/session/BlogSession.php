@@ -12,20 +12,18 @@ Class BlogSession
 {
     public function getUser()
     {
-        $session = $_SESSION;
-        if( !isset($session['user'])   )
+        if( !isset( $_SESSION['user'])   )
         {
-            $session['user'] = new MemberEntity();
+            $_SESSION['user'] = new MemberEntity();
         }
-        return $session['user'];
+        return $_SESSION['user'];
     }
     
     public function setUser($user)
     {    
-        $session = $_SESSION;
         //assign token
         $user->setToken(md5(bin2hex(openssl_random_pseudo_bytes(6))));
-        $session['user'] = $user;
+        $_SESSION['user'] = $user;
     }
 
     public function disconnect()
