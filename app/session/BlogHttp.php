@@ -8,14 +8,16 @@ define('USER_NOT_AUTHENTIFIED', null);
 define('USER_AUTHENTIFIED', 1);
 define('ADMIN', 2);
 
-Class BlogSession
+Class BlogHttp
 {
     private $session;
+    private $request;
+    
     public function __construct()
     {
         $this->session = new Session();
         $this->session->start();
-    } 
+    }
 
     public function getUser()
     {
