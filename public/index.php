@@ -85,9 +85,10 @@ function formContact()
 
 function sendMessage()
 {
-    if(isset($_POST['nom']) && isset( $_POST['mail']) &&  isset($_POST['contenu'] ))
+    $post = $_POST;
+    if(isset($post['nom']) && isset( $post['mail']) &&  isset($post['contenu'] ))
     {
-        ContactController::sendMessage($_POST['nom'], $_POST['mail'], $_POST['contenu']);
+        ContactController::sendMessage($post['nom'], $post['mail'], $post['contenu']);
     }
 }
 
@@ -131,31 +132,33 @@ function postsBack()
 
 function pushPost()
 {
-    if( isset($_POST['auteur']) && isset($_POST['titre']) && isset($_POST['chapo']) && isset($_POST['contenu']) && isset($_POST['token']))
+    $post = $_POST;
+    if( isset($post['auteur']) && isset($post['titre']) && isset($post['chapo']) && isset($post['contenu']) && isset($post['token']))
     {
         $blogSession = new BlogSession();
-        PostController::push($_POST['auteur'], $_POST['titre'], $_POST['chapo'],
-        ($_POST['contenu']), $_POST['token'], $blogSession->getUser());
+        PostController::push($post['auteur'], $post['titre'], $post['chapo'],
+        ($post['contenu']), $post['token'], $blogSession->getUser());
     }
     else
     {
         // this call is not possible in theory
-        echo 'problème, post(s) manquant(s).';
+        print_r('problème, post(s) manquant(s).');
     }
 }
 
 function editPost()
 {
-    if( isset($_POST['id']) && isset($_POST['auteur']) && isset($_POST['titre']) && isset($_POST['chapo']) && isset($_POST['contenu']) && isset($_POST['token']))
+    $post = $_POST;
+    if( isset($post['id']) && isset($post['auteur']) && isset($post['titre']) && isset($post['chapo']) && isset($post['contenu']) && isset($post['token']))
     {
         $blogSession = new BlogSession();
-        PostController::edit($_POST['id'], $_POST['auteur'], $_POST['titre'], $_POST['chapo']
-        , $_POST['contenu'] ,$_POST['token'], $blogSession->getUser());
+        PostController::edit($post['id'], $post['auteur'], $post['titre'], $post['chapo']
+        , $post['contenu'] ,$post['token'], $blogSession->getUser());
     }
     else
     {
         // this call is not possible in theory
-        echo 'problème, post(s) manquant(s).';
+        print_r('problème, post(s) manquant(s).');
     }
 }
 
@@ -174,10 +177,11 @@ function deletePost($id, $token)
     // for user auth
 function pushComment()
 {
-    if(isset($_POST['id_post']) && isset($_POST['contenu']) && isset($_POST['token']))
+    $post = $_POST;
+    if(isset($post['id_post']) && isset($post['contenu']) && isset($post['token']))
     {
         $blogSession = new BlogSession();
-        CommentController::push($_POST['id_post'], $_POST['contenu'], $_POST['token'] ,$blogSession->getUser());
+        CommentController::push($post['id_post'], $post['contenu'], $post['token'] ,$blogSession->getUser());
     }
 }
 
@@ -209,9 +213,10 @@ function signUp()
 
 function pushMember()
 {
-    if(isset($_POST['login'], $_POST['password'] )){
+    $post = $_POST;
+    if(isset($post['login'], $post['password'] )){
         $blogSession = new BlogSession();
-        MemberController::push($_POST['login'], $_POST['password'], $blogSession);
+        MemberController::push($post['login'], $post['password'], $blogSession);
     }
 }
 
@@ -225,15 +230,16 @@ function formEditPassword()
 
 function auth()
 {
-    if( isset($_POST['login'])  && isset($_POST['password']) )
+    $post = $_POST;
+    if( isset($post['login'])  && isset($post['password']) )
     {
         $blogSession = new BlogSession();
-        MemberController::auth($_POST['login'],    $_POST['password'] , $blogSession);
+        MemberController::auth($post['login'],    $post['password'] , $blogSession);
     }
     else
     {
         // this call is not possible in theory
-        echo 'problème, post(s) manquant(s).';
+        print_r('problème, post(s) manquant(s).');
     }
 }
 
@@ -245,20 +251,16 @@ function disconnect()
 
 function editPassword()
 {
-    if( isset($_POST['oldPassword'])  && isset($_POST['newPassword']) && isset($_POST['token']) )
+    $post = $_POST;
+    if( isset($post['oldPassword'])  && isset($post['newPassword']) && isset($post['token']) )
     {
         $blogSession = new BlogSession();
-        MemberController::editPassword($_POST['oldPassword'],  $_POST['newPassword'], $_POST['token'], $blogSession);
+        MemberController::editPassword($post['oldPassword'],  $post['newPassword'], $post['token'], $blogSession);
     }
     else
     {
-        if(isset($_POST))
-        {
-            var_dump($_POST);
-        }
-        else{echo 'non';}
         // this call is not possible in theory
-        echo 'problème, post(s) manquant(s).';
+        print_r('problème, post(s) manquant(s).');
     }
 }
 
@@ -292,11 +294,11 @@ if( is_array($match))
     }
      else 
      {
-         echo "redirection pas de fonction de routage existante.";
+         print_r("redirection pas de fonction de routage existante.");
      }
 }
 else
 {
     $blogSession = new BlogSession();
-    echo RedirectionController::getPage404($blogSession->getUser());
+    print_r(RedirectionController::getPage404($blogSession->getUser()));
 }

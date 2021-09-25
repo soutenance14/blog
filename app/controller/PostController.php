@@ -21,11 +21,11 @@ Abstract Class PostController extends Controller
         try
         {
             self::permission(ADMIN, $userSession );
-            echo PostView::formPushPost($userSession);
+            print_r(PostView::formPushPost($userSession));
         }
         catch (AccessViolationException $e)
         {
-            echo self::ifAccessViolationExceptionView($e);
+            print_r(self::ifAccessViolationExceptionView($e));
         }
     }
     
@@ -39,16 +39,16 @@ Abstract Class PostController extends Controller
             $postEntity->hydrate($post);
             if($post != null)
             {
-                echo PostView::formEditPost($postEntity, $userSession);
+                print_r(PostView::formEditPost($postEntity, $userSession));
             }
             else
             {
-                echo PostView::getNotExist($id, $userSession);
+                print_r(PostView::getNotExist($id, $userSession));
             } 
         }
         catch (AccessViolationException $e)
         {
-            echo self::ifAccessViolationExceptionView($e);
+            print_r(self::ifAccessViolationExceptionView($e));
         }
     }
     
@@ -71,16 +71,16 @@ Abstract Class PostController extends Controller
                     $commentPublishedEntity->hydrate($commentPublished);
                     array_push( $listCommentsPublishedEntity , $commentPublishedEntity);
                 }
-                echo PostView::get($postEntity, $listCommentsPublishedEntity, $userSession);
+                print_r(PostView::get($postEntity, $listCommentsPublishedEntity, $userSession));
             }
             else
             {
-                echo PostView::getNotExist($slug, $userSession);
+                print_r(PostView::getNotExist($slug, $userSession));
             }
         }
         catch (\PDOException $e)
         {
-            echo self::ifPDOExceptionView($e);
+            print_r(self::ifPDOExceptionView($e));
         }
     }
 
@@ -114,20 +114,20 @@ Abstract Class PostController extends Controller
                     array_push( $listCommentsNotPublishedEntity , $commentNotPublishedEntity);
                 }
 
-                echo PostView::getBack($postEntity, $listCommentsPublishedEntity, $listCommentsNotPublishedEntity, $userSession, $slug);
+                print_r(PostView::getBack($postEntity, $listCommentsPublishedEntity, $listCommentsNotPublishedEntity, $userSession, $slug));
             }
             else
             {
-               echo PostView::getNotExist($slug, $userSession);
+               print_r(PostView::getNotExist($slug, $userSession));
             }
         }
         catch (\PDOException $e)
         {
-            echo self::ifPDOExceptionView($e);
+            print_r(self::ifPDOExceptionView($e));
         }
         catch (AccessViolationException $e)
         {
-            echo self::ifAccessViolationExceptionView($e);
+            print_r(self::ifAccessViolationExceptionView($e));
         }
     }
 
@@ -145,16 +145,16 @@ Abstract Class PostController extends Controller
                     $postEntity->hydrate($post);
                     array_push($listPostsEntity, $postEntity);
                 }
-                echo PostView::getAll($listPostsEntity, $user);
+                print_r(PostView::getAll($listPostsEntity, $user));
             }
             else
             {
-                echo PostView::getNoPostExist($user);
+                print_r(PostView::getNoPostExist($user));
             }
         } 
         catch (\PDOException $e)
         {
-            echo self::ifPDOExceptionView($e);
+            print_r(self::ifPDOExceptionView($e));
         }
     }
     
@@ -173,20 +173,20 @@ Abstract Class PostController extends Controller
                     $postEntity->hydrate($post);
                     array_push($listPostsEntity, $postEntity);
                 }
-                echo PostView::getAllBack($listPostsEntity, $userSession);
+                print_r(PostView::getAllBack($listPostsEntity, $userSession));
             }
             else
             {
-                echo PostView::getNoPostExist($userSession);
+                print_r(PostView::getNoPostExist($userSession));
             }
         } 
         catch (\PDOException $e)
         {
-            echo self::ifPDOExceptionView($e);
+            print_r(self::ifPDOExceptionView($e));
         }
         catch (AccessViolationException $e)
         {
-            echo self::ifAccessViolationExceptionView($e);
+            print_r(self::ifAccessViolationExceptionView($e));
         }
     }
 
@@ -209,20 +209,20 @@ Abstract Class PostController extends Controller
             $requestSuccess = PostManager::push( $postEntity);
             if($requestSuccess != null)
             {
-                echo PostView::success();
+                print_r(PostView::success());
             }
             else
             {
-                echo PostView::pushFail($userSession);
+                print_r(PostView::pushFail($userSession));
             }
         }
         catch (\PDOException $e)
         {
-            echo self::ifPDOExceptionView($e);
+            print_r(self::ifPDOExceptionView($e));
         }
         catch (AccessViolationException $e)
         {
-            echo self::ifAccessViolationExceptionView($e);
+            print_r(self::ifAccessViolationExceptionView($e));
         }
     }
 
@@ -247,20 +247,20 @@ Abstract Class PostController extends Controller
             $requestSuccess = PostManager::edit($postEntity);
             if($requestSuccess != null)
             {
-                echo PostView::success();
+                print_r(PostView::success());
             }
             else
             {
-                echo PostView::editFail($userSession);
+                print_r(PostView::editFail($userSession));
             }
         }
         catch (\PDOException $e)
         {
-            echo self::ifPDOExceptionView($e);
+            print_r(self::ifPDOExceptionView($e));
         }
         catch (AccessViolationException $e)
         {
-            echo self::ifAccessViolationExceptionView($e);
+            print_r(self::ifAccessViolationExceptionView($e));
         }
     }
 
@@ -277,16 +277,16 @@ Abstract Class PostController extends Controller
             }
             else
             {
-                echo PostView::deleteFail($userSession);
+                print_r(PostView::deleteFail($userSession));
             } 
         }
         catch (\PDOException $e)
         {
-            echo self::ifPDOExceptionView($e);
+            print_r(self::ifPDOExceptionView($e));
         }
         catch (AccessViolationException $e)
         {
-            echo self::ifAccessViolationExceptionView($e);
+            print_r(self::ifAccessViolationExceptionView($e));
         }
     }
 
