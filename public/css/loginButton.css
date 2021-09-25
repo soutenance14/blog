@@ -10,14 +10,14 @@
 .loginButton a
 {
 font-size: 0.8em;
-  color: #FFF;
+  color: #fff;
   margin:0px;
   padding: 5px 10px;
 }
 
 .loginButton a:hover
 {
-  color: #D4DDDB;
+  color: #d4dddb;
 }
 
 .loginButton :nth-child(2n)

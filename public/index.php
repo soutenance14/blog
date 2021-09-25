@@ -69,7 +69,7 @@ $router->map('POST', '/push/post', 'pushPost');
 function home()
 {
     $blogSession = new BlogSession();
-    MemberController::home($blogSession->getUser());
+    print_r(MemberController::home($blogSession->getUser()));
 }
 
 function home0()
@@ -88,7 +88,7 @@ function sendMessage()
     $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
     if(isset($post['nom']) && isset( $post['mail']) &&  isset($post['contenu'] ))
     {
-        ContactController::sendMessage($post['nom'], $post['mail'], $post['contenu']);
+        print_r(ContactController::sendMessage($post['nom'], $post['mail'], $post['contenu']));
     }
 }
 
@@ -97,37 +97,37 @@ function sendMessage()
 function formPushPost()
 {
     $blogSession = new BlogSession();
-    PostController::formPushPost($blogSession->getUser());
+    print_r(PostController::formPushPost($blogSession->getUser()));
 }
 
 function formEditPost(String $id)
 {
     $blogSession = new BlogSession();
-    PostController::formEditPost($id, $blogSession->getUser());
+    print_r(PostController::formEditPost($id, $blogSession->getUser()));
 }
 
     // controller need model
 function post($slug)
 {
     $blogSession = new BlogSession();
-    PostController::get($slug, $blogSession->getUser());
+    print_r(PostController::get($slug, $blogSession->getUser()));
 }
 
 function postBack($slug)
 {
    $blogSession = new BlogSession();
-    PostController::getBack($slug, $blogSession->getUser());
+    print_r(PostController::getBack($slug, $blogSession->getUser()));
 }
 
 function posts()
 {    $blogSession = new BlogSession();
-    PostController::getAll($blogSession->getUser());
+    print_r(PostController::getAll($blogSession->getUser()));
 }
 
 function postsBack()
 {
    $blogSession = new BlogSession();
-    PostController::getAllBack($blogSession->getUser());
+    print_r(PostController::getAllBack($blogSession->getUser()));
 }
 
 function pushPost()
@@ -136,8 +136,8 @@ function pushPost()
     if( isset($post['auteur']) && isset($post['titre']) && isset($post['chapo']) && isset($post['contenu']) && isset($post['token']))
     {
         $blogSession = new BlogSession();
-        PostController::push($post['auteur'], $post['titre'], $post['chapo'],
-        ($post['contenu']), $post['token'], $blogSession->getUser());
+        print_r(PostController::push($post['auteur'], $post['titre'], $post['chapo'],
+        ($post['contenu']), $post['token'], $blogSession->getUser()));
     }
     else
     {
@@ -152,8 +152,8 @@ function editPost()
     if( isset($post['id']) && isset($post['auteur']) && isset($post['titre']) && isset($post['chapo']) && isset($post['contenu']) && isset($post['token']))
     {
         $blogSession = new BlogSession();
-        PostController::edit($post['id'], $post['auteur'], $post['titre'], $post['chapo']
-        , $post['contenu'] ,$post['token'], $blogSession->getUser());
+        print_r(PostController::edit($post['id'], $post['auteur'], $post['titre'], $post['chapo']
+        , $post['contenu'] ,$post['token'], $blogSession->getUser()));
     }
     else
     {
@@ -165,7 +165,7 @@ function editPost()
 function deletePost($id, $token)
 {
     $blogSession = new BlogSession();
-    PostController::delete($id, $token, $blogSession->getUser());
+    print_r(PostController::delete($id, $token, $blogSession->getUser()));
 }
 
     //END POST===END POST===END POST===END POST===END POST===END POST===END POST===
@@ -181,21 +181,21 @@ function pushComment()
     if(isset($post['id_post']) && isset($post['contenu']) && isset($post['token']))
     {
         $blogSession = new BlogSession();
-        CommentController::push($post['id_post'], $post['contenu'], $post['token'] ,$blogSession->getUser());
+        print_r(CommentController::push($post['id_post'], $post['contenu'], $post['token'] ,$blogSession->getUser()));
     }
 }
 
 function deleteComment($id, $token)
 {
     $blogSession = new BlogSession();
-    CommentController::delete($id, $token, $blogSession->getUser());   
+    print_r(CommentController::delete($id, $token, $blogSession->getUser()));   
 }
 
 // for user auth
 function setPublishedComment($id, $published, $token)
 {
     $blogSession = new BlogSession();
-    CommentController::setPublished($id, $published, $token, $blogSession->getUser());
+    print_r(CommentController::setPublished($id, $published, $token, $blogSession->getUser()));
 }
 
 
@@ -203,12 +203,12 @@ function setPublishedComment($id, $published, $token)
         // form
 function login()
 {   
-    MemberController::login();
+    print_r(MemberController::login());
 }
 
 function signUp()
 {
-    MemberController::signUp();
+    print_r(MemberController::signUp());
 }
 
 function pushMember()
@@ -216,14 +216,14 @@ function pushMember()
     $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
     if(isset($post['login'], $post['password'] )){
         $blogSession = new BlogSession();
-        MemberController::push($post['login'], $post['password'], $blogSession);
+        print_r(MemberController::push($post['login'], $post['password'], $blogSession));
     }
 }
 
 function formEditPassword()
 {
     $blogSession = new BlogSession();
-    MemberController::formEditPassword($blogSession->getUser());
+    print_r(MemberController::formEditPassword($blogSession->getUser()));
 }
 
     //controller need model
@@ -234,7 +234,7 @@ function auth()
     if( isset($post['login'])  && isset($post['password']) )
     {
         $blogSession = new BlogSession();
-        MemberController::auth($post['login'],    $post['password'] , $blogSession);
+        print_r(MemberController::auth($post['login'],    $post['password'] , $blogSession));
     }
     else
     {
@@ -246,7 +246,7 @@ function auth()
 function disconnect()
 {
     $blogSession = new BlogSession();
-    MemberController::disconnect($blogSession);
+    print_r(MemberController::disconnect($blogSession));
 }
 
 function editPassword()
@@ -255,7 +255,7 @@ function editPassword()
     if( isset($post['oldPassword'])  && isset($post['newPassword']) && isset($post['token']) )
     {
         $blogSession = new BlogSession();
-        MemberController::editPassword($post['oldPassword'],  $post['newPassword'], $post['token'], $blogSession);
+        print_r(MemberController::editPassword($post['oldPassword'],  $post['newPassword'], $post['token'], $blogSession));
     }
     else
     {
@@ -266,13 +266,13 @@ function editPassword()
 
 function cv()
 {
-    MemberController::cv();
+    print_r(MemberController::cv());
 }
 
 function administration()
 {
     $blogSession = new BlogSession();
-    MemberController::administration($blogSession->getUser());
+    print_r(MemberController::administration($blogSession->getUser()));
 }
 
 
@@ -300,5 +300,5 @@ if( is_array($match))
 else
 {
     $blogSession = new BlogSession();
-    print_r(RedirectionController::getPage404($blogSession->getUser()));
+    print_r(print_r(RedirectionController::getPage404($blogSession->getUser())));
 }
