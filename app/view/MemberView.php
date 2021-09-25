@@ -3,7 +3,7 @@ namespace App\View;
 
 Class MemberView extends View
 {
-    public static function cv()
+    public static function getCV()
     {
         $filename = "assets/files/cv.pdf";
         header('Content-type: application/pdf');

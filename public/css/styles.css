@@ -10813,18 +10813,18 @@ header.masthead .site-heading .h1 {
   }
 }
 
-.hide{
+.hide {
   display : none;
 }
 
-.clear{
+.clear {
   clear:both;
 }
 
-.special-color{
+.special-color {
   color:#336BFF;
 }
 
-.break-word{
+.break-word {
   word-wrap: break-word;
 }

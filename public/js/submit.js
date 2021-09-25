@@ -5,8 +5,6 @@ var errorMessage = document.getElementById("submitErrorMessage");
 var floatingForms = document.getElementsByClassName("form-floating");
 var postForms = document.getElementsByClassName("post-form");
 
-var form = document.forms["form"];
-
 var post = [];
 
 successMessage.style.display = "none";
@@ -112,7 +110,7 @@ function hideAllErrorAndSuccessMessage()
       //hide rest error 
       var invalid = (floatingForm.getElementsByClassName("invalid-feedback"))[0];
       invalid.style.display = "none";
-    };
+    }
 }
 function sendDataOnClick(post, url)
 {

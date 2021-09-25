@@ -14,7 +14,7 @@ use App\Session\BlogSession;
 
 // use App\Session\BlogSession;
 
-require dirname(__DIR__) . '../vendor/autoload.php';
+require_once dirname(__DIR__).'../vendor/autoload.php';
 
 //start AltoRouter
 $router = new AltoRouter();
@@ -264,9 +264,9 @@ function editPassword()
     }
 }
 
-function cv()
+function getCV()
 {
-    print_r(MemberController::cv());
+    print_r(MemberController::getCV());
 }
 
 function administration()
