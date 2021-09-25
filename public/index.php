@@ -80,7 +80,7 @@ function home0()
 function formContact()
 {
     $blogSession = new BlogSession();
-    ContactController::formContact($blogSession->getUser());
+    print_r(ContactController::formContact($blogSession->getUser()));
 }
 
 function sendMessage()

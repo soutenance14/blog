@@ -15,7 +15,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
     //FORM
     public static function formContact($userSession)
     {
-        print_r(ContactView::formContact($userSession));
+        return(ContactView::formContact($userSession));
     }
     
     public static function sendMessage($nom, $mail, $contenu)
@@ -63,12 +63,12 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
             
             // Send the message
             $mailer->send($message);
-            print_r(ContactView::success());
+            return(ContactView::success());
         }
         catch (Exception $e)
         {
             //message asynchrone
-            print_r(ContactView::renderViewException(
+            return(ContactView::renderViewException(
                 $e, "Oops une erreur est arrivé", "mailError-bg",
                 'Echec lors de l\'envoie, le message n\a pas été envoyé. '.$e->getMessage()));
         }
