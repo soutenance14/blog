@@ -2,7 +2,6 @@
 
 namespace App\Model;
 
-require dirname(__DIR__) . '../../vendor/autoload.php';
 Class CommentManager extends Manager{
     
     public static function get(String $id)

@@ -2,8 +2,6 @@
 
 namespace App\View;
 
-require dirname(__DIR__) . '../../vendor/autoload.php';
-
 Class PostView extends View
 {
     public static function formPushPost($user)

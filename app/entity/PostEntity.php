@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-require dirname(__DIR__) . '../../vendor/autoload.php';
 Class PostEntity extends Entity
 {
     private $id;

@@ -8,8 +8,6 @@ use Swift_Mailer;
 use Swift_Message;
 use Swift_SmtpTransport;
 
-require dirname(__DIR__) . '../../vendor/autoload.php';
-
  Class ContactController
 {
     //FORM
@@ -20,7 +18,7 @@ require dirname(__DIR__) . '../../vendor/autoload.php';
     
     public static function sendMessage($nom, $mail, $contenu)
     {
-        require dirname(__DIR__) . '../../app/config/configMailLocal.php';
+        require dirname(__DIR__).'../../app/config/configMailLocal.php';
         // for getting all config email variables
         try
         {

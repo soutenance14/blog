@@ -8,9 +8,6 @@ use App\Model\CommentManager;
 use App\Model\PostManager;
 use App\View\CommentView;
 
-require dirname(__DIR__) . '../../vendor/autoload.php';
-
-
 Abstract Class CommentController extends Controller
 {
     public static function push( $id_post, $contenu, $tokenSent, $userSession)

@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-require dirname(__DIR__) . '../../vendor/autoload.php';
-
 use App\Entity\CommentEntity;
 use App\Entity\PostEntity;
 use App\Exception\AccessViolationException;

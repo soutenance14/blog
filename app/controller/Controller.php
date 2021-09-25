@@ -92,7 +92,6 @@ Abstract Class Controller
 
     public static function permissionThisIdMember( $user, $id_member_permission, $tokenSent)
     {
-        require dirname(__DIR__) . "../exception/AccessViolationException.php";
         if($user->getPermission() != USER_NOT_AUTHENTIFIED && $user->getToken() === $tokenSent) 
         {
             if( ($user->getId() != $id_member_permission) && ($user->getPermission() != ADMIN)    )

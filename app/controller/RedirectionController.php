@@ -1,9 +1,8 @@
 <?php
+
 namespace App\Controller;
 
 use App\View\View;
-
-require dirname(__DIR__) . '../../vendor/autoload.php'; 
 
 Abstract Class RedirectionController
 {

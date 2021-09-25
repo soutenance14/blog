@@ -1,8 +1,6 @@
 <?php
 namespace App\Model;
 
-require dirname(__DIR__) . '../../vendor/autoload.php';
-
 Class PostManager extends Manager{
     
     public static function get(String $slug)
