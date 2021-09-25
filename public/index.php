@@ -197,11 +197,12 @@ function signUp()
 
 function pushMember()
 {
-    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    if(isset($post['login'], $post['password'] )){
+    // $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    
+        $request = new Request($_POST);
         $blogSession = new BlogSession();
-        print_r(MemberController::push($post['login'], $post['password'], $blogSession));
-    }
+        echo MemberController::push($request, $blogSession);
+    
 }
 
 function formEditPassword()
@@ -214,17 +215,10 @@ function formEditPassword()
 
 function auth()
 {
-    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    if( isset($post['login'])  && isset($post['password']) )
-    {
-        $blogSession = new BlogSession();
-        print_r(MemberController::auth($post['login'],    $post['password'] , $blogSession));
-    }
-    else
-    {
-        // this call is not possible in theory
-        print_r('problème, post(s) manquant(s).');
-    }
+    // $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    $request = new Request($_POST);
+    $blogSession = new BlogSession();
+    echo MemberController::auth($request, $blogSession);
 }
 
 function disconnect()
