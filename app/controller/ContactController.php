@@ -28,9 +28,9 @@ use Swift_SmtpTransport;
             
             $date = $day. " ". $month." ".$year;
             // Create the Transport
-            $transport = (new Swift_SmtpTransport($SERVER, $PORT))
-            ->setUsername($USER)
-            ->setPassword($PASS)
+            $transport = (new Swift_SmtpTransport(SERVER, PORT))
+            ->setUsername(USER)
+            ->setPassword(PASS)
             ;
             
             // Create the Mailer using your created Transport
@@ -53,8 +53,8 @@ use Swift_SmtpTransport;
                 </p>
             </html>';
             $message = (new Swift_Message($subject))
-            ->setFrom([$EMAIL => $NAME_EMAIL])
-            ->setTo([$EMAIL => $NAME_EMAIL])
+            ->setFrom([EMAIL => NAME_EMAIL])
+            ->setTo([EMAIL => NAME_EMAIL])
             // ->setTo(['example1@gmail.com', 'example2@gmail.com' => 'Name email']) multiple
             ->setBody($message, 'text/html')
             ;

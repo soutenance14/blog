@@ -11,7 +11,7 @@ abstract Class Manager
         require dirname(__DIR__) . "../config/configDBLocal.php";  
         // more explain about dsn and oprions here -> https://phpdelusions.net/pdo#dsn 
 
-        $dsn = "mysql:host=$HOST;dbname=$DB_NAME;port=$PORT;charset=$CHARSET";
+        $dsn = "mysql:host=".HOST.";dbname=".DB_NAME.";port=".PORT.";charset=".CHARSET;
 
         $options = [
             \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
@@ -21,7 +21,7 @@ abstract Class Manager
 
         try 
         {
-            Manager::$pdo = new \PDO($dsn, $USER, $PASS, $options);
+            Manager::$pdo = new \PDO($dsn, USER, PASS, $options);
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }
