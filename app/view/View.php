@@ -80,5 +80,12 @@ Abstract Class View
         // for ajax request
         return "error";
     }
+    
+    public static function errorForm()
+    {
+        // return simple text wihout render
+        // for ajax request
+        return "Erreur avec le formulaire";
+    }
 
 }

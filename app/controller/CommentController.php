@@ -7,45 +7,59 @@ use App\Exception\AccessViolationException;
 use App\Model\CommentManager;
 use App\Model\PostManager;
 use App\View\CommentView;
+use Symfony\Component\HttpFoundation\Request;
 
 Abstract Class CommentController extends Controller
 {
-    public static function push( $id_post, $contenu, $tokenSent, $userSession)
+    public static function push(Request $request, $userSession)
     {
-        try
+        if( null !== $request->get("id_post")
+            && null !== $request->get("contenu")
+            && null !== $request->get("token"))
         {
-            CommentController::permissionToken(USER_AUTHENTIFIED, $userSession, $tokenSent);
-            $commentEntity = new CommentEntity();
-            $commentEntity->setIdMembre($userSession->getId());
-            $commentEntity->setIdPost($id_post);
-            $commentEntity->setContenu($contenu);
-            $requestSuccess = null;
-            if($userSession->getType() === 'admin')
+            try
             {
-            //    if user is admin, comment is published
-                $requestSuccess = CommentManager::pushPublished( $commentEntity);
-            }
-            else
-            {
-                $requestSuccess = CommentManager::pushNotPublished( $commentEntity);
-            }
+                $id_post = $request->get("id_post");
+                $contenu = $request->get("contenu");
+                $tokenSent = $request->get("token");
+                
+                CommentController::permissionToken(USER_AUTHENTIFIED, $userSession, $tokenSent);
+                $commentEntity = new CommentEntity();
+                $commentEntity->setIdMembre($userSession->getId());
+                $commentEntity->setIdPost($id_post);
+                $commentEntity->setContenu($contenu);
+                $requestSuccess = null;
+                if($userSession->getType() === 'admin')
+                {
+                //    if user is admin, comment is published
+                    $requestSuccess = CommentManager::pushPublished( $commentEntity);
+                }
+                else
+                {
+                    $requestSuccess = CommentManager::pushNotPublished( $commentEntity);
+                }
 
-            if($requestSuccess === true)
-            {
-                return(CommentView::success());
+                if($requestSuccess === true)
+                {
+                    return(CommentView::success());
+                }
+                else
+                {
+                    return(CommentView::error());
+                }
             }
-            else
+            catch (\PDOException $e)
             {
-                return(CommentView::error());
+                return(CommentController::ifPDOExceptionView($e));
+            }
+            catch (AccessViolationException $e)
+            {
+                return(CommentController::ifAccessViolationExceptionView($e));
             }
         }
-        catch (\PDOException $e)
+        else
         {
-            return(CommentController::ifPDOExceptionView($e));
-        }
-        catch (AccessViolationException $e)
-        {
-            return(CommentController::ifAccessViolationExceptionView($e));
+            return CommentView::errorForm();
         }
     }
 

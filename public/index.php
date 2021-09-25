@@ -11,6 +11,7 @@ use App\Controller\MemberController;
 use App\Controller\PostController;
 use App\Controller\RedirectionController;
 use App\Session\BlogSession;
+use Symfony\Component\HttpFoundation\Request;
 
 // use App\Session\BlogSession;
 
@@ -85,11 +86,9 @@ function formContact()
 
 function sendMessage()
 {
-    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    if(isset($post['nom']) && isset( $post['mail']) &&  isset($post['contenu'] ))
-    {
-        print_r(ContactController::sendMessage($post['nom'], $post['mail'], $post['contenu']));
-    }
+    // $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    $request = new Request($_POST);
+    echo ContactController::sendMessage($request);
 }
 
 // FOR POST
@@ -132,34 +131,19 @@ function postsBack()
 
 function pushPost()
 {
-    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    if( isset($post['auteur']) && isset($post['titre']) && isset($post['chapo']) && isset($post['contenu']) && isset($post['token']))
-    {
-        $blogSession = new BlogSession();
-        print_r(PostController::push($post['auteur'], $post['titre'], $post['chapo'],
-        ($post['contenu']), $post['token'], $blogSession->getUser()));
-    }
-    else
-    {
-        // this call is not possible in theory
-        print_r('problème, post(s) manquant(s).');
-    }
+    // $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    $request = new Request($_POST);
+    $blogSession = new BlogSession();
+    echo PostController::push($request, $blogSession->getUser());
+   
 }
 
 function editPost()
 {
-    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    if( isset($post['id']) && isset($post['auteur']) && isset($post['titre']) && isset($post['chapo']) && isset($post['contenu']) && isset($post['token']))
-    {
-        $blogSession = new BlogSession();
-        print_r(PostController::edit($post['id'], $post['auteur'], $post['titre'], $post['chapo']
-        , $post['contenu'] ,$post['token'], $blogSession->getUser()));
-    }
-    else
-    {
-        // this call is not possible in theory
-        print_r('problème, post(s) manquant(s).');
-    }
+    // $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    $request = new Request($_POST);
+    $blogSession = new BlogSession();
+    echo PostController::edit($request, $blogSession->getUser());
 }
 
 function deletePost($id, $token)
@@ -177,12 +161,12 @@ function deletePost($id, $token)
     // for user auth
 function pushComment()
 {
-    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    if(isset($post['id_post']) && isset($post['contenu']) && isset($post['token']))
-    {
-        $blogSession = new BlogSession();
-        print_r(CommentController::push($post['id_post'], $post['contenu'], $post['token'] ,$blogSession->getUser()));
-    }
+    // $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    $request = new Request($_POST);
+    $blogSession = new BlogSession();
+    // echo (CommentController::push($post['id_post'], $post['contenu'], $post['token'] ,$blogSession->getUser()));
+    echo (CommentController::push($request ,$blogSession->getUser()));
+    
 }
 
 function deleteComment($id, $token)
@@ -213,11 +197,12 @@ function signUp()
 
 function pushMember()
 {
-    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    if(isset($post['login'], $post['password'] )){
+    // $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    
+        $request = new Request($_POST);
         $blogSession = new BlogSession();
-        print_r(MemberController::push($post['login'], $post['password'], $blogSession));
-    }
+        echo MemberController::push($request, $blogSession);
+    
 }
 
 function formEditPassword()
@@ -230,17 +215,10 @@ function formEditPassword()
 
 function auth()
 {
-    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    if( isset($post['login'])  && isset($post['password']) )
-    {
-        $blogSession = new BlogSession();
-        print_r(MemberController::auth($post['login'],    $post['password'] , $blogSession));
-    }
-    else
-    {
-        // this call is not possible in theory
-        print_r('problème, post(s) manquant(s).');
-    }
+    // $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    $request = new Request($_POST);
+    $blogSession = new BlogSession();
+    echo MemberController::auth($request, $blogSession);
 }
 
 function disconnect()

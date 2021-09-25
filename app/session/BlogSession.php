@@ -2,49 +2,53 @@
 namespace App\Session;
 
 use App\Entity\MemberEntity;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 define('USER_NOT_AUTHENTIFIED', null);
 define('USER_AUTHENTIFIED', 1);
 define('ADMIN', 2);
 
-session_start();
 Class BlogSession
 {
-   
+    private $session;
+    private $root;
+    
+    public function __construct()
+    {
+        $this->session = new Session();
+        $this->session->start();
+    }
+
     public function getUser()
     {
-        if(null === Session::get("user") )
+        if( null === $this->session->get("user"))
         {
-            Session::put("user", new MemberEntity());
+            $this->session->set("user", new MemberEntity());
         }
-        return Session::get("user");
+        return $this->session->get("user");
     }
     
     public function setUser($user)
     {    
         //assign token
         $user->setToken(md5(bin2hex(openssl_random_pseudo_bytes(6))));
-        Session::put("user",$user);
+        $this->session->set("user", $user);
     }
 
     public function disconnect()
     {
-        Session::forget("user");
-        session_destroy();
+        $this->session->clear();
+        $this->session->invalidate();
     }
-      
-}
-Class Session{
-
-    public static function put($key, $value){
-        $_SESSION[$key] = $value;
-    }
-
-    public static function get($key){
-        return (isset($_SESSION[$key]) ? $_SESSION[$key] : null);
-    }
-
-    public static function forget($key){
-        unset($_SESSION[$key]);
+    
+    public function getRoot()
+    {
+        if($this->root === null)
+        {
+            require dirname(__DIR__) . "../config/configRoot.php";
+            $this->root = ROOT;
+        }
+        return $this->root;
     }
 }
