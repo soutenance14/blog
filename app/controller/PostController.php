@@ -10,6 +10,7 @@ use App\Model\PostManager;
 use App\View\PostView;
 use App\View\View;
 use \Cocur\Slugify\Slugify;
+use Symfony\Component\HttpFoundation\Request;
 
 Abstract Class PostController extends Controller
 {
@@ -193,14 +194,26 @@ Abstract Class PostController extends Controller
         }
     }
 
-    public static function push( $auteur, $titre, $chapo, $contenu, $tokenSent, $userSession)
+    public static function push(Request $request, $userSession)
     {
-        try{
-            self::permissionToken(ADMIN, $userSession, $tokenSent); 
-            $slugify = new Slugify();
-            $slug = $slugify->slugify($titre); 
-            $postEntity = new PostEntity();
-            $postEntity->hydrate(
+        if( null !== $request->get("auteur")
+            && null !== $request->get("titre")
+            && null !== $request->get("chapo")
+            && null !== $request->get("contenu")
+            && null !== $request->get("tokenSent"))
+        {
+            $auteur = $request->get("auteur");
+            $titre = $request->get("titre");
+            $chapo = $request->get("chapo");
+            $contenu = $request->get("contenu");
+            $tokenSent = $request->get("token");
+            try
+            {
+                self::permissionToken(ADMIN, $userSession, $tokenSent); 
+                $slugify = new Slugify();
+                $slug = $slugify->slugify($titre); 
+                $postEntity = new PostEntity();
+                $postEntity->hydrate(
                 array(
                     "auteur"=>$auteur,
                     "titre"=>$titre,
@@ -208,62 +221,86 @@ Abstract Class PostController extends Controller
                     "chapo"=>$chapo,
                     "contenu"=>$contenu,
                     )
-            );
-            $requestSuccess = PostManager::push( $postEntity);
-            if($requestSuccess != null)
-            {
-                return(PostView::success());
+                );
+                $requestSuccess = PostManager::push( $postEntity);
+                if($requestSuccess != null)
+                {
+                    return(PostView::success());
+                }
+                else
+                {
+                    return(PostView::errorMessage("pushFail"));
+                }
             }
-            else
+            catch (\PDOException $e)
             {
-                return(PostView::errorMessage("pushFail"));
+                return(self::ifPDOExceptionView($e));
+            }
+            catch (AccessViolationException $e)
+            {
+                return(self::ifAccessViolationExceptionView($e));
             }
         }
-        catch (\PDOException $e)
+        else
         {
-            return(self::ifPDOExceptionView($e));
-        }
-        catch (AccessViolationException $e)
-        {
-            return(self::ifAccessViolationExceptionView($e));
+            return PostView::error();
         }
     }
-
-    public static function edit($id, $auteur, $titre, $chapo, $contenu, $tokenSent, $userSession)
+            
+    public static function edit($request, $userSession)
     {
-        try
-        { 
-            self::permissionToken(ADMIN, $userSession, $tokenSent); 
-            $slugify = new Slugify();
-            $slug = $slugify->slugify($titre); 
-            $postEntity = new PostEntity();
-            $postEntity->hydrate(
-                array(
-                    "id"=>$id,
-                    "auteur"=>$auteur,
-                    "titre"=>$titre,
-                    "slug"=>$slug,
-                    "chapo"=>$chapo,
-                    "contenu"=>$contenu,
-                    )
-            );
-            $requestSuccess = PostManager::edit($postEntity);
-            if($requestSuccess != null)
-            {
-                return(PostView::success());
+        if( null !== $request->get("id")
+            && null !== $request->get("auteur")
+            && null !== $request->get("titre")
+            && null !== $request->get("chapo")
+            && null !== $request->get("contenu")
+            && null !== $request->get("token"))
+        {
+            try
+            { 
+                $id = $request->get("id");
+                $auteur = $request->get("auteur");
+                $titre = $request->get("titre");
+                $chapo = $request->get("chapo");
+                $contenu = $request->get("contenu");
+                $tokenSent = $request->get("token");
+                self::permissionToken(ADMIN, $userSession, $tokenSent); 
+                $slugify = new Slugify();
+                $slug = $slugify->slugify($titre); 
+                $postEntity = new PostEntity();
+                $postEntity->hydrate(
+                    array(
+                        "id"=>$id,
+                        "auteur"=>$auteur,
+                        "titre"=>$titre,
+                        "slug"=>$slug,
+                        "chapo"=>$chapo,
+                        "contenu"=>$contenu,
+                        )
+                );
+                $requestSuccess = PostManager::edit($postEntity);
+                if($requestSuccess != null)
+                {
+                    return(PostView::success());
+                }
+                else
+                {
+                    return(PostView::errorMessage("editFail"));
+                }
             }
-            else
+            catch (\PDOException $e)
             {
-                return(PostView::errorMessage("editFail"));
+                return(self::ifPDOExceptionView($e));
+            }
+            catch (AccessViolationException $e)
+            {
+                return(self::ifAccessViolationExceptionView($e));
             }
         }
-        catch (\PDOException $e)
+        else
         {
-            return(self::ifPDOExceptionView($e));
-        }
-        catch (AccessViolationException $e)
-        {
-            return(self::ifAccessViolationExceptionView($e));
+            return 'llll';
+            return PostView::error();
         }
     }
 
