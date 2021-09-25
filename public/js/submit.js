@@ -33,7 +33,7 @@ function validateForm()
     {
       post[ editText["name"]] =   editText["value"] ;
     }
-  };
+  }
   return $validateForm;
 }
 
@@ -175,7 +175,6 @@ function sendData(data, url)
   {//Call a function when the state changes.
       hideSomethingSpecific();
       if(XHR.readyState == 4 && XHR.status == 200) {
-          console.log(XHR.responseText);
           if(XHR.responseText === "success")
           {
               successMessage.style.display = "block";
