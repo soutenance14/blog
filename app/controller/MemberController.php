@@ -80,8 +80,6 @@ use App\View\MemberView;
                 return(MemberView::errorMessage("authFail", [
                     "login"=>$login
                 ]));
-                // return(MemberView::authFail($login));
-                // return(MemberView::errorMessage("authFail", [$login]));
             }
         }
         catch (\PDOException $e)
@@ -94,7 +92,7 @@ use App\View\MemberView;
     {
         try
         {
-            //check if member exist
+            //check if member exists
             $memberEntity = new MemberEntity();
             $memberEntity->setLogin($login);
             $memberEntity->setPassword($password);
@@ -115,61 +113,18 @@ use App\View\MemberView;
                 else
                 {
                     return(MemberView::errorMessage("pushFail"));
-                    // return(MemberView::pushFail());
                 }
             }
             else
             {
-                return(MemberView::errorMessage("memberExist", [
+                return(MemberView::errorMessage("memberExists", [
                     "login"=>$login
                 ]));
-                // return(MemberView::memberExist($login));
             }
         }
         catch (\PDOException $e)
         {
             return(MemberController::ifPDOExceptionView($e));
-        }
-    }
-    
-    public static function delete($login, $id_member_to_delete, $tokenSent, $blogSession)
-    {
-        try
-        {
-            MemberController::permissionThisIdMember( $blogSession->getUser(), $id_member_to_delete, $tokenSent);
-            $memberEntity = new MemberEntity();
-            $memberEntity->setId($id_member_to_delete);
-            $memberEntity->setLogin($login);
-            $requestSuccess = MemberManager::delete($memberEntity);
-            if($requestSuccess === true)
-            {
-                if( MemberManager::memberNotExist($id_member_to_delete)   )
-                {
-                    $blogSession->disconnect();
-                }
-                else
-                {
-                    return(MemberView::errorMessage("wrongLoginForUser", [
-                        "login"=>$login,
-                        "id"=>$id_member_to_delete
-                    ]));
-                    // return(MemberView::wrongLoginForUser($login, $id_member_to_delete));
-                }
-            }
-            else
-            {
-                return(MemberView::errorMessage("deleteFail", [
-                    "login"=>$login,
-                    "id"=> $id_member_to_delete]));
-            }
-        }
-        catch (\PDOException $e)
-        {
-            return(MemberController::ifPDOExceptionView($e));
-        }
-        catch (AccessViolationException $e)
-        {
-            return(MemberController::ifAccessViolationExceptionView($e));
         }
     }
 

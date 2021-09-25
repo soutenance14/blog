@@ -41,6 +41,7 @@ Abstract Class PostController extends Controller
             }
             else
             {
+                //no ajax
                 return(PostView::getNotExist($id, $userSession));
             } 
         }
@@ -73,6 +74,7 @@ Abstract Class PostController extends Controller
             }
             else
             {
+                //no ajax
                 return(PostView::getNotExist($slug, $userSession));
             }
         }
@@ -116,6 +118,7 @@ Abstract Class PostController extends Controller
             }
             else
             {
+                //no ajax
                return(PostView::getNotExist($slug, $userSession));
             }
         }
@@ -147,6 +150,7 @@ Abstract Class PostController extends Controller
             }
             else
             {
+                //no ajax
                 return(PostView::getNoPostExist($user));
             }
         } 
@@ -175,6 +179,7 @@ Abstract Class PostController extends Controller
             }
             else
             {
+                //no ajax
                 return(PostView::getNoPostExist($userSession));
             }
         } 
@@ -250,7 +255,6 @@ Abstract Class PostController extends Controller
             else
             {
                 return(PostView::errorMessage("editFail"));
-                // return(PostView::editFail($userSession));
             }
         }
         catch (\PDOException $e)
@@ -277,7 +281,6 @@ Abstract Class PostController extends Controller
             else
             {
                 return(PostView::errorMessage("deleteFail"));
-                // return(PostView::deleteFail($userSession));
             } 
         }
         catch (\PDOException $e)

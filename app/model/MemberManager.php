@@ -61,20 +61,6 @@ Class MemberManager extends Manager{
         return $member;
     }
 
-    public static function delete( $memberEntity)
-    {
-        //le login est demandé aussi par sécurité, si l'admin
-        // veut supprimer l'utilisateur, il a donc l'obligation d'entrer son login
-        $id = $memberEntity->getId();
-        $login = $memberEntity->getLogin();
-        $request = self::getPdo()->prepare(
-            "DELETE from MEMBER where id = :id and login = :login and type <> 'admin'");
-            $request->bindParam(':id', $id, \PDO::PARAM_STR);
-            $request->bindParam(':login', $login, \PDO::PARAM_STR);
-            $requestSuccess = $request->execute();
-        return $requestSuccess;
-    }
-
     public static function memberNotExist($id)
     {
         $request = self::getPdo()->prepare(

@@ -80,14 +80,6 @@ Class MemberView extends View
                     veuillez en changer.";
                 }
                 break;    
-            case "deleteFail":
-                if(isset($array["login"])   && isset($array["id"]))
-                {
-                    $message = 'La suppression du compte de '.$array['login'].',
-                    id: '.$array['id'].' a échoué';
-                }
-                break;
-                
             case "pushFail":
                     $message = 'Une erreur s\'est produit lors de 
                     l\'enregistrement en bade de donnée, veuillez réessayer.';
