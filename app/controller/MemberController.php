@@ -77,7 +77,11 @@ use App\View\MemberView;
             }
             else
             {
-                return(MemberView::authFail($login));
+                return(MemberView::errorMessage("authFail", [
+                    "login"=>$login
+                ]));
+                // return(MemberView::authFail($login));
+                // return(MemberView::errorMessage("authFail", [$login]));
             }
         }
         catch (\PDOException $e)
@@ -110,12 +114,16 @@ use App\View\MemberView;
                 }
                 else
                 {
-                    return(MemberView::pushFail());
+                    return(MemberView::errorMessage("pushFail"));
+                    // return(MemberView::pushFail());
                 }
             }
             else
             {
-                return(MemberView::memberExist($login));
+                return(MemberView::errorMessage("memberExist", [
+                    "login"=>$login
+                ]));
+                // return(MemberView::memberExist($login));
             }
         }
         catch (\PDOException $e)
@@ -141,12 +149,18 @@ use App\View\MemberView;
                 }
                 else
                 {
-                    return(MemberView::wrongLoginForUser($login, $id_member_to_delete));
+                    return(MemberView::errorMessage("wrongLoginForUser", [
+                        "login"=>$login,
+                        "id"=>$id_member_to_delete
+                    ]));
+                    // return(MemberView::wrongLoginForUser($login, $id_member_to_delete));
                 }
             }
             else
             {
-                return(MemberView::deleteFail($login, $id_member_to_delete));
+                return(MemberView::errorMessage("deleteFail", [
+                    "login"=>$login,
+                    "id"=> $id_member_to_delete]));
             }
         }
         catch (\PDOException $e)

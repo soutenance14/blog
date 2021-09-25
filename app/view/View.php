@@ -62,7 +62,7 @@ Abstract Class View
         if(self::$root === null)
         {
             require dirname(__DIR__) . "../config/configRoot.php";
-            self::$root = $root;
+            self::$root = ROOT;
         }
         return self::$root;
     }
@@ -80,4 +80,5 @@ Abstract Class View
         // for ajax request
         return "error";
     }
+
 }
