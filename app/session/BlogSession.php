@@ -8,7 +8,6 @@ define('USER_NOT_AUTHENTIFIED', null);
 define('USER_AUTHENTIFIED', 1);
 define('ADMIN', 2);
 
-session_start();
 Class BlogSession
 {
     private $session;
