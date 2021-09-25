@@ -243,7 +243,7 @@ Abstract Class PostController extends Controller
         }
         else
         {
-            return PostView::error();
+            return PostView::errorForm();
         }
     }
             
@@ -299,8 +299,7 @@ Abstract Class PostController extends Controller
         }
         else
         {
-            return 'llll';
-            return PostView::error();
+            return PostView::errorForm();
         }
     }
 

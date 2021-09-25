@@ -81,7 +81,7 @@ Class ContactController
             }
         else
         {
-            return ContactView::error();
+            return ContactView::errorForm();
         }
     }
 }

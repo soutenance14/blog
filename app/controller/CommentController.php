@@ -59,7 +59,7 @@ Abstract Class CommentController extends Controller
         }
         else
         {
-            return "Erreur avec le formulaire.";
+            return CommentView::errorForm();
         }
     }
 

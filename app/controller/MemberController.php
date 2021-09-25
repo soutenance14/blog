@@ -95,7 +95,7 @@ Class MemberController extends Controller
         }
         else
         {
-            return "Erreur avec le formulaire";
+            return MemberView::errorForm();
         }
     }
 
@@ -145,7 +145,7 @@ Class MemberController extends Controller
         }
         else
         {
-            return "Erreur avec le formulaire";
+            return MemberView::errorForm();
         }
     }
 
@@ -188,7 +188,7 @@ Class MemberController extends Controller
         }
         else
         {
-            return "Erreur avec le formulaire";
+            return MemberView::errorForm();
         }
     }
 
