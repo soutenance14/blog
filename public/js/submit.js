@@ -10,11 +10,16 @@ var post = [];
 successMessage.style.display = "none";
 errorMessage.style.display = "none";
 
+
 // specific element will be verified
 //the caller page give the specific var anfd specific function thing
+if(typeof(url) !== "undefined")
+{
+  sendDataOnClick(post, url);
+}
 
-sendDataOnClick(post, url);
 
+// functions
 function validateForm()
 {
   $validateForm = true;
@@ -120,9 +125,18 @@ function sendDataOnClick(post, url)
   //   });
   submitButton.addEventListener("click", event => {
     hideAllErrorAndSuccessMessage();
-    if(validateForm() && validFormSpecificPage())
+
+   
+    validComplement = true;
+    if(typeof validFormSpecificPage === 'function')
+    {
+      validComplement = validFormSpecificPage();
+    }
+    if(validateForm() && validComplement)
       {
-        displaySomethingSpecific();
+        if(typeof displaySomethingSpecific === 'function'){
+          displaySomethingSpecific();
+        }
         sendData(post, url);
       }
       // else
@@ -171,24 +185,32 @@ function sendData(data, url)
   // XHR.onreadystatechange = function() 
   XHR.onreadystatechange = function() 
   {//Call a function when the state changes.
+    if(typeof hideSomethingSpecific === 'function'){  
       hideSomethingSpecific();
+    }
       if(XHR.readyState == 4 && XHR.status == 200) {
           if(XHR.responseText === "success")
           {
               successMessage.style.display = "block";
-              doSomethingSpecificSuccess();
+              if(typeof doSomethingSpecificSuccess === 'function'){
+                doSomethingSpecificSuccess();
+              }
           }
           else if(XHR.responseText === "error")
           {
             errorMessage.style.display = "block";
-            doSomethingSpecificError();
-          }
+            if(typeof doSomethingSpecificError === 'function'){
+              doSomethingSpecificError();
+            }
+            }
           else
           {
             errorMessage.style.display = "block";
             errorMessage.innerHTML = XHR.responseText;
             errorMessage.className = "text-center text-danger mb-3";
-            doSomethingSpecificError();
+            if(typeof doSomethingSpecificError === 'function'){
+              doSomethingSpecificError();
+            }
           }
       }
       // else{

@@ -18,7 +18,6 @@
                             <input class="form-control"  name="mail" type="email" placeholder="Enter your email..." data-sb-validations="required,email" />
                             <label for="email">Email</label>
                             <div class="invalid-feedback" data-sb-feedback="email:required">Une adresse email au bon format est nécessaire.</div>
-                            <div class="invalid-feedback" data-sb-feedback="email:email">L'adresse email n'est pas valide.</div>
                         </div>
                         <div class="form-floating post-form" id="message" >
                             <textarea class="form-control" name="contenu" type="text" placeholder="Enter your message here..." style="height: 12rem" data-sb-validations="required"></textarea>
@@ -71,24 +70,6 @@
             progress_bar.style.display = 'none';
         }
 
-        function doSomethingSpecificSuccess()
-        {
-            //this function is obligatory
-            //nothing for me
-        }
-        
-        function doSomethingSpecificError()
-        {
-            //this function is obligatory
-            //nothing for me
-        }
-
-        function validFormSpecificPage()
-        {
-            //this function is obligatory
-            //nothing special for me
-            return true;
-        }
         // ce script doit être ecexuter avant le script ci dessous
     </script>
     <script src="{{root}}js/submit.js"></script>
