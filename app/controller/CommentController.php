@@ -108,7 +108,7 @@ Abstract Class CommentController extends Controller
         else
         {
             //no ajax
-            return(CommentView::wrongValueEditComment(BlogSession::getUser()));
+            return(CommentView::wrongValueEditComment());
         }
     }
 

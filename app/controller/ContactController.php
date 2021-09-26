@@ -15,7 +15,7 @@ Class ContactController
     //FORM
     public static function formContact()
     {
-        return(ContactView::formContact(BlogSession::getUser()));
+        return(ContactView::formContact());
     }
     
     public static function sendMessage(Request $request)

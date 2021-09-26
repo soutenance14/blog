@@ -21,7 +21,7 @@ Abstract Class PostController extends Controller
         try
         {
             self::permission(ADMIN, BlogSession::getUser() );
-            return(PostView::formPushPost(BlogSession::getUser()));
+            return(PostView::formPushPost());
         }
         catch (AccessViolationException $e)
         {
@@ -73,12 +73,12 @@ Abstract Class PostController extends Controller
                     $commentPublishedEntity->hydrate($commentPublished);
                     array_push( $listCommentsPublishedEntity , $commentPublishedEntity);
                 }
-                return(PostView::get($postEntity, $listCommentsPublishedEntity, BlogSession::getUser()));
+                return(PostView::get($postEntity, $listCommentsPublishedEntity));
             }
             else
             {
                 //no ajax
-                return(PostView::getNotExist($slug, BlogSession::getUser()));
+                return(PostView::getNotExist($slug));
             }
         }
         catch (\PDOException $e)
@@ -92,8 +92,7 @@ Abstract Class PostController extends Controller
     {
         try
         {
-            $userSession = BlogSession::getUser();
-            self::permission(ADMIN, $userSession);
+            self::permission(ADMIN, BlogSession::getUser());
 
             $post = PostManager::get($slug);
             if($post != null)
@@ -118,12 +117,12 @@ Abstract Class PostController extends Controller
                     array_push( $listCommentsNotPublishedEntity , $commentNotPublishedEntity);
                 }
 
-                return(PostView::getBack($postEntity, $listCommentsPublishedEntity, $listCommentsNotPublishedEntity, $userSession, $slug));
+                return(PostView::getBack($postEntity, $listCommentsPublishedEntity, $listCommentsNotPublishedEntity, $slug));
             }
             else
             {
                 //no ajax
-               return(PostView::getNotExist($slug, $userSession));
+               return(PostView::getNotExist($slug));
             }
         }
         catch (\PDOException $e)
@@ -150,12 +149,12 @@ Abstract Class PostController extends Controller
                     $postEntity->hydrate($post);
                     array_push($listPostsEntity, $postEntity);
                 }
-                return(PostView::getAll($listPostsEntity, BlogSession::getUser()));
+                return(PostView::getAll($listPostsEntity));
             }
             else
             {
                 //no ajax
-                return(PostView::getNoPostExist(BlogSession::getUser()));
+                return(PostView::getNoPostExist());
             }
         } 
         catch (\PDOException $e)
@@ -168,8 +167,7 @@ Abstract Class PostController extends Controller
     {
         try 
         {
-            $userSession = BlogSession::getUser();
-            self::permission(ADMIN, $userSession);
+            self::permission(ADMIN, BlogSession::getUser());
             $posts = PostManager::getAll();
             if($posts != null)
             {
@@ -180,12 +178,12 @@ Abstract Class PostController extends Controller
                     $postEntity->hydrate($post);
                     array_push($listPostsEntity, $postEntity);
                 }
-                return(PostView::getAllBack($listPostsEntity, $userSession));
+                return(PostView::getAllBack($listPostsEntity));
             }
             else
             {
                 //no ajax
-                return(PostView::getNoPostExist($userSession));
+                return(PostView::getNoPostExist());
             }
         } 
         catch (\PDOException $e)
