@@ -4,10 +4,6 @@ namespace App\Session;
 use App\Entity\MemberEntity;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-define('USER_NOT_AUTHENTIFIED', null);
-define('USER_AUTHENTIFIED', 1);
-define('ADMIN', 2);
-
 Class BlogSession
 {
     private static $session;
