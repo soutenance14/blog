@@ -3,13 +3,10 @@ namespace App\View;
 
 Class ContactView extends View
 {
-    public static function formContact($user)
+    public static function formContact()
     {
         $array = array(
-            'title'=> 'Contact',
-            'user'=> $user,
-            'root'=> self::getRoot(),
-        );
+            'title'=> 'Contact');
 
         return ContactView::renderView('contact/contact.twig', $array); 
     }
