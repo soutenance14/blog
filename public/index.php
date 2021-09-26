@@ -9,16 +9,12 @@ use App\Controller\ContactController;
 use App\Controller\MemberController;
 use App\Controller\PostController;
 use App\Controller\RedirectionController;
-use App\Session\BlogSession;
 use Symfony\Component\HttpFoundation\Request;
-
-// use App\Session\BlogSession;
 
 require_once dirname(__DIR__).'../vendor/autoload.php';
 
 //start AltoRouter
 $router = new AltoRouter();
-
 
 // ALL MAP ROUTES
 
@@ -26,7 +22,7 @@ $router = new AltoRouter();
     //--GET
 $router->map('GET', '/', 'home0');
 $router->map('GET', '/home', 'home');
-$router->map('GET', '/cv', 'cv');
+$router->map('GET', '/cv', 'getCV');
 $router->map('GET', '/admin/2d2823792eb6e1996c9a82cf3396546f', 'administration');
 $router->map('GET', '/contact', 'formContact');
 $router->map('GET', '/signUp', 'signUp');
@@ -166,7 +162,6 @@ function setPublishedComment($id, $published, $token)
     print_r(CommentController::setPublished($id, $published, $token));
 }
 
-
     // FOR MEMBER
         // form
 function login()
@@ -222,7 +217,6 @@ function administration()
     print_r(MemberController::administration());
 }
 
-
     //END MEMBER===END MEMBER===END MEMBER===END MEMBER===END MEMBER===END MEMBER===
 
 //END ALL CALL FUNCTIONS FOR ROUTER****************************************************
@@ -236,13 +230,13 @@ $match = $router->match();
 if( is_array($match))
 {
     if( is_callable( $match['target'] ) ) 
-    {
+    {   //if fucntion exists and is callabe
 	    call_user_func_array( $match['target'], $match['params'] ); 
     }
-     else 
-     {
-         print_r("redirection pas de fonction de routage existante.");
-     }
+    else 
+    {
+        print_r(RedirectionController::getPageNoFuncCallable());
+    }
 }
 else
 {

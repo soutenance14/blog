@@ -306,7 +306,7 @@ Abstract Class PostController extends Controller
             $requestSuccess = PostManager::delete( $id);
             if($requestSuccess == true)
             {
-                header('Location:'.self::getRoot().'postsBack');
+                header('Location:'.self::getRoot().'posts/back');
             }
             else
             {
