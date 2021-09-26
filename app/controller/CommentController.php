@@ -138,12 +138,12 @@ Abstract Class CommentController extends Controller
                 }
                 else
                 {
-                    return(CommentView::error());
+                    return(CommentView::commentDeleteFail());
                 }
             }
             else
             {
-                return(CommentView::error());
+                return(CommentView::commentNotFound());
             }
         }
         catch (\PDOException $e)
