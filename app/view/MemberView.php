@@ -91,7 +91,6 @@ Class MemberView extends View
             case "editPasswordFail":
                     $message = 'La modification du mot de passe a échoué';
                 break;
-            
         }
         return $message;
     }
