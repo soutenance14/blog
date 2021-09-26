@@ -6,12 +6,13 @@ use App\Entity\PostEntity;
 use App\Exception\AccessViolationException;
 use App\Model\CommentManager;
 use App\Model\PostManager;
+use App\Session\BlogSession;
 use App\View\CommentView;
 use Symfony\Component\HttpFoundation\Request;
 
 Abstract Class CommentController extends Controller
 {
-    public static function push(Request $request, $userSession)
+    public static function push(Request $request)
     {
         if( null !== $request->get("id_post")
             && null !== $request->get("contenu")
@@ -19,6 +20,7 @@ Abstract Class CommentController extends Controller
         {
             try
             {
+                $userSession = BlogSession::getUser();
                 $id_post = $request->get("id_post");
                 $contenu = $request->get("contenu");
                 $tokenSent = $request->get("token");
@@ -63,13 +65,13 @@ Abstract Class CommentController extends Controller
         }
     }
 
-    public static function setPublished($id, $published, $tokenSent, $userSession)
+    public static function setPublished($id, $published, $tokenSent)
     {
         if( $published === '0' || $published === '1')
         {
             try
             {
-                CommentController::permissionToken(ADMIN, $userSession, $tokenSent);
+                CommentController::permissionToken(ADMIN, BlogSession::getUser(), $tokenSent);
                 $commentEntity = new CommentEntity();
                 $commentEntity->setId($id);
                 $commentEntity->setPublished($published);
@@ -106,11 +108,11 @@ Abstract Class CommentController extends Controller
         else
         {
             //no ajax
-            return(CommentView::wrongValueEditComment($userSession));
+            return(CommentView::wrongValueEditComment(BlogSession::getUser()));
         }
     }
 
-    public static function delete($id, $tokenSent, $userSession)
+    public static function delete($id, $tokenSent)
     {
         try
         {
@@ -119,7 +121,7 @@ Abstract Class CommentController extends Controller
             {
                 $commentEntity = new CommentEntity();
                 $commentEntity->hydrate($comment);
-                CommentController::permissionThisIdMember( $userSession, $commentEntity->getIdMembre(), $tokenSent);
+                CommentController::permissionThisIdMember( BlogSession::getUser(), $commentEntity->getIdMembre(), $tokenSent);
                 
                 $requestSuccess = CommentManager::delete( $id);
                 if($requestSuccess === true)
@@ -127,7 +129,7 @@ Abstract Class CommentController extends Controller
                     $post = PostManager::getFromId($commentEntity->getIdPost());
                     $postEntity = new PostEntity();
                     $postEntity->hydrate($post);
-                    $type = $userSession->getType();
+                    $type = BlogSession::getUser()->getType();
                     if($type === "admin")
                     {
                         header("Location:".self::getRoot()."post/back/".$postEntity->getSlug());
