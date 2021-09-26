@@ -34,7 +34,7 @@ $router->map('GET', '/post/back/[:slug]', 'postBack');
 
     //--POST
 $router->map('POST', '/auth', 'auth');
-$router->map('POST', '/pushMember', 'pushMember');
+$router->map('POST', '/push/member', 'pushMember');
 $router->map('POST', '/sendMessage', 'sendMessage');
 
 // for user auth

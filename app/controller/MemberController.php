@@ -140,7 +140,6 @@ Class MemberController extends Controller
                         $memberEntity->hydrate($member);
                         BlogSession::setUser($memberEntity);
                         return(MemberView::success());
-                        header('Location:'.self::getRoot());
                     }
                     else
                     {
