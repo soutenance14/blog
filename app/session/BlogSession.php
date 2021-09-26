@@ -2,7 +2,6 @@
 namespace App\Session;
 
 use App\Entity\MemberEntity;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 define('USER_NOT_AUTHENTIFIED', null);
@@ -11,44 +10,50 @@ define('ADMIN', 2);
 
 Class BlogSession
 {
-    private $session;
-    private $root;
+    private static $session;
+    // private $root;
     
-    public function __construct()
+    public static function initSession()
     {
-        $this->session = new Session();
-        $this->session->start();
+        if(null === self::$session)
+        {
+            self::$session = new Session();
+            self::$session->start();
+        }
     }
 
-    public function getUser()
+    public static function getUser()
     {
-        if( null === $this->session->get("user"))
+        self::initSession();
+        if( null === self::$session->get("user"))
         {
-            $this->session->set("user", new MemberEntity());
+            self::$session->set("user", new MemberEntity());
         }
-        return $this->session->get("user");
+        return self::$session->get("user");
     }
     
-    public function setUser($user)
+    public static function setUser($user)
     {    
         //assign token
+        self::initSession();
         $user->setToken(md5(bin2hex(openssl_random_pseudo_bytes(6))));
-        $this->session->set("user", $user);
+        self::$session->set("user", $user);
     }
 
-    public function disconnect()
+    public static function disconnect()
     {
-        $this->session->clear();
-        $this->session->invalidate();
+        self::initSession();
+        self::$session->clear();
+        self::$session->invalidate();
     }
     
-    public function getRoot()
-    {
-        if($this->root === null)
-        {
-            require dirname(__DIR__) . "../config/configRoot.php";
-            $this->root = ROOT;
-        }
-        return $this->root;
-    }
+    // public function getRoot()
+    // {
+    //     if($this->root === null)
+    //     {
+    //         require dirname(__DIR__) . "../config/configRoot.php";
+    //         $this->root = ROOT;
+    //     }
+    //     return $this->root;
+    // }
 }

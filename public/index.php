@@ -69,8 +69,7 @@ $router->map('POST', '/push/post', 'pushPost');
 // CALLED FUNCTIONS
 function home()
 {
-    $blogSession = new BlogSession();
-    print_r(MemberController::home($blogSession->getUser()));
+    print_r(MemberController::home());
 }
 
 function home0()

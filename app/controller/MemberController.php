@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\MemberEntity;
 use App\Exception\AccessViolationException;
 use App\Model\MemberManager;
+use App\Session\BlogSession;
 use App\View\MemberView;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -15,12 +16,12 @@ Class MemberController extends Controller
         return(MemberView::getCV());
     }
 
-    public static function administration($userSession)
+    public static function administration()
     {
         try
         {
-            MemberController::permission(ADMIN, $userSession);
-            return(MemberView::administration($userSession));
+            MemberController::permission(ADMIN, BlogSession::getUser());
+            return(MemberView::administration(BlogSession::getUser()));
         }
         catch (AccessViolationException $e)
         {
@@ -28,9 +29,9 @@ Class MemberController extends Controller
         }
     }
 
-    public static function home($userSession)
+    public static function home()
     {
-        return(MemberView::home($userSession));
+        return(MemberView::home(BlogSession::getUser()));
     }
 
     //FORM
@@ -44,12 +45,12 @@ Class MemberController extends Controller
         return(MemberView::signUp());
     }
 
-    public static function formEditPassword($userSession)
+    public static function formEditPassword()
     {
         try
         {
-            MemberController::permission(USER_AUTHENTIFIED, $userSession);
-            return(MemberView::formEditPassword($userSession));
+            MemberController::permission(USER_AUTHENTIFIED, BlogSession::getUser());
+            return(MemberView::formEditPassword(BlogSession::getUser()));
         }
         catch (AccessViolationException $e)
         {
@@ -58,7 +59,7 @@ Class MemberController extends Controller
     }
 
     // NOT FORM
-    public static function auth(Request $request, $blogSession)
+    public static function auth(Request $request)
     {
         if( null !== $request->get("login")
             && null !== $request->get("password"))
@@ -78,7 +79,7 @@ Class MemberController extends Controller
                 if($member != null)
                 {
                     $memberEntity->hydrate($member);
-                    $blogSession->setUser($memberEntity);
+                    BlogSession::setUser($memberEntity);
                     return(MemberView::success());
                 }
                 else
@@ -99,7 +100,7 @@ Class MemberController extends Controller
         }
     }
 
-    public static function push(Request $request, $blogSession)
+    public static function push(Request $request)
     {
         if( null !== $request->get("login")
             && null !==$request->get("password"))
@@ -122,7 +123,7 @@ Class MemberController extends Controller
                         $member = MemberManager::auth($memberEntity);
                         //rehydrate memberEntity with model data
                         $memberEntity->hydrate($member);
-                        $blogSession->setUser($memberEntity);
+                        BlogSession::setUser($memberEntity);
                         return(MemberView::success());
                         header('Location:'.self::getRoot());
                     }
@@ -149,7 +150,7 @@ Class MemberController extends Controller
         }
     }
 
-    public static function editPassword(Request $request,$blogSession)
+    public static function editPassword(Request $request)
     {
         if(null !== $request->get("oldPassword")
            && null !==  $request->get("newPassword")
@@ -161,14 +162,14 @@ Class MemberController extends Controller
                 $newPassword = $request->get("newPassword");
                 $tokenSent = $request->get("token");
                 //use js for check new password and confirmNewPassword
-                $userSession = $blogSession->getUser();
+                $userSession = BlogSession::getUser();
                 
                 MemberController::permission(USER_AUTHENTIFIED, $userSession, $tokenSent);
                 if( $userSession->getPassword() === $oldPassord)
                 {
                     $userSession->setPassword($newPassword);
                     //update SESSION USER
-                    $blogSession->setUser($userSession);
+                    BlogSession::setUser($userSession);
                     MemberManager::editPassword($userSession);
                     return(MemberView::success());
                 }
@@ -192,9 +193,9 @@ Class MemberController extends Controller
         }
     }
 
-    public static function disconnect($blogSession)
+    public static function disconnect()
     {
-        $blogSession->disconnect();
+        BlogSession::disconnect();
         header('Location:'.self::getRoot());
     }
 }
