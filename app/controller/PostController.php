@@ -307,6 +307,7 @@ Abstract Class PostController extends Controller
 
     public static function delete( $id, $tokenSent)
     {
+        //get call, no post
         try
         {
             self::permissionToken(ADMIN, BlogSession::getUser(), $tokenSent); 
