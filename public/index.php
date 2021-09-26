@@ -207,16 +207,9 @@ function disconnect()
 
 function editPassword()
 {
-    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    if( isset($post['oldPassword'])  && isset($post['newPassword']) && isset($post['token']) )
-    {
-        print_r(MemberController::editPassword($post['oldPassword'],  $post['newPassword'], $post['token']));
-    }
-    else
-    {
-        // this call is not possible in theory
-        print_r('problème, post(s) manquant(s).');
-    }
+    // $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    $request = Request::createFromGlobals();
+    print_r(MemberController::editPassword($request));
 }
 
 function getCV()
