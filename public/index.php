@@ -49,7 +49,7 @@ $router->map('GET', '/delete/comment/[i:id]/[:token]', 'deleteComment');
 $router->map('GET', '/published/comment/[i:id]/[i:published]/[:token]', 'setPublishedComment');//use post later is better
 
     // POST
-$router->map('POST', '/editPassword', 'editPassword');
+$router->map('POST', '/edit/password', 'editPassword');
 $router->map('POST', '/push/comment', 'pushComment');
 $router->map('POST', '/deleteMember/[:token]', 'deleteMember');
 
@@ -207,16 +207,9 @@ function disconnect()
 
 function editPassword()
 {
-    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    if( isset($post['oldPassword'])  && isset($post['newPassword']) && isset($post['token']) )
-    {
-        print_r(MemberController::editPassword($post['oldPassword'],  $post['newPassword'], $post['token']));
-    }
-    else
-    {
-        // this call is not possible in theory
-        print_r('problème, post(s) manquant(s).');
-    }
+    // $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    $request = Request::createFromGlobals();
+    print_r(MemberController::editPassword($request));
 }
 
 function getCV()
