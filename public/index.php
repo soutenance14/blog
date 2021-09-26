@@ -95,37 +95,37 @@ function sendMessage()
 function formPushPost()
 {
     $blogSession = new BlogSession();
-    print_r(PostController::formPushPost($blogSession->getUser()));
+    print_r(PostController::formPushPost());
 }
 
 function formEditPost(String $id)
 {
     $blogSession = new BlogSession();
-    print_r(PostController::formEditPost($id, $blogSession->getUser()));
+    print_r(PostController::formEditPost($id));
 }
 
     // controller need model
 function post($slug)
 {
     $blogSession = new BlogSession();
-    print_r(PostController::get($slug, $blogSession->getUser()));
+    print_r(PostController::get($slug));
 }
 
 function postBack($slug)
 {
    $blogSession = new BlogSession();
-    print_r(PostController::getBack($slug, $blogSession->getUser()));
+    print_r(PostController::getBack($slug));
 }
 
 function posts()
 {    $blogSession = new BlogSession();
-    print_r(PostController::getAll($blogSession->getUser()));
+    print_r(PostController::getAll());
 }
 
 function postsBack()
 {
    $blogSession = new BlogSession();
-    print_r(PostController::getAllBack($blogSession->getUser()));
+    print_r(PostController::getAllBack());
 }
 
 function pushPost()
@@ -133,7 +133,7 @@ function pushPost()
     // $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
     $request = Request::createFromGlobals();;
     $blogSession = new BlogSession();
-    print_r(PostController::push($request, $blogSession->getUser()));
+    print_r(PostController::push($request));
    
 }
 
@@ -142,13 +142,13 @@ function editPost()
     // $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
     $request = Request::createFromGlobals();;
     $blogSession = new BlogSession();
-    print_r( PostController::edit($request, $blogSession->getUser()));
+    print_r( PostController::edit($request));
 }
 
 function deletePost($id, $token)
 {
     $blogSession = new BlogSession();
-    print_r(PostController::delete($id, $token, $blogSession->getUser()));
+    print_r(PostController::delete($id, $token));
 }
 
     //END POST===END POST===END POST===END POST===END POST===END POST===END POST===
