@@ -21,7 +21,7 @@ Class MemberController extends Controller
         try
         {
             MemberController::permission(ADMIN, BlogSession::getUser());
-            return(MemberView::administration(BlogSession::getUser()));
+            return(MemberView::administration());
         }
         catch (AccessViolationException $e)
         {
@@ -31,7 +31,7 @@ Class MemberController extends Controller
 
     public static function home()
     {
-        return(MemberView::home(BlogSession::getUser()));
+        return(MemberView::home());
     }
 
     //FORM
@@ -50,7 +50,7 @@ Class MemberController extends Controller
         try
         {
             MemberController::permission(USER_AUTHENTIFIED, BlogSession::getUser());
-            return(MemberView::formEditPassword(BlogSession::getUser()));
+            return(MemberView::formEditPassword());
         }
         catch (AccessViolationException $e)
         {
