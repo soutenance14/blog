@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Session\BlogSession;
 use App\View\ContactView;
 use Exception;
 use Swift_Mailer;
@@ -12,9 +13,9 @@ use Symfony\Component\HttpFoundation\Request;
 Class ContactController
 {
     //FORM
-    public static function formContact($userSession)
+    public static function formContact()
     {
-        return(ContactView::formContact($userSession));
+        return(ContactView::formContact(BlogSession::getUser()));
     }
     
     public static function sendMessage(Request $request)
