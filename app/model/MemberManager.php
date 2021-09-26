@@ -37,12 +37,11 @@ Class MemberManager extends Manager{
         $request->bindParam(':login', $login, \PDO::PARAM_STR);
         $request->execute();
         $login = $request->fetch(\PDO::FETCH_ASSOC);
-        $loginNotExist = false;
-        if( $login === null )
+        if( $login === null || $login === false)
         {
-            $loginNotExist = true;
+            return true;
         }
-        return $loginNotExist;
+        return false;
     }
 
     public static function push( $memberEntity)

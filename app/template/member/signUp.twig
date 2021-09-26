@@ -68,34 +68,15 @@
         var invalidSpecificPassword = (document.getElementById("password").getElementsByClassName("specific-feedback"))[0];
         var invalidSpecificConfirmPassword = (document.getElementById("confirmPassword").getElementsByClassName("specific-feedback"))[0];
 
-        var url = "{{root}}pushMember";
+        var url = "{{root}}push/member";
 
         //specific calling after click
-        function displaySomethingSpecific()
-        {
-            //this function is obligatory
-            //nothing for me
-        }
-        
-        function hideSomethingSpecific()
-        {
-            // a supprimer
-            //this function is obligatory
-            //nothing for me
-        }
         
         function doSomethingSpecificSuccess()
         {
-            //this function is obligatory
-            //nothing for me
+            document.location.href="{{root}}home";
         }
         
-        function doSomethingSpecificError()
-        {
-            //this function is obligatory
-            //nothing for me
-        }
-
         function validFormSpecificPage()
         {
             var $validFormSpecificPage = true;
