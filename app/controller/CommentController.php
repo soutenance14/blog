@@ -14,22 +14,19 @@ Abstract Class CommentController extends Controller
 {
     public static function push(Request $request)
     {
-        if( null !== $request->get("id_post")
-            && null !== $request->get("contenu")
-            && null !== $request->get("token"))
+        if( Controller::checkForm($request, [
+            "id_post",
+            "contenu",
+            "token"]))
         {
             try
             {
                 $userSession = BlogSession::getUser();
-                $id_post = $request->get("id_post");
-                $contenu = $request->get("contenu");
-                $tokenSent = $request->get("token");
-                
-                CommentController::permissionToken(USER_AUTHENTIFIED, $userSession, $tokenSent);
+                CommentController::permissionToken(USER_AUTHENTIFIED, $userSession, $request->get("token"));
                 $commentEntity = new CommentEntity();
                 $commentEntity->setIdMembre($userSession->getId());
-                $commentEntity->setIdPost($id_post);
-                $commentEntity->setContenu($contenu);
+                $commentEntity->setIdPost($request->get("id_post"));
+                $commentEntity->setContenu($request->get("contenu"));
                 $requestSuccess = null;
                 if($userSession->getType() === 'admin')
                 {
@@ -65,13 +62,13 @@ Abstract Class CommentController extends Controller
         }
     }
 
-    public static function setPublished($id, $published, $tokenSent)
+    public static function setPublished($id, $published, $token)
     {
         if( $published === '0' || $published === '1')
         {
             try
             {
-                CommentController::permissionToken(ADMIN, BlogSession::getUser(), $tokenSent);
+                CommentController::permissionToken(ADMIN, BlogSession::getUser(), $token);
                 $commentEntity = new CommentEntity();
                 $commentEntity->setId($id);
                 $commentEntity->setPublished($published);
@@ -112,7 +109,7 @@ Abstract Class CommentController extends Controller
         }
     }
 
-    public static function delete($id, $tokenSent)
+    public static function delete($id, $token)
     {
         try
         {
@@ -121,7 +118,7 @@ Abstract Class CommentController extends Controller
             {
                 $commentEntity = new CommentEntity();
                 $commentEntity->hydrate($comment);
-                CommentController::permissionThisIdMember( BlogSession::getUser(), $commentEntity->getIdMembre(), $tokenSent);
+                CommentController::permissionThisIdMember( BlogSession::getUser(), $commentEntity->getIdMembre(), $token);
                 
                 $requestSuccess = CommentManager::delete( $id);
                 if($requestSuccess === true)

@@ -19,9 +19,10 @@ Class ContactController
     
     public static function sendMessage(Request $request)
     {
-        if( null !== $request->get("nom") 
-        && null !== $request->get("mail")
-        && null !== $request->get("contenu"))
+        if( Controller::checkForm($request, [
+            "nom",
+            "mail",
+            "contenu"]))
         {
             $nom = $request->get("nom");
             $mail = $request->get("mail");

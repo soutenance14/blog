@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Exception\AccessViolationException;
 use App\View\View;
+use Symfony\Component\HttpFoundation\Request;
 
 define('USER_NOT_AUTHENTIFIED', null);
 define('USER_AUTHENTIFIED', 1);
@@ -122,5 +123,17 @@ Abstract Class Controller
             self::$root = ROOT;
         }
         return self::$root;
+    }
+
+    public static function checkForm(Request $request, $names)
+    {
+        foreach($names as $name)
+        {
+           if(null === $request->get($name))
+           {
+                return false;
+           }
+        }
+        return true;
     }
 }

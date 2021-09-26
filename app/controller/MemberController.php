@@ -61,8 +61,9 @@ Class MemberController extends Controller
     // NOT FORM
     public static function auth(Request $request)
     {
-        if( null !== $request->get("login")
-            && null !== $request->get("password"))
+        if( Controller::checkForm($request, [
+            "login",
+            "password"]))
         {
             try
             {
@@ -77,7 +78,7 @@ Class MemberController extends Controller
                 //seront recupérés dans la db
                 // $member = MemberManager::auth($memberEntity);
                 $member = MemberManager::getByLogin($memberEntity);
-                if($member !== null)
+                if($member !== null && $member !== false )
                 {
                     $memberEntity->hydrate($member);
                     //good password for login
@@ -115,8 +116,9 @@ Class MemberController extends Controller
 
     public static function push(Request $request)
     {
-        if( null !== $request->get("login")
-            && null !==$request->get("password"))
+        if( Controller::checkForm($request, [
+            "login",
+            "password"]))
         {
             try
             {
@@ -165,9 +167,10 @@ Class MemberController extends Controller
 
     public static function editPassword(Request $request)
     {
-        if(null !== $request->get("oldPassword")
-           && null !==  $request->get("newPassword")
-           && null !==  $request->get("token"))
+        if( Controller::checkForm($request, [
+        "oldPassword",
+        "newPassword",
+        "token"]))
         {
             try
             {
