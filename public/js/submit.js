@@ -188,7 +188,7 @@ function sendData(data, url)
     if(typeof hideSomethingSpecific === 'function'){  
       hideSomethingSpecific();
     }
-      if(XHR.readyState == 4 && XHR.status == 200) {
+      if(XHR.readyState === 4 && XHR.status == 200) {
           if(XHR.responseText === "success")
           {
               successMessage.style.display = "block";
