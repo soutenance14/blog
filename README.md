@@ -6,6 +6,7 @@ Application PHP en architecture MVC sans framework, utilisant des packages.
 > - Cocur
 > - SwiftMailer
 > - Twig
+> - HttpFoundation
 ### Ces packages dépendent des packages suivants, qui seront automatiquement téléchargés.
 > - Doctrine
 > - Elogus

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 24 sep. 2021 à 10:14
+-- Généré le : Dim 26 sep. 2021 à 18:51
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.4.9
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   PRIMARY KEY (`id`),
   KEY `Comment_Membre0_FK` (`id_membre`),
   KEY `Comment_Post_FK` (`id_post`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Déchargement des données de la table `comment`
@@ -47,18 +47,23 @@ CREATE TABLE IF NOT EXISTS `comment` (
 INSERT INTO `comment` (`id`, `contenu`, `created_at`, `published`, `id_post`, `id_membre`) VALUES
 (1, 'C\'est un bon article.', '2021-09-24 11:24:06', 1, 1, 1),
 (2, 'Oui nous avons trop d\'idées reçues!', '2021-09-24 11:43:22', 1, 6, 2),
-(4, 'Merci, grâce à vous je suis devenu un pro de l\'astronomie amateur.', '2021-09-24 11:46:35', 1, 4, 2),
-(5, 'C\'est un excellent télescope en effet.', '2021-09-24 11:43:58', 1, 1, 2),
+(4, 'Merci, grâce à vous je suis devenu un développeur pro.', '2021-09-24 11:46:35', 1, 4, 2),
+(5, 'C\'est un excellent article.', '2021-09-24 11:43:58', 1, 1, 2),
 (6, 'Bravo, bon article.', '2021-09-24 11:42:57', 1, 6, 3),
 (7, 'Un peu compliqué comme sujet.', '2021-09-24 11:47:34', 0, 5, 3),
 (8, 'Plus de sujets comme celui là.', '2021-09-24 11:46:31', 1, 4, 3),
 (10, 'Merci, j\'avais du mal à comprendre celà.', '2021-09-24 11:46:47', 1, 3, 3),
-(11, 'Je ne suis pas fan de ce télescope moi.', '2021-09-24 11:44:21', 0, 1, 3),
+(11, 'Je ne suis pas fan de ce sujet.', '2021-09-24 11:44:21', 0, 1, 3),
 (12, 'Merci Caroline!', '2021-09-24 11:48:02', 1, 5, 1),
 (13, 'Très bon article sur un beau sujet.', '2021-09-24 11:53:11', 1, 5, 2),
-(14, 'je débute justement l\'astrophotographie, merci.', '2021-09-24 11:53:06', 1, 5, 2),
+(14, 'je débute justement sur ce sujet.', '2021-09-24 11:53:06', 1, 5, 2),
 (16, '<script>alert(\"test\")<script>', '2021-09-24 11:57:06', 1, 5, 2),
-(17, '<a href=\"https://www.google.com/search?client=opera&q=test&sourceid=opera&ie=UTF-8&oe=UTF-8\"></a>', '2021-09-24 11:56:52', 1, 5, 2);
+(17, '<a href=\"https://www.google.com/search?client=opera&q=test&sourceid=opera&ie=UTF-8&oe=UTF-8\"></a>', '2021-09-24 11:56:52', 1, 5, 2),
+(18, 'ceci est un test fait par paul', '2021-09-25 08:28:34', 0, 5, 2),
+(19, 'BRAVO', '2021-09-25 08:32:02', 0, 5, 2),
+(20, 'J\'aime beaucoup cet article', '2021-09-25 11:46:05', 0, 5, 2),
+(22, 'Fantastique', '2021-09-26 08:13:56', 0, 6, 2),
+(25, 'Je ne partage pas votre avis', '2021-09-26 08:40:17', 0, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -73,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `member` (
   `password` text COLLATE utf8mb4_bin NOT NULL,
   `type` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Déchargement des données de la table `member`
@@ -83,7 +88,23 @@ INSERT INTO `member` (`id`, `login`, `password`, `type`) VALUES
 (1, 'pierre', 'password', 'admin'),
 (2, 'paul', 'password', 'subscriber'),
 (3, 'jacques', 'password', 'subscriber'),
-(4, 'henry', 'password', 'subscriber');
+(4, 'henry', 'password', 'subscriber'),
+(5, 'larry', 'password', 'subscriber'),
+(6, 'harry', 'password', 'subscriber'),
+(7, 'laura', 'password', 'subscriber'),
+(8, 'lauraa', 'password', 'subscriber'),
+(9, 'lauraaa', 'password', 'subscriber'),
+(10, 'lauraaaa', 'password', 'subscriber'),
+(11, 'lauraaaaa', 'password', 'subscriber'),
+(12, 'lauraaaaaa', 'password', 'subscriber'),
+(13, 'lauraaaaaaa', 'password', 'subscriber'),
+(14, 'lauraaaaaaaa', 'password', 'subscriber'),
+(15, 'lauraaaaaaaaa', 'password', 'subscriber'),
+(16, 'lauraaaaaaaaaa', 'password', 'subscriber'),
+(17, 'lauraaaaaaaaaaa', 'password', 'subscriber'),
+(18, 'lauraaaaaaaaaaaa', 'password', 'subscriber'),
+(19, 'lauraaaaaaaaaaaaa', 'password', 'subscriber'),
+(20, 'lauren', 'password', 'subscriber');
 
 -- --------------------------------------------------------
 
@@ -102,18 +123,20 @@ CREATE TABLE IF NOT EXISTS `post` (
   `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `post`
 --
 
 INSERT INTO `post` (`id`, `auteur`, `titre`, `chapo`, `contenu`, `created_at`, `slug`) VALUES
-(1, 'Pierre Dupont', 'Le meilleur télescope pour débuter l’astrophotographie ', 'Ciel profond', 'Dans l’article 4 manières de débuter l’astrophotographie, nous avons vu qu’il n’y avait pas un télescope pour pratiquer l’astrophoto.\nEn effet, le télescope que vous allez choisir va dépendre des objets que vous voulez photographier.\n\nIl n’existe pas un télescope universel permettant de faire tout type de photographie.\n\nEnfin en tout cas, ce n’est pas l’idéal.\nIl vaut toujours mieux avoir un télescope spécialisé qui donne une bonne qualité d’images, plutôt qu’un télescope qui peut « tout faire », mais avec une qualité moyenne.\n\nIl est donc préférable de savoir dès le début ce que vous souhaitez photographier, pour choisir votre matériel en conséquence.', '2021-09-24 11:21:35', 'le-meilleur-telescope-pour-debuter-l-astrophotographie'),
-(3, 'Michel De La Marne', 'Comprendre les différentes phases de la Lune', 'Notre satellite, la Lune', 'Certaines nuits elle est là.\nD’autres non.\nParfois, elle vient même nous faire coucou la journée.\n\nBref, la Lune fait partie de notre paysage quotidien (ou presque).\n\nMais la connaissez-vous vraiment ?\n\nConnaissez-vous les différents phases de la Lune ?\nEt savez-vous pourquoi elles existent ?\n\nC’est ce que nous allons voir ensemble maintenant !\n\nPourquoi la Lune possède différentes phases ?\nAvant de découvrir pourquoi la Lune nous montre différents visages suivant les jours, voyons déjà pourquoi nous pouvons si bien la contempler.\n\nPourquoi nous la voyons si bien ?\nLa Lune n’est pas une étoile (mais un satellite), elle n’émet donc pas de lumière. Ce que nous voyons ce sont donc les rayons du Soleil qui se reflètent sur elle et qui nous parviennent.\n\nEt si elle est si lumineuse, c’est simplement parce qu’elle se trouve (relativement) proche de nous.', '2021-09-24 11:27:12', 'comprendre-les-differentes-phases-de-la-lune'),
-(4, 'Michel De La Marne', '12 étapes pour devenir un Pro de l’ASTRONOMIE AMATEUR', 'ASTRONOMIE AMATEUR', 'Peut-être que vous rêvez de photographier des nébuleuses ? Ou d’observer les anneaux de Saturne ? Ou les cratères de la Lune en gros plan ?\n\nBref : vous avez envie de vous lancer dans le merveilleux monde de l’astronomie amateur !\n\nLe problème c’est que vous ne savez peut-être pas par où commencer.\n\nPar quelle étape commencer ? Est-ce que vous devez tout de suite acheter un télescope (et lequel) ?\n\nJuste une petite précision avant de commencer :\n\nL’astronomie est un domaine assez complexe.\n\nLe but de cet article est donc de prendre un peu de recul. De vous donner une vue globale de ce qu’il est possible de faire dans cette pratique.\n\nEt surtout de vous faciliter la vie dans votre parcours d’astronome amateur.\n\nMême s’il n’existe pas vraiment de parcours type (il existe autant de chemins que d’astronomes), il existe une suite logique d’étapes / de connaissances à acquérir qui vous aideront à progresser sans trop d’embûches.', '2021-09-24 11:28:38', '12-etapes-pour-devenir-un-pro-de-l-astronomie-amateur'),
-(5, 'Caroline Gaultier', 'Astrophotographie : tout ce que vous devez savoir pour bien débuter', 'Astrophotographie ', 'L’astrophotographie est un domaine passionnant et extrêmement riche. Mais il est aussi complexe. \n\nOui, pour bien débuter, vous devez connaître pas mal de choses. \n\nComme : \n\nCe qu’il est possible de photographier\nDes notions de photo, et d’astronomie\nLe choix et l’utilisation du matériel (APN, télescope (si besoin)…)\nPas de panique !\n\nLes différents types d’astrophotographie\nL’astrophotographie est vaste, il existe donc beaucoup de catégories.\n\nCela peut aller de la simple photo de la voûte céleste prise avec votre smartphone. Jusqu’à une superposition de clichés pris avec un télescope et une caméra (à plusieurs milliers d’euros).\n\nCe type d’astrophotographie est le plus simple. \n\nEn effet, il vous suffit simplement de viser le ciel avec votre appareil photo et d’appuyer sur le déclencheur. Et hop… vous pouvez voir les étoiles apparaître sur votre photo !\n\nBon, en réalité, c’est pas aussi simple que ça. \n\nEh oui, l’astrophotographie possède un gros défaut : le manque de lumière. \n\nSi vous faites déjà un peu de photo vous le savez : les clichés en basse luminosité sont les plus compliquées à prendre. \n\nAlors imaginez prendre des photos sans aucune autre source lumineuse que celles des objets célestes… (Voire celle de la Lune quand elle est présente.)\n\nL’autre ennemi des astrophotographes, c’est la pollution lumineuse.\n\n(En effet, vous ne voulez pas non plus avoir trop de luminosité. Enfin du moins pas la mauvaise : celle venant de nos villes.)', '2021-09-24 11:45:01', 'astrophotographie-tout-ce-que-vous-devez-savoir-pour-bien-debuter'),
-(6, 'Sophie Dubois', '5 idées reçues sur l’astronomie', 'Idées reçues', 'Eh oui, en astronomie comme dans n’importe quel autre domaine, il existe des croyances erronées !\n\nQue ce soit sur le Soleil, la Lune, les planètes… ou bien sur l’histoire de l’astronomie, certaines idées reçues se sont installées.\n\nLes anneaux de Saturne n’ont pas toujours été là…\nJe suis sûre que vous connaissez la magnifique Saturne ! Et quand on parle de Saturne, tout de suite on pense à… ses anneaux ! Eh oui, parce que ce qui caractérise le plus Saturne, ce sont bien ses anneaux. Imaginer Saturne sans ses anneaux, c’est comme imaginer la Lune sans ses cratères !\n\nImpossible n’est-ce pas ?\n\nEt pourtant, Saturne n’a pas toujours eu des anneaux… Et elle n’en aura pas jusqu’à la fin des temps.\n\nEn effet, grâce aux informations fournies par Cassini, les chercheurs estiment désormais l’âge des anneaux entre 10 et 100 millions d’années.\n\nLa formation de notre Système solaire remonte quant à elle à 4,6 milliards d’années. Ainsi, Saturne a vécu pendant longtemps sans ses anneaux.\n\nEt d’ailleurs, elle devra réapprendre à vivre sans !\n\n', '2021-09-24 11:32:25', '5-idees-recues-sur-l-astronomie');
+(1, 'Pierre Dupont', 'Générer des uuidv4 depuis mysql', 'ASTUCE', 'Introduction\nLes UUID sont de plus en plus utiliser pour identifier des resources dans une base de données. Ils sont généralement générer avec l\'insertion de vos données. Néanmoins, ils y a des cas où générer l\'UUID depuis MySQL peut être très utile. Je pense notamment à la migration de données ou à l\'import de données ne possédant pas d\'UUID. Pour des raisons de performance, ces scripts sont généralement écrit entièrement en SQL, il n\'est donc pas possible d\'utiliser une quelqu\'un lib d\'un autre langage pour générer nos UUID.\n\nUUIDv1 vs UUIDv4\nMySQL propose une function native UUID() qui malheureusement ne génère que des UUIDv1. Les UUIDv1 comporte une partie déterminé à partir de l\'adresse physique de la machine et de la date, puis une partie aléatoire. Ainsi, vos UUIDv1 sont garantie d\'être unique à moins d\'être générer du même ordinateur exactement au même moment.', '2021-09-26 19:12:47', 'generer-des-uuidv4-depuis-mysql'),
+(3, 'Michel De La Marne', 'Découper une chaine de caractère mais avec plusieurs séparateur en php', 'PHP', 'La fonction explode est très connu en PHP. Elle permet de découper une chaine de caractère en fonction d\'un séparateur.\n\nLa fonction preg_split est moins connu, elle permet de découper une chaine de caractère non plus en fonction d\'un séparateur mais en fonction d\'une regex. Il est possible de cibler plusieurs séparateurs avec cette regex.\n\npreg_split permet donc l\'équivalent d\'un explode mais avec plusieurs séparateur.', '2021-09-26 19:11:44', 'decouper-une-chaine-de-caractere-mais-avec-plusieurs-separateur-en-php'),
+(4, 'Michel De La Marne', 'Boucler sur les jours entre deux dates php', 'PHP', 'Il m\'arrive souvent de devoir boucler sur les jours entre deux dates en PHP pour par exemple créer des tableaux, construire des graphiques ou des statistiques.\n\nVoici une façon élégante de le faire en utilisant la classe \\DatePeriod.\n\nEn choisissant un interval d\'un jour, il est possible de boucler sur les jours avec un simple foreach.', '2021-09-26 19:10:29', 'boucler-sur-les-jours-entre-deux-dates-php'),
+(5, 'Caroline Gaultier', 'Permettre un embeddable doctrine d\'être nullable', 'SYMFONY', 'Doctrine propose une fonctionnalité très utile pour créer des propriétés objets sur vos entité, il s\'agit des embeddable.\n\nSeulement il existe une limitation aux embeddable, il ne peux pas être nullable. Au mieux vous pouvez rendre toutes les propriétés de l\'embbedable nullable mais Doctrine vous hydratera toujours l\'objet embeddable même si toutes ses propriétés sont null.\n\nUn workaround à cela est d\'utiliser un event listener Doctrine en postLoad afin d\'assigner null à la place de embedable si toutes ses propriétés sont null.', '2021-09-26 19:08:02', 'permettre-un-embeddable-doctrine-d-etre-nullable'),
+(6, 'Sophie Dubois', 'Créer une configuration sémantique dans symfony sans bundle', 'SYMFONY', 'Depuis quelque temps et avec l\'arrivé de Flex, le découpage applicatif en bundle ne fait plus partie des bonnes pratiques Symfony. Si cela amène plus de simplicité dans le code, un des avantages des bundles était leur capacité à étendre la configuration du framework grâce au répertoire DependencyInjection.\n\nVoici comment reproduire cela dans les versions récentes de Symfony et sans bundle.', '2021-09-26 19:09:12', 'creer-une-configuration-semantique-dans-symfony-sans-bundle'),
+(9, 'Pierre Dupont', 'Modifier l\'auteur des commit sur un arbre git', 'GIT', 'commit-tree\nSi comme moi vous utilisez plusieurs identités différentes pour committer votre code sur vos repos git (par exemple votre nom et email professionnels pour le travail et un pseudo et votre email perso pour vos projets perso), il vous est surement déjà arrivé d\'avoir des commits avec le mauvais nom ou le mauvais email.\n\nHeureusement git vous permet de modifier ces informations en réécrivant l\'arbre de commit.', '2021-09-26 19:21:26', 'modifier-l-auteur-des-commit-sur-un-arbre-git'),
+(10, 'Paul De LA Marne', 'Active l\'option case-sensitive sur phpstorm', 'PHPSTORM', 'Lorsque vous utilisez un système de fichier sensible avec PHPStorm, celui ci devrait vous montrer le message erreur suivant vous indiquant que le logiciel n\'est pas configurer pour gérer la casse.\n\nFilesystem Case-Sensitivity Mismatch The project seems to be located on a case-sensitive file system. This does not match the IDE setting (controlled by property \"idea.case.sensitive.fs\")\n\nPHPStorm ne fera alors pas la différence entre les noms de fichiers avec ou sans majuscule et vous permettra de créer plusieurs fichiers avec le même nom mais une casse différente, ce qui peut entrainer des nombreuses erreurs une fois le code déployé sur un système sensible à la casse.\n\nJe vous conseil donc d\'activer l\'option case-sensitive.\n\nLes exemples suivants sont sur macOS mais le principe est le même sur les autres OS.', '2021-09-26 19:19:34', 'active-l-option-case-sensitive-sur-phpstorm');
 
 --
 -- Contraintes pour les tables déchargées
