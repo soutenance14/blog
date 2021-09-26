@@ -52,13 +52,19 @@ Class MemberView extends View
             case "authFail":
                 if(isset($array["login"]))
                 {
-                    $message = "L'utilisateur ".$array["login"]." n'a pas été trouvé.";
+                    $message = "L'utilisateur \"".$array["login"]."\" n'a pas été trouvé.";
+                }
+                break;
+            case "wrongPasswordAuth":
+                if(isset($array["login"]))
+                {
+                    $message = "Mauvais mot de passe pour \"".$array["login"]."\"";
                 }
                 break;
             case "memberExists":
                 if(isset($array["login"]))
                 {
-                    $message = "Le login ".$array["login"]." est déja utilisé,
+                    $message = "Le login \"".$array["login"]."\" est déja utilisé,
                     veuillez en changer.";
                 }
                 break;    

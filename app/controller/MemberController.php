@@ -70,17 +70,30 @@ Class MemberController extends Controller
                 $password = $request->get("password");
                 $memberEntity = new MemberEntity();
                 $memberEntity->setLogin($login);
-                $memberEntity->setPassword($password);
+                // $memberEntity->setPassword($password);
 
                 //seul les login et password sont crées pour le user
                 // si l'auth est fait, les autres caracteristiques
                 //seront recupérés dans la db
-                $member = MemberManager::auth($memberEntity);
-                if($member != null)
+                // $member = MemberManager::auth($memberEntity);
+                $member = MemberManager::getByLogin($memberEntity);
+                if($member !== null)
                 {
                     $memberEntity->hydrate($member);
-                    BlogSession::setUser($memberEntity);
-                    return(MemberView::success());
+                    //good password for login
+                    if($memberEntity->getPassword() === $password)
+                    {
+                        $memberEntity->hydrate($member);
+                        BlogSession::setUser($memberEntity);
+                        return(MemberView::success());
+                    }
+                    else
+                    {
+                        //wrong password for login
+                        return(MemberView::errorMessage("wrongPasswordAuth", [
+                            "login"=>$login
+                        ]));
+                    }
                 }
                 else
                 {
@@ -120,7 +133,7 @@ Class MemberController extends Controller
                     $pushSuccess = MemberManager::push($memberEntity);
                     if($pushSuccess === true)
                     {
-                        $member = MemberManager::auth($memberEntity);
+                        $member = MemberManager::getByLogin($memberEntity);
                         //rehydrate memberEntity with model data
                         $memberEntity->hydrate($member);
                         BlogSession::setUser($memberEntity);

@@ -3,15 +3,27 @@ namespace App\Model;
 
 Class MemberManager extends Manager{
 
-    public static function auth($memberEntity)
+    // public static function auth($memberEntity)
+    // {
+    //     $login = $memberEntity->getLogin();
+    //     $password = $memberEntity->getPassword();
+
+    //     $request = self::getPdo()->prepare(
+    //         "SELECT id, login, password, type from MEMBER where login = :login and password = :password");
+    //     $request->bindParam(':login', $login, \PDO::PARAM_STR);
+    //     $request->bindParam(':password', $password, \PDO::PARAM_STR);
+    //     $request->execute();
+    //     $member = $request->fetch(\PDO::FETCH_ASSOC);
+    //     return $member;
+    // }
+    
+    public static function getByLogin($memberEntity)
     {
         $login = $memberEntity->getLogin();
-        $password = $memberEntity->getPassword();
 
         $request = self::getPdo()->prepare(
-            "SELECT id, login, password, type from MEMBER where login = :login and password = :password");
+            "SELECT id, login, password, type from MEMBER where login = :login");
         $request->bindParam(':login', $login, \PDO::PARAM_STR);
-        $request->bindParam(':password', $password, \PDO::PARAM_STR);
         $request->execute();
         $member = $request->fetch(\PDO::FETCH_ASSOC);
         return $member;
