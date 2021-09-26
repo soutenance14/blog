@@ -57,6 +57,11 @@ Abstract Class View
                 //if controller does not give user
                 $array["user"] = BlogSession::getUser();
             }
+            if(!isset($array["root"]))
+            {
+                //if controller does not give user
+                $array["root"] = self::getRoot();
+            }
             return $template->render($array); 
         }catch (Exception $e) 
         {

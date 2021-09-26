@@ -14,51 +14,33 @@ Class MemberView extends View
         @readfile($filename);
     }
 
-    public static function home($user)
+    public static function home()
     {
-        $array = array(
-            'title'=> 'Accueil',
-            'user'=> $user,
-            'root'=> self::getRoot(),
-        );
+        $array = array('title'=> 'Accueil',);
         return MemberView::renderView('member/home.twig', $array); 
     }
 
     public static function login()
     {
-        $array = array(
-            'title'=> 'S\'identifier',
-            'root'=> self::getRoot(),
-        );
+        $array = array('title'=> 'S\'identifier',);
         return MemberView::renderView('member/login.twig', $array); 
     }
     
-    public static function administration($user)
+    public static function administration()
     {
-        $array = array(
-            'title'=> 'Administration',
-            'root'=> self::getRoot(),
-            'user'=> $user,
-        );
+        $array = array('title'=> 'Administration');
         return MemberView::renderView('member/administration.twig', $array); 
     }
 
     public static function signUp()
     {
-        $array = array(
-            'title'=> 'Devenir membre',
-            'root'=> self::getRoot(),
-        );
+        $array = array('title'=> 'Devenir membre' );
         return MemberView::renderView('member/signUp.twig', $array); 
     }
 
-    public static function formEditPassword( $user)
+    public static function formEditPassword()
     {
-        $array = array(
-            'title'=> 'Modifier Mot de passe',
-            'root'=> self::getRoot(),
-            'user'=> $user,
-        );
+        $array = array('title'=> 'Modifier Mot de passe' );
         return MemberView::renderView('member/editPassword.twig', $array); 
     }
     public static function errorMessage($error, $array = null)
