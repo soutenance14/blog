@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Session\BlogSession;
 use App\View\ContactView;
 use Exception;
 use Swift_Mailer;
