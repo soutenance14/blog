@@ -198,30 +198,26 @@ Abstract Class PostController extends Controller
 
     public static function push(Request $request)
     {
-        if( null !== $request->get("auteur")
-            && null !== $request->get("titre")
-            && null !== $request->get("chapo")
-            && null !== $request->get("contenu")
-            && null !== $request->get("tokenSent"))
+        if( Controller::checkForm($request, [
+            "auteur",
+            "titre",
+            "chapo",
+            "contenu",
+            "token"]))
         {
-            $auteur = $request->get("auteur");
-            $titre = $request->get("titre");
-            $chapo = $request->get("chapo");
-            $contenu = $request->get("contenu");
-            $tokenSent = $request->get("token");
             try
             {
-                self::permissionToken(ADMIN, BlogSession::getUser(), $tokenSent); 
+                self::permissionToken(ADMIN, BlogSession::getUser(), $request->get("token")); 
                 $slugify = new Slugify();
-                $slug = $slugify->slugify($titre); 
+                $slug = $slugify->slugify($request->get("titre")); 
                 $postEntity = new PostEntity();
                 $postEntity->hydrate(
                 array(
-                    "auteur"=>$auteur,
-                    "titre"=>$titre,
+                    "auteur"=>$request->get("auteur"),
+                    "titre"=>$request->get("titre"),
                     "slug"=>$slug,
-                    "chapo"=>$chapo,
-                    "contenu"=>$contenu,
+                    "chapo"=>$request->get("chapo"),
+                    "contenu"=>$request->get("contenu"),
                     )
                 );
                 $requestSuccess = PostManager::push( $postEntity);
@@ -251,33 +247,28 @@ Abstract Class PostController extends Controller
             
     public static function edit($request)
     {
-        if( null !== $request->get("id")
-            && null !== $request->get("auteur")
-            && null !== $request->get("titre")
-            && null !== $request->get("chapo")
-            && null !== $request->get("contenu")
-            && null !== $request->get("token"))
+        if( Controller::checkForm($request, [
+            "id",
+            "auteur",
+            "titre",
+            "chapo",
+            "contenu",
+            "token"]))
         {
             try
             { 
-                $id = $request->get("id");
-                $auteur = $request->get("auteur");
-                $titre = $request->get("titre");
-                $chapo = $request->get("chapo");
-                $contenu = $request->get("contenu");
-                $tokenSent = $request->get("token");
-                self::permissionToken(ADMIN, BlogSession::getUser(), $tokenSent); 
+                self::permissionToken(ADMIN, BlogSession::getUser(), $request->get("token")); 
                 $slugify = new Slugify();
-                $slug = $slugify->slugify($titre); 
+                $slug = $slugify->slugify($request->get("titre")); 
                 $postEntity = new PostEntity();
                 $postEntity->hydrate(
                     array(
-                        "id"=>$id,
-                        "auteur"=>$auteur,
-                        "titre"=>$titre,
+                        "id"=>$request->get("id"),
+                        "auteur"=>$request->get("auteur"),
+                        "titre"=>$request->get("titre"),
                         "slug"=>$slug,
-                        "chapo"=>$chapo,
-                        "contenu"=>$contenu,
+                        "chapo"=>$request->get("chapo"),
+                        "contenu"=>$request->get("contenu"),
                         )
                 );
                 $requestSuccess = PostManager::edit($postEntity);
@@ -305,12 +296,12 @@ Abstract Class PostController extends Controller
         }
     }
 
-    public static function delete( $id, $tokenSent)
+    public static function delete( $id, $token)
     {
         //get call, no post
         try
         {
-            self::permissionToken(ADMIN, BlogSession::getUser(), $tokenSent); 
+            self::permissionToken(ADMIN, BlogSession::getUser(), $token); 
 
             $requestSuccess = PostManager::delete( $id);
             if($requestSuccess == true)
