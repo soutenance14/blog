@@ -49,7 +49,7 @@ $router->map('GET', '/delete/comment/[i:id]/[:token]', 'deleteComment');
 $router->map('GET', '/published/comment/[i:id]/[i:published]/[:token]', 'setPublishedComment');//use post later is better
 
     // POST
-$router->map('POST', '/editPassword', 'editPassword');
+$router->map('POST', '/edit/password', 'editPassword');
 $router->map('POST', '/push/comment', 'pushComment');
 $router->map('POST', '/deleteMember/[:token]', 'deleteMember');
 
