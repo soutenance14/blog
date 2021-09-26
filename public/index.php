@@ -276,6 +276,5 @@ if( is_array($match))
 }
 else
 {
-    $blogSession = new BlogSession();
-    print_r(print_r(RedirectionController::getPage404($blogSession->getUser())));
+    print_r(print_r(RedirectionController::getPage404()));
 }

@@ -2,16 +2,17 @@
 
 namespace App\Controller;
 
+use App\Session\BlogSession;
 use App\View\View;
 
 Abstract Class RedirectionController
 {
     private static $root = null;
 
-    public static function getPage404($userSession)
+    public static function getPage404()
     {
         $array = array(
-            'user'=> $userSession,
+            'user'=> BlogSession::getUser(),
             'title'=> "Erreur 404, page non trouvé",
             'root'=>self::getRoot(),
         ); 
