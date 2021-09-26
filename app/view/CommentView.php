@@ -12,4 +12,27 @@ Class CommentView extends View
         ); 
         return CommentView::renderViewMessage($array);  
     }
+
+    public static function commentNotFound()
+    {
+        $array = array(
+            'title'=> 'Oops petit problème',
+            'message'=> "Ce commentaire n'a pas été trouvé",
+        );
+        return CommentView::renderViewMessage($array);  
+    }
+    
+    public static function commentDeleteFail()
+    {
+        $array = array(
+            'title'=> 'Oops petit problème',
+            'message'=> "La suppréssion à échoué, 
+            une érreur s'est produit en base de données",
+        );
+        return CommentView::renderViewMessage($array);  
+    }
+
+
+
+
 }
