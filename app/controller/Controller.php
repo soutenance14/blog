@@ -5,6 +5,10 @@ namespace App\Controller;
 use App\Exception\AccessViolationException;
 use App\View\View;
 
+define('USER_NOT_AUTHENTIFIED', null);
+define('USER_AUTHENTIFIED', 1);
+define('ADMIN', 2);
+
 Abstract Class Controller
 {
     private static $root = null;

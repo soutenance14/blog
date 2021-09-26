@@ -7,6 +7,7 @@ use App\Entity\PostEntity;
 use App\Exception\AccessViolationException;
 use App\Model\CommentManager;
 use App\Model\PostManager;
+use App\Session\BlogSession;
 use App\View\PostView;
 use App\View\View;
 use \Cocur\Slugify\Slugify;
@@ -15,12 +16,12 @@ use Symfony\Component\HttpFoundation\Request;
 Abstract Class PostController extends Controller
 {
     // FORM
-    public static function formPushPost($userSession)
+    public static function formPushPost()
     {
         try
         {
-            self::permission(ADMIN, $userSession );
-            return(PostView::formPushPost($userSession));
+            self::permission(ADMIN, BlogSession::getUser() );
+            return(PostView::formPushPost(BlogSession::getUser()));
         }
         catch (AccessViolationException $e)
         {
@@ -28,10 +29,11 @@ Abstract Class PostController extends Controller
         }
     }
     
-    public static function formEditPost(String $id, $userSession)
+    public static function formEditPost(String $id)
     {
         try
         {
+            $userSession = BlogSession::getUser();
             self::permission(ADMIN, $userSession);
             $post = PostManager::getFromId($id);
             $postEntity = new PostEntity();
@@ -54,7 +56,7 @@ Abstract Class PostController extends Controller
     
     //NOT FORM
     //get for the front-end
-    public static function get(String $slug, $userSession)
+    public static function get(String $slug)
     {
         try
         {
@@ -71,12 +73,12 @@ Abstract Class PostController extends Controller
                     $commentPublishedEntity->hydrate($commentPublished);
                     array_push( $listCommentsPublishedEntity , $commentPublishedEntity);
                 }
-                return(PostView::get($postEntity, $listCommentsPublishedEntity, $userSession));
+                return(PostView::get($postEntity, $listCommentsPublishedEntity, BlogSession::getUser()));
             }
             else
             {
                 //no ajax
-                return(PostView::getNotExist($slug, $userSession));
+                return(PostView::getNotExist($slug, BlogSession::getUser()));
             }
         }
         catch (\PDOException $e)
@@ -86,10 +88,11 @@ Abstract Class PostController extends Controller
     }
 
     //get for the back-end
-    public static function getBack(String $slug, $userSession)
+    public static function getBack(String $slug)
     {
         try
         {
+            $userSession = BlogSession::getUser();
             self::permission(ADMIN, $userSession);
 
             $post = PostManager::get($slug);
@@ -133,7 +136,7 @@ Abstract Class PostController extends Controller
         }
     }
 
-    public static function getAll($user)
+    public static function getAll()
     {
         try 
         {
@@ -147,12 +150,12 @@ Abstract Class PostController extends Controller
                     $postEntity->hydrate($post);
                     array_push($listPostsEntity, $postEntity);
                 }
-                return(PostView::getAll($listPostsEntity, $user));
+                return(PostView::getAll($listPostsEntity, BlogSession::getUser()));
             }
             else
             {
                 //no ajax
-                return(PostView::getNoPostExist($user));
+                return(PostView::getNoPostExist(BlogSession::getUser()));
             }
         } 
         catch (\PDOException $e)
@@ -161,10 +164,11 @@ Abstract Class PostController extends Controller
         }
     }
     
-    public static function getAllBack($userSession)
+    public static function getAllBack()
     {
         try 
         {
+            $userSession = BlogSession::getUser();
             self::permission(ADMIN, $userSession);
             $posts = PostManager::getAll();
             if($posts != null)
@@ -194,7 +198,7 @@ Abstract Class PostController extends Controller
         }
     }
 
-    public static function push(Request $request, $userSession)
+    public static function push(Request $request)
     {
         if( null !== $request->get("auteur")
             && null !== $request->get("titre")
@@ -209,7 +213,7 @@ Abstract Class PostController extends Controller
             $tokenSent = $request->get("token");
             try
             {
-                self::permissionToken(ADMIN, $userSession, $tokenSent); 
+                self::permissionToken(ADMIN, BlogSession::getUser(), $tokenSent); 
                 $slugify = new Slugify();
                 $slug = $slugify->slugify($titre); 
                 $postEntity = new PostEntity();
@@ -247,7 +251,7 @@ Abstract Class PostController extends Controller
         }
     }
             
-    public static function edit($request, $userSession)
+    public static function edit($request)
     {
         if( null !== $request->get("id")
             && null !== $request->get("auteur")
@@ -264,7 +268,7 @@ Abstract Class PostController extends Controller
                 $chapo = $request->get("chapo");
                 $contenu = $request->get("contenu");
                 $tokenSent = $request->get("token");
-                self::permissionToken(ADMIN, $userSession, $tokenSent); 
+                self::permissionToken(ADMIN, BlogSession::getUser(), $tokenSent); 
                 $slugify = new Slugify();
                 $slug = $slugify->slugify($titre); 
                 $postEntity = new PostEntity();
@@ -303,11 +307,11 @@ Abstract Class PostController extends Controller
         }
     }
 
-    public static function delete( $id, $tokenSent, $userSession)
+    public static function delete( $id, $tokenSent)
     {
         try
         {
-            self::permissionToken(ADMIN, $userSession, $tokenSent); 
+            self::permissionToken(ADMIN, BlogSession::getUser(), $tokenSent); 
 
             $requestSuccess = PostManager::delete( $id);
             if($requestSuccess == true)
