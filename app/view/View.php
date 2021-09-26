@@ -2,6 +2,7 @@
 
 namespace App\View;
 
+use App\Session\BlogSession;
 use Exception;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -25,6 +26,7 @@ Abstract Class View
             'title'=> $title,
             'imageHeader'=> $imageHeader,
             'root'=>self::getRoot(),
+            'user'=>BlogSession::getUser(),
         ); 
         return self::renderView('message/exception.twig', $array);
     }
@@ -50,6 +52,16 @@ Abstract Class View
             // load template
             $template = $twig->load($pathFileTwig);
         
+            if(!isset($array["user"]))
+            {
+                //if controller does not give user
+                $array["user"] = BlogSession::getUser();
+            }
+            if(!isset($array["root"]))
+            {
+                //if controller does not give user
+                $array["root"] = self::getRoot();
+            }
             return $template->render($array); 
         }catch (Exception $e) 
         {
